@@ -30,6 +30,10 @@ html{
   font-family: 'Montserrat', sans-serif;
 }
 
+.hehe{
+  background-image: url('/FE-Ikuzports-CapstoneProject/src/assets/logo-background.png');
+}
+
 body {
   margin: 0;
   display: flex;
