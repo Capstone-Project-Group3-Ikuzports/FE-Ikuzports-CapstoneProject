@@ -4,7 +4,6 @@ import {AiFillFrown} from 'react-icons/ai'
 
 const CardMyClub = () => {
   return (
-    
     <div>
          <Card
         direction={{ base: 'column', sm: 'row' }}
