@@ -1,13 +1,11 @@
 import { Container } from "@chakra-ui/react";
 import React from "react";
-import Navbar from "../components/Navbar";
+
+import Loading from "../components/Loading";
 
 const Home = () => {
-  return (
-    <Container p={0}>
-      <Navbar />
-    </Container>
-  );
+  return <div><Loading/></div>;
+
 };
 
 export default Home;

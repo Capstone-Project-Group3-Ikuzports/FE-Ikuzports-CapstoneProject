@@ -1,7 +1,10 @@
-import React from "react";
+
+import React from 'react'
 
 const DetailStore = () => {
-  return <div>DetailStore</div>;
-};
+  return (
+    <div>DetailStore</div>
+  )
+}
 
-export default DetailStore;
+export default DetailStore
