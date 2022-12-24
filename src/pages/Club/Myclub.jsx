@@ -1,3 +1,4 @@
+
 import React from 'react'
 import CardMyClub from '../../components/MyClub/CardMyClub'
 
@@ -7,4 +8,3 @@ const Myclub = () => {
   )
 }
 
-export default Myclub
