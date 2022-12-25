@@ -8,3 +8,4 @@ const Myclub = () => {
   )
 }
 
+export default Myclub
