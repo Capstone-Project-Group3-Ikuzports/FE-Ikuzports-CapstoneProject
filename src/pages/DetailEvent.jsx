@@ -1,3 +1,4 @@
+
 import React from 'react'
 
 const DetailEvent = () => {
@@ -7,3 +8,4 @@ const DetailEvent = () => {
 }
 
 export default DetailEvent
+
