@@ -11,7 +11,7 @@ import DetailStore from "./pages/Product/DetailStore";
 import AddNewClub from "./pages/Club/AddNewClub";
 import ClubNonJoin from "./pages/Club/ClubNonJoin";
 import ClubJoin from "./pages/Club/ClubJoin";
-import MyClub from "./pages/Club/Myclub";
+import Myclub from "./pages/Club/Myclub";
 import EditClub from "./pages/Club/EditClub";
 import DetailClub from "./pages/Club/DetailClub";
 
@@ -27,7 +27,7 @@ const App = () => {
         <Route path="/store" element={<Store />} />
         <Route path="/detailstore" element={<DetailStore />} />
         <Route path="/myproduct" element={<MyProduct />} />
-        <Route path="/myclub" element={<MyClub />} />
+        <Route path="/myclub" element={<Myclub />} />
         <Route path="/editclub" element={<EditClub />} />
         <Route path="/detailclub" element={<DetailClub />} />
         <Route path="/addnewclub" element={<AddNewClub />} />
