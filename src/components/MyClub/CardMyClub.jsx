@@ -1,8 +1,12 @@
 import React from 'react'
-import { Card, CardHeader, CardBody, CardFooter, Stack, Heading, Button, Text, Image, Flex, Spacer } from '@chakra-ui/react'
+import { Card, CardBody, CardFooter, Stack, Heading, Button, Text, Image, Flex, Spacer, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from '@chakra-ui/react'
 import {AiFillFrown} from 'react-icons/ai'
+import {BsFillTrashFill} from 'react-icons/bs'
+import { useDisclosure } from '@chakra-ui/react'
+
 
 const CardMyClub = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <div>
          <Card
@@ -11,8 +15,6 @@ const CardMyClub = () => {
         variant='outline'
         w={843}
         h={267}
-        mx={100}
-        my={100}
         boxShadow="xl"
         rounded='xl'
         >
@@ -50,9 +52,26 @@ const CardMyClub = () => {
             </CardBody>
             <CardFooter pt='0' mt='-5' justify='end'>
                 <button>
-                <AiFillFrown color='red' size={50}/>
+                <AiFillFrown color='red'onClick={onOpen} size={50}/>
                 </button>
             </CardFooter>
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                <ModalHeader mx={'auto'}><BsFillTrashFill size={50} color={'red'} /></ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                    <Text>This button will DELETE your club/resigning member!</Text>
+                </ModalBody>
+
+                <ModalFooter>
+                    <Button px={'10'} backgroundColor="white" color={'black'} variant='outline' mr={3} onClick={onClose}>
+                    Yes
+                    </Button>
+                    <Button backgroundColor="white" color={'black'} variant='outline' px={'10'}>No</Button>
+                </ModalFooter>
+                </ModalContent>
+            </Modal>
 
         </Stack>
         </Card>
