@@ -1,10 +1,11 @@
 import { Container } from "@chakra-ui/react";
 import React from "react";
 
-import CardGallery from "../components/ClubJoin/CardGallery";
+
+import CardProduct from "../components/Store/CardProduct";
 
 const Home = () => {
-  return <div><CardGallery/></div>;
+  return <div><CardProduct/></div>;
 
 };
 
