@@ -32,6 +32,7 @@ html{
 
 .hehe{
   background-image: url('/FE-Ikuzports-CapstoneProject/src/assets/logo-background.png');
+  height: 100vh;
 }
 
 body {
@@ -40,7 +41,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
   font-family: 'Montserrat', sans-serif;
-
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 h1 {

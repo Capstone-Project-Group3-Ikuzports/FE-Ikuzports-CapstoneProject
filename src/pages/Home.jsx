@@ -1,10 +1,10 @@
-import { Container } from "@chakra-ui/react";
+import { Card, Container } from "@chakra-ui/react";
 import React from "react";
 
-import Loading from "../components/Loading";
+import CardActivity from "../components/ClubJoin/CardActivity";
 
 const Home = () => {
-  return <div><Loading/></div>;
+  return <div><CardActivity/></div>;
 
 };
 
