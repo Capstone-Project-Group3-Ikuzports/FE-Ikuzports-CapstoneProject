@@ -34,6 +34,10 @@ html{
   background-image: url('/FE-Ikuzports-CapstoneProject/src/assets/logo-background.png');
 }
 
+.full-width{
+  width: 100%;
+}
+
 body {
   display: flex;
   place-items: center;
@@ -41,6 +45,7 @@ body {
   min-height: 100vh;
   font-family: 'Montserrat', sans-serif;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 h1 {
