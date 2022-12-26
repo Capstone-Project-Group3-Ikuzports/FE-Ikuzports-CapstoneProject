@@ -35,6 +35,10 @@ html{
   height: 100vh;
 }
 
+.full-width{
+  width: 100%;
+}
+
 body {
   display: flex;
   place-items: center;
