@@ -6,6 +6,7 @@ import CardActivity from "../components/ClubJoin/CardActivity";
 const Home = () => {
   return <div><CardActivity/></div>;
 
+
 };
 
 export default Home;
