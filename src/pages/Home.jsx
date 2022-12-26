@@ -1,3 +1,4 @@
+
 import React from "react";
 import CardEvent from '../components/Home/CardEvent'
 import Navbar from '../components/Navbar'
@@ -226,6 +227,7 @@ const Home = () => {
     </div>
   )
     
+
 
 };
 

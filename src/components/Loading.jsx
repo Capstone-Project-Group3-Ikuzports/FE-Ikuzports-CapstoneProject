@@ -4,7 +4,7 @@ import {Box, Image, Spinner, Center} from '@chakra-ui/react'
 const Loading = () => {
   return (
     <div className='hehe'>
-        <Box h='70vh' bgImage="url(./assets/logo-background.png.)" backgroundPosition="center"
+        <Box h='70vh' w='100vw' bgImage="url(./src/assets/logo-background.png)" backgroundPosition="center"
         backgroundRepeat="no-repeat">
         </Box>
         <Center w='100%'>
