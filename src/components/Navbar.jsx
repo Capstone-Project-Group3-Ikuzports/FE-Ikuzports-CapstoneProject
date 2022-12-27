@@ -40,7 +40,10 @@ const Navbar = () => {
               />
             </Box>
             <Box pt={3}>
-              <FiUsers size={30} onClick={() => navigate("profile")}></FiUsers>
+              <FiUsers
+                size={30}
+                onClick={() => navigate("/clubNonJoin")}
+              ></FiUsers>
             </Box>
             <Menu px={1}>
               <Text color={"primary.100"} pt={"4"} fontSize="md">
@@ -60,16 +63,16 @@ const Navbar = () => {
               <Box>
                 <MenuList alignItems={"center"} textColor={"primary.200"}>
                   <MenuDivider />
-                  <MenuItem onClick={() => navigate("profile")}>
+                  <MenuItem onClick={() => navigate("/profile")}>
                     Profile
                   </MenuItem>
-                  <MenuItem onClick={() => navigate("myclub")}>
+                  <MenuItem onClick={() => navigate("/myclub")}>
                     My Club
                   </MenuItem>
-                  <MenuItem onClick={() => navigate("myproduct")}>
+                  <MenuItem onClick={() => navigate("/myproduct")}>
                     My Product
                   </MenuItem>
-                  <MenuItem onClick={() => navigate("login")}>Logout</MenuItem>
+                  <MenuItem onClick={() => navigate("/login")}>Logout</MenuItem>
                 </MenuList>
               </Box>
             </Menu>
