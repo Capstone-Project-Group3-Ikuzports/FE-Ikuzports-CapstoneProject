@@ -1,0 +1,15 @@
+.uploadFile{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #E2E8F0;
+    width: 90%;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+/* .uploadFile:hover{
+    border: 3px solid #E2E8F0;
+    
+} */

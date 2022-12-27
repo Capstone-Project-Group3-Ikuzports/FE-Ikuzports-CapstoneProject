@@ -20,9 +20,9 @@ const Login = () => {
   return (
     <Flex>
       <HeroLogin />
-      <Center>
-        <Box className="form-side" width={"35vw"}>
-          <FormControl p={"20"} mb={20}>
+      <Box className="form-side" width={"35vw"}>
+        <Center>
+          <FormControl p={10} mb={20}>
             <Text fontSize={"4xl"} color={"brand.300"}>
               Log in
             </Text>
@@ -53,8 +53,8 @@ const Login = () => {
               </Link>
             </Text>
           </FormControl>
-        </Box>
-      </Center>
+        </Center>
+      </Box>
     </Flex>
   );
 };
