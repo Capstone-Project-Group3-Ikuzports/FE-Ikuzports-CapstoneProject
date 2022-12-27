@@ -1,29 +1,20 @@
 import {
   Box,
   Button,
-  Center,
   Flex,
   FormControl,
   FormLabel,
-  Image,
-  Stack,
-  Radio,
   Input,
+  Radio,
   RadioGroup,
+  Stack,
   Text,
   Textarea,
-  Spacer,
-  AspectRatio,
-  Wrap,
-  Container,
-  VStack,
-  Avatar,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import HeroLogin from "../../components/HeroLogin";
 import "../../styles/uploadFile.css";
-import { MdUpload } from "react-icons/md";
-// import image from "../../assets/google.png"; // test prev
+import UploadFiles from "../../components/UploadFiles";
 
 const Register = () => {
   const [name, setName] = useState(" ");
@@ -37,8 +28,6 @@ const Register = () => {
   //=== SET PREVIOUS IMAGE ===//
   const [prev, setPrev] = useState("");
 
-  console.log(file);
-
   return (
     <Stack display={"flex"} flexDirection={"row"}>
       <HeroLogin />
@@ -48,7 +37,7 @@ const Register = () => {
         alignItems={"center"}
         w="35vw"
       >
-        <Box>
+        <Box w={"25vw"}>
           <FormControl isRequired>
             <Text fontSize={"3xl"} color={"brand.300"}>
               Create an account
@@ -86,42 +75,17 @@ const Register = () => {
             </Flex>
             <FormLabel color={"brand.300"}>Address</FormLabel>
             <Textarea id="textarea" type="textarea" border={"2px"} />
-            <Box display={"flex"} pt={4}>
-              <form
-                action=""
-                className="uploadFile"
-                onClick={() => document.querySelector(".input-file").click()}
-              >
-                <input
-                  type="file"
-                  className="input-file"
-                  hidden
-                  accept="image/*"
-                  onChange={({ target: { files } }) => {
-                    files[0] && setFiles(files[0].name);
-                    if (files) {
-                      setPrev(URL.createObjectURL(files[0]));
-                    }
-                  }}
-                />
-                <Text fontSize={"xs"} color={"gray.400"}>
-                  Upload image here
-                </Text>
-                <MdUpload size={80} color={"#eaeaea"} />
-              </form>
-              <Box w={52} border={"2px"} borderLeft={"none"} color={"#E2E8F0"}>
-                <Center alignItems={"center"} flexDirection={"column"} gap={2}>
-                  <Text fontSize={"xs"} color={"gray.400"}>
-                    Preview image
-                  </Text>
-                  {prev ? (
-                    <Avatar size={"lg"} src={prev} />
-                  ) : (
-                    <Avatar size={"lg"} />
-                  )}
-                </Center>
-              </Box>
-            </Box>
+            <UploadFiles
+              prev={prev}
+              prevSize={"lg"}
+              onChange={({ target: { files } }) => {
+                files[0] && setFiles(files[0].name);
+                if (files) {
+                  setPrev(URL.createObjectURL(files[0]));
+                  setFiles(files[0]);
+                }
+              }}
+            />
             <Button
               bg="brand.300"
               color={"primary.100"}
