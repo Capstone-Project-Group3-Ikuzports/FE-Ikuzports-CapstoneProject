@@ -18,7 +18,7 @@ const CardProduct = () => {
                 <Heading size='md'>SSD SAMSUNG 980 EVO 1TB</Heading>
                 <Spacer></Spacer>
             </Flex>
-            <Text color='blue.600' fontSize='2xl'>
+            <Text color='blue.600' as='b' fontSize='2xl'>
                 Rp 420.000
             </Text>
             </Stack>
