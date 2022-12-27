@@ -5,7 +5,7 @@ import {BsFillTrashFill} from 'react-icons/bs'
 const CardProduct = () => {
   return (
     <div>
-        <Card maxW='sm' ml='100px' mt='100px' _hover={{cursor: 'pointer'}}>
+        <Card maxW='sm' backgroundColor={'white'} _hover={{cursor: 'pointer'}}>
         <CardBody>
             <Image
             src='https://images.hothardware.com/contentimages/article/3079/content/small_samsung-980-angle.jpg'
@@ -18,7 +18,7 @@ const CardProduct = () => {
                 <Heading size='md'>SSD SAMSUNG 980 EVO 1TB</Heading>
                 <Spacer></Spacer>
             </Flex>
-            <Text color='blue.600' fontSize='2xl'>
+            <Text color='blue.600' as='b' fontSize='2xl'>
                 Rp 420.000
             </Text>
             </Stack>
