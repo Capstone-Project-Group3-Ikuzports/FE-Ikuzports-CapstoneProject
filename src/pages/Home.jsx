@@ -14,9 +14,9 @@ const Home = () => {
     const handleInputChange = (e) => setInput(e.target.value)
     const isError = input === ' '
   return(
-    <div>
+    <div className="no-scroll-home">
       <Navbar/>
-      <Box p='8' px={'10%'} w={'100vw'} h={'100vh'} backgroundColor={'brand.100'} overflowX='hidden'>
+      <Box p='8' px={'10%'} w={'100vw'} h={'100%'} backgroundColor={'brand.100'} overflowX='hidden'>
         <Flex>
           <div>
           <Text as="b" fontSize={'2xl'}>Home</Text>
