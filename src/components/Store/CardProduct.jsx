@@ -5,7 +5,7 @@ import {BsFillTrashFill} from 'react-icons/bs'
 const CardProduct = () => {
   return (
     <div>
-        <Card maxW='sm' backgroundColor={'white'} _hover={{cursor: 'pointer'}}>
+        <Card maxW='sm' bg='white' _hover={{cursor: 'pointer'}}>
         <CardBody>
             <Image
             src='https://images.hothardware.com/contentimages/article/3079/content/small_samsung-980-angle.jpg'
