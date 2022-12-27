@@ -10,7 +10,7 @@ const Myclub = () => {
   return (
     <div>
       <Navbar/>
-      <Box p='8' px={'5%'} w={'100vw'} h={'100vh'} backgroundColor={'brand.100'} overflowX='hidden'>
+      <Box p='8' px={'10%'} w={'100vw'} h={'100vh'} backgroundColor={'brand.100'} overflowX='hidden'>
         <Flex onClick={() => navigate("/")} _hover={{cursor: 'pointer'}}>
         <AiOutlineArrowLeft size={41}/> 
         <Text fontSize={'2xl'} as='b' ml='10px'>Back</Text>
