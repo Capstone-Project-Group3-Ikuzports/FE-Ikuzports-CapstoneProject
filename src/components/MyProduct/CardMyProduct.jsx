@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Flex, CardBody, Button, Text, Image, Stack, FormLabel, Input, Textarea, InputGroup, InputLeftAddon, Divider, Heading, Spacer, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from '@chakra-ui/react'
+import { Card, Flex, CardBody, Button, Text, Image, Stack, Divider, Heading, Spacer, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from '@chakra-ui/react'
 import {BsFillTrashFill} from 'react-icons/bs'
 import { useDisclosure } from '@chakra-ui/react';
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '../../components/Navbar'
-import {AiOutlineArrowLeft, AiOutlineSearch} from 'react-icons/ai'
-import { Box, Text, Flex, Divider, Button, SimpleGrid, Textarea, Select, Input, InputGroup, InputLeftAddon, InputLeftElement, FormLabel, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton,} from "@chakra-ui/react";
+import {AiOutlineArrowLeft} from 'react-icons/ai'
+import { Box, Text, Flex, Divider, Button, SimpleGrid, Textarea, Input, InputGroup, InputLeftAddon, FormLabel, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton,} from "@chakra-ui/react";
 import CardMyProduct from '../../components/MyProduct/CardMyProduct'
 import { useDisclosure } from '@chakra-ui/react';
 
