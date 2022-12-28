@@ -74,7 +74,7 @@ const Register = () => {
               </RadioGroup>
             </Flex>
             <FormLabel color={"brand.300"}>Address</FormLabel>
-            <Textarea id="textarea" type="textarea" border={"2px"} />
+            <Textarea id="textarea" type="textarea" border={"2px"} mb={4} />
             <UploadFiles
               prev={prev}
               prevSize={"lg"}
