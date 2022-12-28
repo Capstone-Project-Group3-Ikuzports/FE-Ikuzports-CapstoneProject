@@ -1,34 +1,21 @@
 import {
-  Stack,
   Box,
-  Button,
+  ButtonGroup,
   Center,
   Flex,
   FormControl,
   FormLabel,
-  Image,
   Input,
-  Text,
-  Radio,
-  RadioGroup,
-  Textarea,
-  Spacer,
   Select,
-  ButtonGroup,
+  Spacer,
+  Text,
+  Textarea,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { ButtonBack, ButtonClear, ButtonCreate } from "../../components/Button";
 import Navbar from "../../components/Navbar";
-import Sample from "../../assets/sample.png";
 import UploadFiles from "../../components/UploadFiles";
-import {
-  ButtonBack,
-  ButtonCancel,
-  ButtonClear,
-  ButtonCreate,
-  ButtonSave,
-} from "../../components/Button";
 
 const AddNewClub = () => {
   const [prev, setPrev] = useState();

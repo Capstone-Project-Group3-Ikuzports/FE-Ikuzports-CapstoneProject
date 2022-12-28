@@ -18,7 +18,7 @@ export const ButtonCancel = () => {
 };
 
 // === SAVE === //
-export const ButtonSave = () => {
+export const ButtonSave = ({ onClick }) => {
   return (
     <Button
       w={20}
@@ -26,6 +26,7 @@ export const ButtonSave = () => {
       bgColor={"brand.300"}
       color={"primary.100"}
       _hover={{ bgColor: "primary.300" }}
+      onClick={onClick}
     >
       Save
     </Button>
@@ -48,7 +49,7 @@ export const ButtonBack = () => {
   );
 };
 
-// === SAVE === //
+// === CLEAR === //
 export const ButtonClear = () => {
   return (
     <Button
@@ -63,7 +64,7 @@ export const ButtonClear = () => {
   );
 };
 
-// === Create === //
+// === CREATE === //
 export const ButtonCreate = ({ onClick }) => {
   return (
     <Button
