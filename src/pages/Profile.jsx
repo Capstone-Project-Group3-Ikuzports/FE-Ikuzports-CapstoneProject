@@ -23,6 +23,7 @@ import UploadFiles from "../components/UploadFiles";
 import { useCallback } from "react";
 import Sample from ".././assets/sample.png";
 import Swal from "sweetalert2";
+import { ButtonBack, ButtonCancel, ButtonSave } from "../components/Button";
 
 const Profile = () => {
   const [file, setFiles] = useState(null);
@@ -62,16 +63,7 @@ const Profile = () => {
       <Navbar />
       <Box p="8" px={"10%"} w={"100vw"} overflowX="hidden" minH={"90vh"}>
         <Flex onClick={() => navigate("/")} _hover={{ cursor: "pointer" }}>
-          <Button
-            size={"md"}
-            variant={"ghost"}
-            _hover={{ bg: "#2E5984", color: "#eaeaea" }}
-          >
-            <BiArrowBack size={"28"} />
-            <Text fontSize={"lg"} ml="0.5em">
-              Back
-            </Text>
-          </Button>
+          <ButtonBack />
         </Flex>
         <Flex>
           <Box w={"25vw"}>
@@ -98,7 +90,7 @@ const Profile = () => {
                 <FormLabel color={"brand.300"}>Full Name</FormLabel>
                 <Input id="name" type="text" border={"2px"} />
                 <FormLabel color={"brand.300"}>Email</FormLabel>
-                <Input id="email" type="text" border={"2px"} />
+                <Input id="email" type="text" border={"2px"} mb={4} />
                 <UploadFiles
                   prev={prev}
                   prevSize={"xl"}
@@ -151,24 +143,8 @@ const Profile = () => {
           </Text>
           <Spacer />
           <ButtonGroup spacing={4} px={5}>
-            <Button
-              w={20}
-              h={8}
-              variant={"outline"}
-              color={"brand.500"}
-              _hover={{ bgColor: "brand.500", color: "primary.100" }}
-            >
-              Cancel
-            </Button>
-            <Button
-              w={20}
-              h={8}
-              bgColor={"brand.300"}
-              color={"primary.100"}
-              _hover={{ bgColor: "primary.300" }}
-            >
-              Save
-            </Button>
+            <ButtonCancel />
+            <ButtonSave />
           </ButtonGroup>
         </Flex>
       </Box>
