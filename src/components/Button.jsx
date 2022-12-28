@@ -98,3 +98,35 @@ export const ButtonBuy = ({ onClick }) => {
     </Button>
   );
 };
+
+// === ADD ACTIVITY === //
+export const ButtonAddActivity = ({ onClick }) => {
+  return (
+    <Button
+      w={"32"}
+      h={8}
+      bgColor={"brand.300"}
+      color={"primary.100"}
+      _hover={{ bgColor: "primary.300" }}
+      onClick={onClick}
+    >
+      Add activity
+    </Button>
+  );
+};
+
+// === ADD PHOT === //
+export const ButtonAddPhoto = ({ onClick }) => {
+  return (
+    <Button
+      w={"32"}
+      h={8}
+      bgColor={"brand.300"}
+      color={"primary.100"}
+      _hover={{ bgColor: "primary.300" }}
+      onClick={onClick}
+    >
+      Add new photo
+    </Button>
+  );
+};
