@@ -4,7 +4,6 @@ import * as ReactDOM from "react-dom/client";
 import React from "react";
 import App from "./App";
 import "./index.css";
-
 const colors = {
   brand: {
     100: "#F2F6FA",
@@ -21,10 +20,17 @@ const colors = {
     100: "#eaeaea",
     200: "#454545",
     300: "#0000e5",
+    600: "#3ba74f",
   },
 };
 
-const theme = extendTheme({ colors });
+const theme = extendTheme({
+  colors,
+  fonts: {
+    heading: `'Montserrat', sans-serif`,
+    body: `'Montserrat', sans-serif`,
+  },
+});
 
 const rootElement = document.getElementById("root");
 ReactDOM.createRoot(rootElement).render(
