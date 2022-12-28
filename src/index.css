@@ -47,6 +47,11 @@ html{
   background-color: white;
   height: 100%;
 }
+.no-scroll-store{
+  overflow-x: hidden;
+  background-color: #F2F6FA;
+  height: 100vh;
+}
 
 body {
   margin: 0;
