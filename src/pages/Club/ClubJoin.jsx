@@ -1,7 +1,12 @@
 import React from "react";
 
+
 const ClubJoin = () => {
-  return <div>ClubJoin</div>;
+  return (
+    <div>
+        Hehe
+    </div>
+  )
 };
 
 export default ClubJoin;
