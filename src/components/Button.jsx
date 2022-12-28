@@ -3,7 +3,7 @@ import { Button, Text } from "@chakra-ui/react";
 import { BiArrowBack } from "react-icons/bi";
 
 // === CANCEL === //
-export const ButtonCancel = () => {
+export const ButtonCancel = ({ onClick }) => {
   return (
     <Button
       w={20}
@@ -11,6 +11,7 @@ export const ButtonCancel = () => {
       variant={"outline"}
       color={"brand.500"}
       _hover={{ bgColor: "brand.500", color: "primary.100" }}
+      onClick={onClick}
     >
       Cancel
     </Button>
@@ -34,12 +35,13 @@ export const ButtonSave = ({ onClick }) => {
 };
 
 // === BACK === //
-export const ButtonBack = () => {
+export const ButtonBack = ({ onClick }) => {
   return (
     <Button
       size={"md"}
       variant={"ghost"}
       _hover={{ bg: "#2E5984", color: "#eaeaea" }}
+      onClick={onClick}
     >
       <BiArrowBack size={"28"} />
       <Text fontSize={"lg"} ml="0.5em">
@@ -50,7 +52,7 @@ export const ButtonBack = () => {
 };
 
 // === CLEAR === //
-export const ButtonClear = () => {
+export const ButtonClear = ({ onClick }) => {
   return (
     <Button
       w={20}
@@ -58,6 +60,7 @@ export const ButtonClear = () => {
       variant={"outline"}
       color={"brand.500"}
       _hover={{ bgColor: "brand.500", color: "primary.100" }}
+      onClick={onClick}
     >
       Clear
     </Button>
@@ -76,6 +79,22 @@ export const ButtonCreate = ({ onClick }) => {
       onClick={onClick}
     >
       Create
+    </Button>
+  );
+};
+
+// === BUY === //
+export const ButtonBuy = ({ onClick }) => {
+  return (
+    <Button
+      w={"80%"}
+      h={8}
+      bgColor={"brand.600"}
+      color={"primary.100"}
+      _hover={{ bgColor: "primary.600" }}
+      onClick={onClick}
+    >
+      Buy Now
     </Button>
   );
 };

@@ -1,29 +1,26 @@
 import {
-  Stack,
   Box,
-  Button,
+  ButtonGroup,
   Center,
   Flex,
   FormControl,
   FormLabel,
   Image,
   Input,
-  Text,
   Radio,
   RadioGroup,
-  Textarea,
   Spacer,
-  ButtonGroup,
+  Stack,
+  Text,
+  Textarea,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { BiArrowBack } from "react-icons/bi";
+import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import Sample from ".././assets/sample.png";
+import { ButtonBack, ButtonCancel, ButtonSave } from "../components/Button";
 import Navbar from "../components/Navbar";
 import UploadFiles from "../components/UploadFiles";
-import { useCallback } from "react";
-import Sample from ".././assets/sample.png";
-import Swal from "sweetalert2";
-import { ButtonBack, ButtonCancel, ButtonSave } from "../components/Button";
 
 const Profile = () => {
   const [file, setFiles] = useState(null);

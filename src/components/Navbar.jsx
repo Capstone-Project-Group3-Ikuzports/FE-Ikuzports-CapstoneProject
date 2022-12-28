@@ -36,7 +36,7 @@ const Navbar = () => {
             <Box pt={3}>
               <AiOutlineShoppingCart
                 size={35}
-                onClick={() => navigate("store")}
+                onClick={() => navigate("/store")}
               />
             </Box>
             <Box pt={3}>
