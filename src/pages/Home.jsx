@@ -1,4 +1,3 @@
-
 import React from "react";
 import CardEvent from '../components/Home/CardEvent'
 import Navbar from '../components/Navbar'
@@ -8,6 +7,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 const Home = () => {
@@ -16,9 +17,13 @@ const Home = () => {
     const [loading, setLoading] = useState(false)
     const handleInputChange = (e) => setInput(e.target.value)
     const isError = input === ' '
+    const currentUser = useSelector((state) => state.users.currentUser)
+    const token = currentUser.token
+    const navigate = useNavigate()
+    console.log(currentUser)
+    console.log(token)
 
     const [getEvents, setGetEvents] = useState([])
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NzIzNzgxNzAsIm5hbWUiOiJNaWNoYWVsIEpvcmRhbiIsInJvbGUiOiJVc2VyIiwidXNlcklkIjoyfQ.xNwP3_mLoncOmMHWRgE5qLSBSARnDaSh6Q8b6OnO8z4"
 
     const config = {
       headers: {Authorization : `Bearer ${token}`},
@@ -44,7 +49,7 @@ const Home = () => {
   return(
     <div className="no-scroll-home">
       <Navbar/>
-      <Box p='8' px={'10%'} w={'100vw'} h={'100%'} backgroundColor={'brand.100'} overflowX='hidden'>
+      <Box p='8' px={'10%'} w={'100vw'} h={'100%'} backgroundColor={'brand.100'} bgImage='./src/assets/logo-background.png' bgRepeat={'no-repeat'} bgPosition='center' mx='auto' justifyContent={'center'} overflowX='hidden'>
         <Flex>
           <div>
           <Text as="b" fontSize={'2xl'}>Home</Text>
@@ -175,11 +180,28 @@ const Home = () => {
         </Flex>
         {
           getEvents && loading === false ?
-          <CardEvent
-          data = {getEvents}
-          />
-          :
-          <p>LOADING</p>
+            getEvents.map(data => (
+              <CardEvent
+              address = {data.address}
+              category = {data.category_name}
+              city = {data.city}
+              selesai = {data.end_date}
+              gambar = {data.image_event}
+              total = {data.maximum_people}
+              name = {data.name}
+              mulai = {data.start_date}
+              status= {data.status}
+              user = {data.total_participant}
+              diKlik = {() => {
+                navigate('/detailevent', {
+                  state : {
+                    id : data.id
+                  }
+                })
+              }}
+              />
+            ))
+            : <p>Hehe</p>
         }
         </Box>
           </div>

@@ -1,12 +1,11 @@
 import React from 'react'
 import { Card, CardBody, Stack, Heading, Text, Image, CardFooter, Button, Flex} from '@chakra-ui/react'
 
-const CardEvent = ({data}) => {
+const CardEvent = ({address, category, city, selesai, gambar, total, name, mulai, status, user, diKlik}) => {
 
   return (
-    <div>
-      {data.map(item => {
-        return (
+    <div onClick={diKlik}>
+
           <Card
         direction={{ base: 'column', sm: 'row' }}
         overflow='hidden'
@@ -18,28 +17,28 @@ const CardEvent = ({data}) => {
         <Image
           objectFit='cover'
           maxW={{ base: '100%', sm: '300px' }}
-          src={item.image_event}
+          src={gambar}
           alt='Caffe Latte'
         />
 
         <Stack w={"100%"}>
           <CardBody py='0'>
-            <Heading size='md'>{item.name}</Heading>
+            <Heading size='md'>{name}</Heading>
             <Flex>
               <Text py='2' mr={'70px'}>
-              {item.start_date}
+              {mulai}
               </Text>
               <Text py='2'>
-              {item.end_date}
+              {selesai}
               </Text>
             </Flex>
-            <Text py='1' as='b'>Slot : {item.total_participant}/{item.maximum_people}</Text>
+            <Text py='1' as='b'>Slot : {user}/{total}</Text>
             <br/>
-            <Text py='1' as='b'>Location : {item.city}</Text>
+            <Text py='1' as='b'>Location : {city}</Text>
             <br/>
-            <Text py='1' as='b'>{item.address}</Text>
+            <Text py='1' as='b'>{address}</Text>
             <br/>
-            <Text py='1' as='b'>{item.category_name}</Text>
+            <Text py='1' as='b'>{category}</Text>
           </CardBody>
 
           <CardFooter justify='end' ml={'auto'} justifyContent={'end'} py='0' pb='2'>
@@ -49,8 +48,6 @@ const CardEvent = ({data}) => {
           </CardFooter>
         </Stack>
       </Card>
-        )
-      })}
     </div>
   )
 }

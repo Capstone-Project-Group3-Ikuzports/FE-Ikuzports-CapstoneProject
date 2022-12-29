@@ -7,7 +7,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     updateUser(state, action) {
-      delete action.payload.token;
+      delete action.payload.state;
       return {
         ...state,
         currentUser: action.payload,
