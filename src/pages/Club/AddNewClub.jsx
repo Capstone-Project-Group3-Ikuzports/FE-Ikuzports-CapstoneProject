@@ -13,8 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { ButtonBack, ButtonClear, ButtonCreate } from "../../components/Button";
-import Navbar from "../../components/Navbar";
+import { ButtonBack, ButtonClear, ButtonCreate } from "../../components/Button"
 import UploadFiles from "../../components/UploadFiles";
 import Layout from "../../components/Layout";
 

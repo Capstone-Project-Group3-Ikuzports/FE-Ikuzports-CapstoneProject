@@ -1,17 +1,16 @@
 import React from 'react'
-import Navbar from '../../components/Navbar'
+
 import {AiOutlineArrowLeft} from 'react-icons/ai'
 import { Box, Text, Flex, Divider, Button, SimpleGrid, Textarea, Input, InputGroup, InputLeftAddon, FormLabel, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton,} from "@chakra-ui/react";
 import CardMyProduct from '../../components/MyProduct/CardMyProduct'
 import { useDisclosure } from '@chakra-ui/react';
-
+import Layout from '../../components/Layout';
 
 const MyProduct = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
-    <div>
-      <Navbar/>
-      <Box p='8' px={'10%'} w={'100vw'} h={'100%'} backgroundColor={'brand.100'} overflowX='hidden'>
+ <Layout>
+      <Box p='8' px={'10%'} w={'100vw'} h={'100%'}  overflowX='hidden'>
         <Flex onClick={() => navigate("/")} _hover={{cursor: 'pointer'}}>
         <AiOutlineArrowLeft size={41}/> 
         <Text fontSize={'2xl'} as='b' ml='10px'>Back</Text>
@@ -65,7 +64,7 @@ const MyProduct = () => {
         <CardMyProduct/>
         </SimpleGrid>
       </Box>
-    </div>
+      </Layout>
   )
 }
 

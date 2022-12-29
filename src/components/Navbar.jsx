@@ -73,7 +73,7 @@ const Navbar = () => {
   }, []);
 
   return (
-<Box w={"100vw"} bg="brand.200" px={4} pos='sticky' top={0} zIndex={1} overflow='hidden'>
+<Box w={"100vw"} bg="brand.200" px={4} pos='sticky' top={0} zIndex={1}>
       <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
         <Box>
           <Image

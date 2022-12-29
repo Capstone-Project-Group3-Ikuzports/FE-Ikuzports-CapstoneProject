@@ -3,12 +3,12 @@ import Navbar from '../../components/Navbar'
 import {AiOutlineArrowLeft, AiOutlineSearch} from 'react-icons/ai'
 import { Box, Text, Flex, Divider, Button, SimpleGrid, Card, ButtonGroup, Select, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import CardProduct from '../../components/Store/CardProduct'
+import Layout from '../../components/Layout';
 
 const Store = () => {
   return (
-    <div className='no-scroll-event'>
-      <Navbar/>
-      <Box p='8' px={'10%'} w={'100vw'} h={'100%'} backgroundColor={'brand.100'} overflowX='hidden'>
+<Layout>
+      <Box p='8' px={'10%'} w={'100vw'} h={'100%'} overflowX='hidden'>
         <Flex onClick={() => navigate("/")} _hover={{cursor: 'pointer'}}>
         <AiOutlineArrowLeft size={41}/> 
         <Text fontSize={'2xl'} as='b' ml='10px'>Back</Text>
@@ -55,7 +55,7 @@ const Store = () => {
         <CardProduct/>
         </SimpleGrid>
       </Box>
-    </div>
+      </Layout>
   )
 }
 

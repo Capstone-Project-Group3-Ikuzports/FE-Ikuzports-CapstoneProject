@@ -23,15 +23,13 @@ import {
   ButtonCancel,
   ButtonSave,
 } from "../../components/Button";
-import Navbar from "../../components/Navbar";
 import Sample1 from "../../assets/sampleJersey1.jpeg";
 import Sample2 from "../../assets/sampleJersey2.jpg";
 import Sample3 from "../../assets/sampleJersey3.jpeg";
-
+import Layout from "../../components/Layout";
 const DetailStore = () => {
   return (
-    <Box minH={"100vh"} backgroundColor={"brand.100"}>
-      <Navbar />
+    <Layout>
       <Box p="8" px={"10%"} w={"100vw"} overflowX="hidden" minH={"90vh"}>
         <Flex onClick={() => navigate("/")} _hover={{ cursor: "pointer" }}>
           <ButtonBack />
@@ -68,7 +66,7 @@ const DetailStore = () => {
           </Box>
         </Flex>
       </Box>
-    </Box>
+      </Layout>
   );
 };
 
