@@ -15,7 +15,7 @@ const MyProduct = () => {
         <AiOutlineArrowLeft size={41}/> 
         <Text fontSize={'2xl'} as='b' ml='10px'>Back</Text>
         </Flex>
-        <Text fontSize={'6xl'}>Store</Text>
+        <Text fontSize={'5xl'} as='u'>My Product</Text>
         <Divider w="17%" orientation='horizontal' />
         <Flex>
         <Box  ml='auto' mb={10} >

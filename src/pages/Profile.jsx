@@ -71,10 +71,10 @@ const Profile = () => {
         </Flex>
         <Flex>
           <Box w={"25vw"}>
-            <Text fontSize={"4xl"} textAlign={"start"}>
+            <Text fontSize={"5xl"} textAlign={"start"} as='u'>
               Profile
             </Text>
-            <hr className="hr-profile" />
+      
             <Box display={"flex"} flexDirection={"column"} pt={5}>
               <Image
                 src={Sample}
