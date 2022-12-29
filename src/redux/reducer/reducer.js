@@ -7,13 +7,13 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     updateUser(state, action) {
-      delete action.payload.token;
+      delete action.payload.state;
       return {
         ...state,
         currentUser: action.payload,
       };
     },
-    clearUSer(state) {
+    clearUser(state) {
       return {
         ...state,
         currentUser: {},
@@ -22,5 +22,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { updateUser, clearUSer } = userSlice.actions;
+export const { updateUser, clearUser } = userSlice.actions;
 export default userSlice.reducer;
