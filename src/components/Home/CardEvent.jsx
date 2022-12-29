@@ -1,11 +1,13 @@
 import React from 'react'
 import { Card, CardBody, Stack, Heading, Text, Image, CardFooter, Button, Flex} from '@chakra-ui/react'
 
-const CardEvent = () => {
+const CardEvent = ({data}) => {
 
   return (
     <div>
-        <Card
+      {data.map(item => {
+        return (
+          <Card
         direction={{ base: 'column', sm: 'row' }}
         overflow='hidden'
         variant='filled'
@@ -22,31 +24,33 @@ const CardEvent = () => {
 
         <Stack w={"100%"}>
           <CardBody py='0'>
-            <Heading size='md'>Sparring Team Antar Negara</Heading>
+            <Heading size='md'>{item.name}</Heading>
             <Flex>
               <Text py='2' mr={'70px'}>
-              2022 / 12 / 21
+              {item.start_date}
               </Text>
               <Text py='2'>
-              2022 / 12 / 21
+              {item.end_date}
               </Text>
             </Flex>
-            <Text py='1' as='b'>Slot : 10/25</Text>
+            <Text py='1' as='b'>Slot : {item.total_participant}/{item.maximum_people}</Text>
             <br/>
-            <Text py='1' as='b'>Location : Gurun Sahara</Text>
+            <Text py='1' as='b'>Location : {item.city}</Text>
             <br/>
-            <Text py='1' as='b'>Tanggerang Selatan</Text>
+            <Text py='1' as='b'>{item.address}</Text>
             <br/>
-            <Text py='1' as='b'>Basketball</Text>
+            <Text py='1' as='b'>{item.category_name}</Text>
           </CardBody>
 
           <CardFooter justify='end' ml={'auto'} justifyContent={'end'} py='0' pb='2'>
-            <Button variant='solid'  colorScheme='blue'>
+            {/* <Button variant='solid'  colorScheme='blue'>
               Buy Latte
-            </Button>
+            </Button> */}
           </CardFooter>
         </Stack>
       </Card>
+        )
+      })}
     </div>
   )
 }

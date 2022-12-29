@@ -5,14 +5,42 @@ import Navbar from '../components/Navbar'
 import { Box, Stack, Text, Flex, Image, Button, Select, FormControl, FormLabel, FormErrorMessage, FormHelperText, Card,  CardBody, Input, Heading, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, } from '@chakra-ui/react'
 import { FiUser } from "react-icons/fi";
 import { useState } from "react";
+import { useEffect } from "react";
 import { useDisclosure } from "@chakra-ui/react";
+import axios from "axios";
 
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
     const [input, setInput] = useState('')
+    const [loading, setLoading] = useState(false)
     const handleInputChange = (e) => setInput(e.target.value)
     const isError = input === ' '
+
+    const [getEvents, setGetEvents] = useState([])
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NzIzNzgxNzAsIm5hbWUiOiJNaWNoYWVsIEpvcmRhbiIsInJvbGUiOiJVc2VyIiwidXNlcklkIjoyfQ.xNwP3_mLoncOmMHWRgE5qLSBSARnDaSh6Q8b6OnO8z4"
+
+    const config = {
+      headers: {Authorization : `Bearer ${token}`},
+    }
+    console.log(config)
+
+    const getEvent = async () => {
+      await axios.get(`https://rubahmerah.site/events`, config)
+      .then((response) => {
+        setLoading(true)
+        setGetEvents(response.data.data)
+        setLoading(false)
+        console.log(response.data.data)
+      })
+      .catch((err) => {
+        err
+      })
+    }
+
+    useEffect(() => {
+      getEvent()
+    }, [])
   return(
     <div className="no-scroll-home">
       <Navbar/>
@@ -145,51 +173,19 @@ const Home = () => {
           <option value='option3'>Yogyakarta</option>
         </Select>
         </Flex>
-        <CardEvent/>
-        <CardEvent/>
-        <CardEvent/>
-        <CardEvent/>
-        <CardEvent/>
-        <CardEvent/>
-        <CardEvent/>
-        <CardEvent/>
-        <CardEvent/>
-        <CardEvent/>
+        {
+          getEvents && loading === false ?
+          <CardEvent
+          data = {getEvents}
+          />
+          :
+          <p>LOADING</p>
+        }
         </Box>
           </div>
           <div className="full-width">
             <Box mt={'6%'} ml={'20%'} w={'100%'} position="sticky" top={"0"}>
             <Button backgroundColor={"white"} shadow={'xl'} w={'70%'} mb={"8%"} px={"5%"} color="brand.700" rounded="full">Find your own club now </Button>
-              <Card
-                direction={{ base: 'column', sm: 'row' }}
-                overflow='hidden'
-                variant='filled'
-                w={'80%'}
-                backgroundColor={'white'}
-                mb={"5%"}
-              >
-              <Image
-                objectFit='cover'
-                maxW={{ base: '100%', sm: '300px' }}
-                src='https://www.servethehome.com/wp-content/uploads/2016/12/AMD-Ryzen-Logo.png'
-                alt='Caffe Latte'
-              />
-                <Stack>
-                  <CardBody pb={'0'}>
-                    <Heading size='md'>Team Ryzen</Heading>
-
-                    <Text py='1'>
-                     Member: 11/20
-                    </Text>
-                    <Text pb='1'>
-                     Football
-                    </Text>
-                    <Text pb='1'>
-                     Jakarta Selatan
-                    </Text>
-                  </CardBody>
-                </Stack>
-              </Card>
               <Card
                 direction={{ base: 'column', sm: 'row' }}
                 overflow='hidden'
