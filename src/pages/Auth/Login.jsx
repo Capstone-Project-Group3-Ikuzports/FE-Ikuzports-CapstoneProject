@@ -12,18 +12,16 @@ import {
 import HeroLogin from "../../components/HeroLogin";
 import { updateUser } from "../../redux/reducer/reducer";
 
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useCookies } from "react-cookie";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { useSelector } from "react-redux";
 
 const Login = () => {
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState(" ");
-  const [cookies, setCookies] = useCookies(["userToken"]);
+  // const [cookies, setCookies] = useCookies(["userToken"]); // useCookies
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -48,7 +46,6 @@ const Login = () => {
             showConfirmButton: false,
             timer: 1500,
           });
-          setCookies("userToken", data.token, { path: "/login" });
           dispatch(updateUser(data));
           navigate("/");
         }
