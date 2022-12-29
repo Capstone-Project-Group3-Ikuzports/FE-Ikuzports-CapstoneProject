@@ -9,6 +9,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Layout from "../components/Layout";
 
 
 const Home = () => {
@@ -80,9 +81,9 @@ const Home = () => {
 
     console.log(name)
   return(
-    <div className="no-scroll-home">
-      <Navbar/>
-      <Box p='8' px={'10%'} w={'100vw'} h={'100vh'} backgroundColor={'brand.100'} bgImage='./src/assets/logo-background.png' bgRepeat={'no-repeat'} bgPosition='center' overflowX='hidden'>
+    <Layout>
+    <div>
+      <Box p='8' px={'10%'} w={'100vw'} h={'100%'}>
         <Flex>
           <div>
           <Text as="b" fontSize={'2xl'}>Home</Text>
@@ -273,6 +274,7 @@ const Home = () => {
         </Flex>
       </Box>
     </div>
+    </Layout>
   )
     
 

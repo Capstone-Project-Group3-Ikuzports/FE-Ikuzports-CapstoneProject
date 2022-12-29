@@ -10,6 +10,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  layout,
   Text,
 } from "@chakra-ui/react";
 import React from "react";
@@ -26,14 +27,13 @@ import {
 import CardActivity from "../../components/ClubJoin/CardActivity";
 import CardGallery from "../../components/ClubJoin/CardGallery";
 import ChatDiscuss from "../../components/ClubJoin/ChatDiscuss";
-import Navbar from "../../components/Navbar";
+import Layout from "../../components/Layout";
 
 const ClubJoin = () => {
   const navigate = useNavigate();
   return (
-    <Box minH={"100vh"} backgroundColor={"brand.100"}>
-      <Navbar />
-      <Box p="8" px={"10%"} w={"100vw"} overflowX="hidden">
+  <Layout>
+          <Box p="8" px={"10%"} w={"100vw"} overflowX="hidden">
         <Flex onClick={() => navigate("/")} _hover={{ cursor: "pointer" }}>
           <ButtonBack />
         </Flex>
@@ -180,7 +180,7 @@ const ClubJoin = () => {
           <CardGallery />
         </Box>
       </Box>
-    </Box>
+      </Layout>
   );
 };
 

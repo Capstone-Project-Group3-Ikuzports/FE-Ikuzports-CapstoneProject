@@ -16,13 +16,14 @@ import Swal from "sweetalert2";
 import { ButtonBack, ButtonClear, ButtonCreate } from "../../components/Button";
 import Navbar from "../../components/Navbar";
 import UploadFiles from "../../components/UploadFiles";
+import Layout from "../../components/Layout";
 
 const AddNewClub = () => {
   const [prev, setPrev] = useState();
   const [files, setFiles] = useState();
   return (
-    <Box minH={"100vh"} backgroundColor={"brand.100"}>
-      <Navbar />
+    <Layout>
+
       <Box p="8" px={"10%"} w={"100vw"} overflowX="hidden" minH={"90vh"}>
         <Flex onClick={() => navigate("/")} _hover={{ cursor: "pointer" }}>
           <ButtonBack />
@@ -94,7 +95,8 @@ const AddNewClub = () => {
           </ButtonGroup>
         </Flex>
       </Box>
-    </Box>
+
+    </Layout>
   );
 };
 

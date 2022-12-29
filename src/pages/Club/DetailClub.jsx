@@ -4,13 +4,13 @@ import CardGallery from "../../components/ClubJoin/CardGallery";
 import { Box, Flex, Stack, StackDivider, Text, Image, Card, CardHeader, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from "@chakra-ui/react";
 import {AiOutlineArrowLeft, AiOutlineSearch} from 'react-icons/ai'
 import { useDisclosure } from "@chakra-ui/react";
+import Layout from "../../components/Layout";
 
 const DetailClub = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
-    <div className="no-scroll-store">
-    <Navbar/>
-    <Box p='8' px={'10%'} w={'100vw'} backgroundColor={'brand.100'} overflowX='hidden'>
+  <Layout>
+    <Box p='8' px={'10%'} w={'100vw'}>
     <Flex onClick={() => navigate("/")} _hover={{cursor: 'pointer'}}>
         <AiOutlineArrowLeft size={41}/> 
         <Text fontSize={'2xl'} as='b' ml='10px'>Back</Text>
@@ -92,7 +92,8 @@ const DetailClub = () => {
         </Modal>
       </Box>
     </Box>
-    </div>
+    </Layout>
+
   )
 };
 
