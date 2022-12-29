@@ -115,7 +115,7 @@ export const ButtonAddActivity = ({ onClick }) => {
   );
 };
 
-// === ADD PHOT === //
+// === ADD PHOTO === //
 export const ButtonAddPhoto = ({ onClick }) => {
   return (
     <Button

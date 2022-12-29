@@ -9,14 +9,67 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import HeroLogin from "../../components/HeroLogin";
+import { updateUser } from "../../redux/reducer/reducer";
+
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState(" ");
+  const [cookies, setCookies] = useCookies(["userToken"]);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  //=== URL API ===//
+  const UrlLogin = "https://rubahmerah.site/auth";
+
+  const login = async (e) => {
+    e.preventDefault();
+    await axios
+      .post(UrlLogin, {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        const { data } = res.data;
+        console.log(data); // dell after prod
+        if (data) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Signed successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setCookies("userToken", data.token, { path: "/login" });
+          setCookies("id", data.id);
+          dispatch(updateUser(data));
+          // navigate("/");
+        }
+      })
+      .catch((err) => {
+        console.log(err); // dell after prod
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Email or Password incorrect",
+          showConfirmButton: true,
+        });
+      });
+  };
+  useEffect(() => {
+    if (cookies.userToken) {
+      // navigate("/home");
+      console.log(cookies);
+    }
+    return () => {};
+  }, [cookies.userToken]);
   return (
     <Flex>
       <HeroLogin />
@@ -33,15 +86,28 @@ const Login = () => {
                 Log in
               </Text>
               <FormLabel color={"brand.300"}>Email</FormLabel>
-              <Input id="email" type="email" border={"2px"} mb={2} />
+              <Input
+                id="email"
+                type="email"
+                border={"2px"}
+                mb={2}
+                onChange={(e) => setEmail(e.target.value)}
+              />
               <FormLabel color={"brand.300"}>Password</FormLabel>
-              <Input id="password" type="password" border={"2px"} />
+              <Input
+                id="password"
+                type="password"
+                border={"2px"}
+                onChange={(e) => setPassword(e.target.value)}
+              />
               <Button
+                type="submit"
                 bg="brand.300"
                 color={"primary.100"}
                 w={"full"}
                 mt={14}
                 _hover={{ bg: "#0000e5" }}
+                onClick={login}
               >
                 Sign in
               </Button>

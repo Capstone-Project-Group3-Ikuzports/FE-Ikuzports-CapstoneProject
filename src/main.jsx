@@ -2,8 +2,14 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 import * as ReactDOM from "react-dom/client";
 import React from "react";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { CookiesProvider } from "react-cookie";
+import { persistStore } from "redux-persist";
+
 import App from "./App";
 import "./index.css";
+import store from "./redux/store";
 const colors = {
   brand: {
     100: "#F2F6FA",
@@ -34,11 +40,19 @@ const theme = extendTheme({
   },
 });
 
+let persistor = persistStore(store);
+
 const rootElement = document.getElementById("root");
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <App />
-    </ChakraProvider>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <CookiesProvider>
+          <ChakraProvider theme={theme}>
+            <App />
+          </ChakraProvider>
+        </CookiesProvider>
+      </PersistGate>
+    </Provider>
   </React.StrictMode>
 );

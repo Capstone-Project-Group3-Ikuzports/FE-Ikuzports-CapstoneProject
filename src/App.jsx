@@ -1,27 +1,29 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
-import Home from "./pages/Home";
-import Profile from "./pages/Profile";
-import Store from "./pages/Product/Store";
-import DetailEvent from "./pages/DetailEvent";
-import MyProduct from "./pages/Product/MyProduct";
-import DetailStore from "./pages/Product/DetailStore";
 import AddNewClub from "./pages/Club/AddNewClub";
-import ClubNonJoin from "./pages/Club/ClubNonJoin";
 import ClubJoin from "./pages/Club/ClubJoin";
-import Myclub from "./pages/Club/Myclub";
-import EditClub from "./pages/Club/EditClub";
+import ClubNonJoin from "./pages/Club/ClubNonJoin";
 import DetailClub from "./pages/Club/DetailClub";
+import EditClub from "./pages/Club/EditClub";
+import Myclub from "./pages/Club/Myclub";
+import DetailEvent from "./pages/DetailEvent";
+import Home from "./pages/Home";
+import DetailStore from "./pages/Product/DetailStore";
+import MyProduct from "./pages/Product/MyProduct";
+import Store from "./pages/Product/Store";
+import Profile from "./pages/Profile";
+import store from "./redux/store";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register/" element={<Register />} />
+        <Route path="/" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/detailevent" element={<DetailEvent />} />
         <Route path="/store" element={<Store />} />
