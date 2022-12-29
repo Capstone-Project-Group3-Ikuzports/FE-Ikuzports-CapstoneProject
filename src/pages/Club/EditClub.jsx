@@ -36,10 +36,9 @@ const EditClub = () => {
         </Flex>
         <Flex>
           <Box w={"25vw"}>
-            <Text fontSize={"4xl"} textAlign={"start"}>
+            <Text fontSize={"5xl"} textAlign={"start"} as='u'>
               Edit Club
             </Text>
-            <hr className="hr-edit-club" />
             <Box display={"flex"} flexDirection={"column"} pt={5}>
               <Box>
                 <Image

@@ -29,10 +29,9 @@ const AddNewClub = () => {
         </Flex>
         <Flex>
           <Box w={"25vw"}>
-            <Text fontSize={"4xl"} textAlign={"start"}>
+            <Text fontSize={"4xl"} textAlign={"start"} as='u'>
               Create Club
             </Text>
-            <hr className="hr-add-club" />
           </Box>
           <Box w={"40vw"}>
             <Center>

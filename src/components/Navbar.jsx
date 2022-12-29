@@ -95,7 +95,7 @@ const Navbar = () => {
             <Box pt={3}>
               <FiUsers
                 size={30}
-                onClick={() => navigate("/clubNonJoin")}
+                onClick={() => navigate("/clublist")}
               ></FiUsers>
             </Box>
             <Menu px={1}>

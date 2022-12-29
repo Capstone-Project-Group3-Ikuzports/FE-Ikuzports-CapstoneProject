@@ -5,7 +5,7 @@ import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import AddNewClub from "./pages/Club/AddNewClub";
 import ClubJoin from "./pages/Club/ClubJoin";
-import ClubNonJoin from "./pages/Club/ClubNonJoin";
+import ClubList from "./pages/Club/ClubList";
 import DetailClub from "./pages/Club/DetailClub";
 import EditClub from "./pages/Club/EditClub";
 import Myclub from "./pages/Club/Myclub";
@@ -32,7 +32,7 @@ const App = () => {
         <Route path="/editclub" element={<EditClub />} />
         <Route path="/detailclub" element={<DetailClub />} />
         <Route path="/addnewclub" element={<AddNewClub />} />
-        <Route path="/clubnonjoin" element={<ClubNonJoin />} />
+        <Route path="/clublist" element={<ClubList />} />
         <Route path="/clubjoin" element={<ClubJoin />} />
       </Routes>
     </BrowserRouter>
