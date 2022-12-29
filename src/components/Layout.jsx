@@ -11,6 +11,7 @@ const Layout = ({children}) => {
           backgroundPosition="center"
           backgroundRepeat="no-repeat"
           backgroundColor={'brand.100'} overflowX='hidden'
+          pos='absolute'
           h={'100vh'}
           >
                 <Navbar/>

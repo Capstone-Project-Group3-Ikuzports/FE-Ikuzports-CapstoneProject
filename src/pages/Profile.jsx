@@ -21,6 +21,7 @@ import Sample from ".././assets/sample.png";
 import { ButtonBack, ButtonCancel, ButtonSave } from "../components/Button";
 import Navbar from "../components/Navbar";
 import UploadFiles from "../components/UploadFiles";
+import Layout from "../components/Layout";
 
 const Profile = () => {
   const [file, setFiles] = useState(null);
@@ -56,8 +57,8 @@ const Profile = () => {
   }, []);
   console.log("prev", prev);
   return (
-    <Box minH={"100vh"} backgroundColor={"brand.100"}>
-      <Navbar />
+
+<Layout>
       <Box p="8" px={"10%"} w={"100vw"} overflowX="hidden" minH={"90vh"}>
         <Flex onClick={() => navigate("/")} _hover={{ cursor: "pointer" }}>
           <ButtonBack />
@@ -145,7 +146,7 @@ const Profile = () => {
           </ButtonGroup>
         </Flex>
       </Box>
-    </Box>
+      </Layout>
   );
 };
 
