@@ -134,7 +134,7 @@ const Profile = () => {
             fontWeight={"bold"}
             fontSize={"lg"}
             color={"brand.500"}
-            onClick={() => alert("abc")}
+            onClick={DellAcc}
           >
             Delete account?
           </Text>
