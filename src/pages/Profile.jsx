@@ -19,29 +19,29 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Sample from ".././assets/sample.png";
 import { ButtonBack, ButtonCancel, ButtonSave } from "../components/Button";
-import Navbar from "../components/Navbar";
 import UploadFiles from "../components/UploadFiles";
 import Layout from "../components/Layout";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Profile = () => {
   const [file, setFiles] = useState(null);
   const [prev, setPrev] = useState("");
   const [gender, setGender] = useState(" ");
-
+  const user = useSelector((state) => state.users.currentUser);
   const navigate = useNavigate();
-  // console.log("file", file);
 
   const DellAcc = useCallback(() => {
     Swal.fire({
       title: "Are you sure?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#DC143C",
-      confirmButtonText: "Not now",
-      cancelButtonColor: "#454545",
-      cancelButtonText: "Yes, Delete",
+      confirmButtonColor: "#454545",
+      confirmButtonText: "Yes Delete",
+      cancelButtonColor: "#DC143C",
+      cancelButtonText: "Not now",
     }).then((result) => {
-      if (!result.isConfirmed) {
+      if (result.isConfirmed) {
         Swal.fire({
           position: "center",
           icon: "success",
@@ -55,7 +55,13 @@ const Profile = () => {
       }
     });
   }, []);
-  console.log("prev", prev);
+
+  useEffect(() => {
+    if (!user.token) {
+      navigate("/");
+    }
+    return () => {};
+  }, [user.token]);
   return (
 
 <Layout>

@@ -15,7 +15,6 @@ import DetailStore from "./pages/Product/DetailStore";
 import MyProduct from "./pages/Product/MyProduct";
 import Store from "./pages/Product/Store";
 import Profile from "./pages/Profile";
-import store from "./redux/store";
 
 const App = () => {
   return (

@@ -18,6 +18,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
 
 const Login = () => {
   const [email, setEmail] = useState(" ");
@@ -38,7 +39,7 @@ const Login = () => {
       })
       .then((res) => {
         const { data } = res.data;
-        console.log(data); // dell after prod
+        // console.log(data); // dell after prod
         if (data) {
           Swal.fire({
             position: "center",
@@ -48,9 +49,8 @@ const Login = () => {
             timer: 1500,
           });
           setCookies("userToken", data.token, { path: "/login" });
-          setCookies("id", data.id);
           dispatch(updateUser(data));
-          // navigate("/");
+          navigate("/");
         }
       })
       .catch((err) => {
@@ -63,13 +63,7 @@ const Login = () => {
         });
       });
   };
-  useEffect(() => {
-    if (cookies.userToken) {
-      // navigate("/home");
-      console.log(cookies);
-    }
-    return () => {};
-  }, [cookies.userToken]);
+
   return (
     <Flex>
       <HeroLogin />
