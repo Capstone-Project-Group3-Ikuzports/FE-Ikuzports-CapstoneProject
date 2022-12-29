@@ -20,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const navigate = useNavigate();
   return (
-    <Box w={"100vw"} bg="brand.200" px={4}>
+<Box w={"100vw"} bg="brand.200" px={4} pos='absolute' zIndex={1} overflow='hidden'>
       <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
         <Box>
           <Image
