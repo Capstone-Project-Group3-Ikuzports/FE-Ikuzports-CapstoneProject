@@ -1,11 +1,11 @@
 import React from 'react'
 import Navbar from '../../components/Navbar'
 import {AiOutlineArrowLeft, AiOutlineSearch} from 'react-icons/ai'
-import { Box, Text, Flex, Divider, Button, SimpleGrid, Card, ButtonGroup, Select, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import {Stack,CardBody,Heading,CardFooter,Box, Text, Flex, Divider, Button, SimpleGrid, Card, ButtonGroup, Select, Input, InputGroup, InputLeftElement,Image } from "@chakra-ui/react";
 import CardProduct from '../../components/Store/CardProduct'
 import Layout from '../../components/Layout';
 
-const Store = () => {
+const ClubList = () => {
   return (
 <Layout>
       <Box p='8' px={'10%'} w={'100vw'} h={'100%'} overflowX='hidden'>
@@ -13,7 +13,7 @@ const Store = () => {
         <AiOutlineArrowLeft size={41}/> 
         <Text fontSize={'2xl'} as='b' ml='10px'>Back</Text>
         </Flex>
-        <Text fontSize={'6xl'}>Store</Text>
+        <Text fontSize={'6xl'}>Club List</Text>
         <Divider w="17%" orientation='horizontal' />
         <Flex>
         <Box  ml={'57%'}>
@@ -39,25 +39,37 @@ const Store = () => {
         </Box>
         </Flex>
         <SimpleGrid columns={{sm:2, md:4}} gap={8}>
-        <CardProduct/>
-        <CardProduct/>
-        <CardProduct/>
-        <CardProduct/>
-        <CardProduct/>
-        <CardProduct/>
-        <CardProduct/>
-        <CardProduct/>
-        <CardProduct/>
-        <CardProduct/>
-        <CardProduct/>
-        <CardProduct/>
-        <CardProduct/>
-        <CardProduct/>
+        <Card
+  direction={{ base: 'column', sm: 'row' }}
+  overflow='hidden'
+  variant='outline'
+><Image
+    objectFit='cover'
+    maxW={{ base: '100%', sm: '100px' }}
+    src='https://www.servethehome.com/wp-content/uploads/2016/12/AMD-Ryzen-Logo.png'
+    alt='Caffe Latte'
+  />
+  <Stack>
+    <CardBody>
+      <Heading size='md'>TEAM AMD</Heading>
+
+      <Text py='2'>
+    Member
+      </Text>
+      <Text py='2'>
+    BasketBall
+      </Text>
+      <Text py='2'>
+    Bogor
+      </Text>
+    </CardBody>
+  </Stack>
+</Card>
         </SimpleGrid>
       </Box>
       </Layout>
   )
 }
 
-export default Store
+export default ClubList
 

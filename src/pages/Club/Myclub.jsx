@@ -1,6 +1,5 @@
 import React from "react";
 import CardMyClub from "../../components/MyClub/CardMyClub";
-import Navbar from "../../components/Navbar";
 import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import {
@@ -12,18 +11,16 @@ import {
   SimpleGrid,
   Card,
 } from "@chakra-ui/react";
-
+import Layout from "../../components/Layout";
 const Myclub = () => {
   const navigate = useNavigate();
   return (
-    <div>
-      <Navbar />
+<Layout>
       <Box
         p="8"
         px={"10%"}
         w={"100vw"}
         h={"100vh"}
-        backgroundColor={"brand.100"}
         overflowX="hidden"
       >
         <Flex onClick={() => navigate("/")} _hover={{ cursor: "pointer" }}>
@@ -61,7 +58,7 @@ const Myclub = () => {
           <CardMyClub />
         </SimpleGrid>
       </Box>
-    </div>
+    </Layout>
   );
 };
 

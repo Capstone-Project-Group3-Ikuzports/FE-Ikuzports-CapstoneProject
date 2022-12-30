@@ -12,17 +12,16 @@ import {
 import HeroLogin from "../../components/HeroLogin";
 import { updateUser } from "../../redux/reducer/reducer";
 
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useCookies } from "react-cookie";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Login = () => {
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState(" ");
-  const [cookies, setCookies] = useCookies(["userToken"]);
+  // const [cookies, setCookies] = useCookies(["userToken"]); // useCookies
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -38,7 +37,7 @@ const Login = () => {
       })
       .then((res) => {
         const { data } = res.data;
-        console.log(data); // dell after prod
+        // console.log(data); // dell after prod
         if (data) {
           Swal.fire({
             position: "center",
@@ -47,10 +46,8 @@ const Login = () => {
             showConfirmButton: false,
             timer: 1500,
           });
-          setCookies("userToken", data.token, { path: "/login" });
-          setCookies("id", data.id);
           dispatch(updateUser(data));
-          // navigate("/");
+          navigate("/");
         }
       })
       .catch((err) => {
@@ -63,13 +60,7 @@ const Login = () => {
         });
       });
   };
-  useEffect(() => {
-    if (cookies.userToken) {
-      // navigate("/home");
-      console.log(cookies);
-    }
-    return () => {};
-  }, [cookies.userToken]);
+
   return (
     <Flex>
       <HeroLogin />

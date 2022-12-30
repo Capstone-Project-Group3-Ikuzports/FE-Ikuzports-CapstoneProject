@@ -9,6 +9,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Layout from "../components/Layout";
 
 
 const Home = () => {
@@ -30,6 +31,7 @@ const Home = () => {
     const [category_id, setCategoryId] = useState('')
     const [start_date, setStartDate] = useState('')
     const [end_date, setEndDate] = useState('')
+    const [image_event, setImageEvent] = useState('')
     const [maximum_people, setMaximumPeople] = useState('')
 
     const config = {
@@ -53,8 +55,8 @@ const Home = () => {
       })
     }
 
-    
 
+  
     const handleSubmit = (e) => {
       const config = {
         headers: {
@@ -92,10 +94,11 @@ const Home = () => {
     }, [])
 
 
+  console.log(name)
   return(
-    <div className="no-scroll-home">
-      <Navbar/>
-      <Box p='8' px={'10%'} w={'100vw'} h={'100vh'} backgroundColor={'brand.100'} bgImage='./src/assets/logo-background.png' bgRepeat={'no-repeat'} bgPosition='center' overflowX='hidden'>
+    <Layout>
+    <div>
+      <Box p='8' px={'10%'} w={'100vw'} h={'100%'}>
         <Flex>
           <div>
           <Text as="b" fontSize={'2xl'}>Home</Text>
@@ -144,6 +147,7 @@ const Home = () => {
                 />
                 <FormLabel my='3'>Event Category</FormLabel>
                 <Select placeholder='Select option' onChange={(e) => setCategoryId(e.target.value)}>
+
                   <option value= '1' >SepakBola</option>
                   <option value= '2'>Basket</option>
                   <option value= '3'>Futsal</option>
@@ -181,7 +185,9 @@ const Home = () => {
               </ModalBody>
 
               <ModalFooter>
+
                 <button type="submit" onClick={(e) => handleSubmit(e)}>Submit</button>
+
               </ModalFooter>
             </ModalContent>
           </Modal>
@@ -284,6 +290,7 @@ const Home = () => {
         </Flex>
       </Box>
     </div>
+    </Layout>
   )
     
 

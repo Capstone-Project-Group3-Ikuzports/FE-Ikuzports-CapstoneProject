@@ -10,17 +10,70 @@ import {
   MenuItem,
   MenuList,
   Stack,
+  Text,
 } from "@chakra-ui/react";
-import React from "react";
-import { Text } from "@chakra-ui/react";
-import { FiUsers } from "react-icons/fi";
+import axios from "axios";
+import React, { useCallback, useEffect, useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { FiUsers } from "react-icons/fi";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { clearUser } from "../redux/reducer/reducer.js";
 
 const Navbar = () => {
+  const [data, setData] = useState();
+  const user = useSelector((state) => state.users.currentUser);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  //=== CONFIG GET USER ===//
+  const URLgetUser = `https://rubahmerah.site/users/${user.id}`;
+  const config = {
+    headers: { Authorization: `Bearer ${user.token}` },
+  };
+
+  //=== API GET DATA USER ===//
+  const getUser = async () => {
+    await axios
+      .get(URLgetUser, config)
+      .then((res) => {
+        setData(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const logout = useCallback(() => {
+    Swal.fire({
+      title: "Are you sure want to logout?",
+      // text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "Yes",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          text: "Logout successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        dispatch(clearUser());
+        navigate("/login");
+      }
+    });
+  }, []);
+
   return (
-    <Box w={"100vw"} bg="brand.200" px={4}>
+<Box w={"100vw"} bg="brand.200" px={4} pos='sticky' top={0} zIndex={1}>
       <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
         <Box>
           <Image
@@ -42,12 +95,12 @@ const Navbar = () => {
             <Box pt={3}>
               <FiUsers
                 size={30}
-                onClick={() => navigate("/clubNonJoin")}
+                onClick={() => navigate("/clublist")}
               ></FiUsers>
             </Box>
             <Menu px={1}>
               <Text color={"primary.100"} pt={"4"} fontSize="md">
-                Username
+                {user ? user.name : ""}
               </Text>
               <MenuButton
                 as={Button}
@@ -55,10 +108,7 @@ const Navbar = () => {
                 variant={"link"}
                 cursor={"pointer"}
               >
-                <Avatar
-                  size={"md"}
-                  src={"https://avatars.dicebear.com/api/male/username.svg"}
-                />
+                <Avatar size={"md"} src={data?.user_image} />
               </MenuButton>
               <Box>
                 <MenuList alignItems={"center"} textColor={"primary.200"}>
@@ -72,7 +122,7 @@ const Navbar = () => {
                   <MenuItem onClick={() => navigate("/myproduct")}>
                     My Product
                   </MenuItem>
-                  <MenuItem onClick={() => navigate("/login")}>Logout</MenuItem>
+                  <MenuItem onClick={() => logout()}>Logout</MenuItem>
                 </MenuList>
               </Box>
             </Menu>

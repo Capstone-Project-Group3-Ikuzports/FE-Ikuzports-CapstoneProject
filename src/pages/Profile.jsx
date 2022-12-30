@@ -19,28 +19,29 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Sample from ".././assets/sample.png";
 import { ButtonBack, ButtonCancel, ButtonSave } from "../components/Button";
-import Navbar from "../components/Navbar";
 import UploadFiles from "../components/UploadFiles";
+import Layout from "../components/Layout";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Profile = () => {
   const [file, setFiles] = useState(null);
   const [prev, setPrev] = useState("");
   const [gender, setGender] = useState(" ");
-
+  const user = useSelector((state) => state.users.currentUser);
   const navigate = useNavigate();
-  // console.log("file", file);
 
   const DellAcc = useCallback(() => {
     Swal.fire({
       title: "Are you sure?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#DC143C",
-      confirmButtonText: "Not now",
-      cancelButtonColor: "#454545",
-      cancelButtonText: "Yes, Delete",
+      confirmButtonColor: "#454545",
+      confirmButtonText: "Yes Delete",
+      cancelButtonColor: "#DC143C",
+      cancelButtonText: "Not now",
     }).then((result) => {
-      if (!result.isConfirmed) {
+      if (result.isConfirmed) {
         Swal.fire({
           position: "center",
           icon: "success",
@@ -54,20 +55,26 @@ const Profile = () => {
       }
     });
   }, []);
-  console.log("prev", prev);
+
+  useEffect(() => {
+    if (!user.token) {
+      navigate("/");
+    }
+    return () => {};
+  }, [user.token]);
   return (
-    <Box minH={"100vh"} backgroundColor={"brand.100"}>
-      <Navbar />
+
+<Layout>
       <Box p="8" px={"10%"} w={"100vw"} overflowX="hidden" minH={"90vh"}>
         <Flex onClick={() => navigate("/")} _hover={{ cursor: "pointer" }}>
           <ButtonBack />
         </Flex>
         <Flex>
           <Box w={"25vw"}>
-            <Text fontSize={"4xl"} textAlign={"start"}>
+            <Text fontSize={"5xl"} textAlign={"start"} as='u'>
               Profile
             </Text>
-            <hr className="hr-profile" />
+      
             <Box display={"flex"} flexDirection={"column"} pt={5}>
               <Image
                 src={Sample}
@@ -145,7 +152,7 @@ const Profile = () => {
           </ButtonGroup>
         </Flex>
       </Box>
-    </Box>
+      </Layout>
   );
 };
 

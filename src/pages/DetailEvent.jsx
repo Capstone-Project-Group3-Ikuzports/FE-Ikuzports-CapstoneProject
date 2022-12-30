@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { useLocation } from 'react-router'
+import Layout from '../components/Layout'
 
 const DetailEvent = () => {
   const currentUser = useSelector((state) => state.users.currentUser)
@@ -48,9 +49,8 @@ const DetailEvent = () => {
   const navigate = useNavigate()
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
-    <div className='no-scroll-event'>
-      <Navbar/>
-      <Box p='8' px={'10%'} w={'100vw'} h={'100%'} backgroundColor={'brand.100'} overflowX='hidden'>
+    <Layout>
+      <Box p='8' px={'10%'} w={'100vw'} h={'100%'}>
       <Flex onClick={() => navigate("/")} _hover={{cursor: 'pointer'}}>
         <AiOutlineArrowLeft size={41}/> 
         <Text fontSize={'2xl'} as='b' ml='10px'>Back</Text>
@@ -101,8 +101,8 @@ const DetailEvent = () => {
         </ModalContent>
       </Modal>
       </Box>
-
-    </div>
+</Layout>
+   
   )
 }
 
