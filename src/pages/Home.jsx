@@ -24,9 +24,19 @@ const Home = () => {
     console.log(token)
 
     const [getEvents, setGetEvents] = useState([])
+    const [name, setName] = useState('')
+    const [address, setAddress] = useState('')
+    const [city, setCity] = useState('')
+    const [category_id, setCategoryId] = useState('')
+    const [start_date, setStartDate] = useState('')
+    const [end_date, setEndDate] = useState('')
+    const [maximum_people, setMaximumPeople] = useState('')
 
     const config = {
-      headers: {Authorization : `Bearer ${token}`},
+      headers: {
+        Authorization : `Bearer ${token}`,
+        "content-type" : "multipart/form-data",
+      },
     }
     console.log(config)
 
@@ -43,13 +53,49 @@ const Home = () => {
       })
     }
 
+    
+
+    const handleSubmit = (e) => {
+      const config = {
+        headers: {
+          Authorization : `Bearer ${token}`,
+          "content-type" : "multipart/form-data",
+        },
+      }
+
+      e.preventDefault();
+      let formerData = new FormData()
+      formerData.append("name", name) 
+      formerData.append("address", address) 
+      formerData.append("city", city) 
+      formerData.append("category_id", category_id) 
+      formerData.append("start_date", start_date) 
+      formerData.append("end_date", end_date) 
+      formerData.append("maximum_people", maximum_people) 
+      console.log([... formerData])
+
+        const addEvent = async () => {
+        await axios.post(`https://rubahmerah.site/events`, formerData, config )
+        .then(response => {
+          console.log(response.MSG)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
+
+      addEvent()
+    }
+
     useEffect(() => {
       getEvent()
     }, [])
+
+
   return(
     <div className="no-scroll-home">
       <Navbar/>
-      <Box p='8' px={'10%'} w={'100vw'} h={'100%'} backgroundColor={'brand.100'} bgImage='./src/assets/logo-background.png' bgRepeat={'no-repeat'} bgPosition='center' mx='auto' justifyContent={'center'} overflowX='hidden'>
+      <Box p='8' px={'10%'} w={'100vw'} h={'100vh'} backgroundColor={'brand.100'} bgImage='./src/assets/logo-background.png' bgRepeat={'no-repeat'} bgPosition='center' overflowX='hidden'>
         <Flex>
           <div>
           <Text as="b" fontSize={'2xl'}>Home</Text>
@@ -67,85 +113,79 @@ const Home = () => {
           </CardBody>
         </Card>
 
-        <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Add New Event</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-          <FormControl isInvalid={isError}>
-            <FormLabel>Event Title</FormLabel>
-            <Input type='text' onChange={handleInputChange} />
-            {!isError ? (
-              <FormHelperText>
-                What your Event Name ?
-              </FormHelperText>
-            ) : (
-              <FormErrorMessage>Event Title is required.</FormErrorMessage>
-            )}
-            <FormLabel>Event Location</FormLabel>
-            <Input type='text' onChange={handleInputChange} />
-            {!isError ? (
-              <FormHelperText>
-                Tell us where your event gonna take place
-              </FormHelperText>
-            ) : (
-              <FormErrorMessage>Event Location is required.</FormErrorMessage>
-            )}
-            <FormLabel>Event Location</FormLabel>
-            <Input type='text' onChange={handleInputChange} />
-            {!isError ? (
-              <FormHelperText>
-                Tell us where your event gonna take place
-              </FormHelperText>
-            ) : (
-              <FormErrorMessage>Event Location is required.</FormErrorMessage>
-            )}
-            <Input
-            placeholder="Select Date and Time"
-            size="md"
-            type="datetime-local"
-            />
-            <FormLabel>Amount</FormLabel>
-              <NumberInput max={50} min={10}>
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-            <FormLabel>Event Category</FormLabel>
-            <Select placeholder='Event Category' variant='filled' shadow='2xl' backgroundColor={'white'}>
-              <option value='option1'>Jakarta</option>
-              <option value='option2'>Bogor</option>
-              <option value='option3'>Depok</option>
-              <option value='option3'>Tanggerang</option>
-              <option value='option3'>Bekasi</option>
-              <option value='option3'>Bandung</option>
-              <option value='option3'>Yogyakarta</option>
-            </Select>
-            <FormLabel>City</FormLabel>
-            <Select placeholder='City' variant='filled' shadow='2xl' backgroundColor={'white'}>
-              <option value='option1'>Jakarta</option>
-              <option value='option2'>Bogor</option>
-              <option value='option3'>Depok</option>
-              <option value='option3'>Tanggerang</option>
-              <option value='option3'>Bekasi</option>
-              <option value='option3'>Bandung</option>
-              <option value='option3'>Yogyakarta</option>
-            </Select>
-          </FormControl>
-          </ModalBody>
+        <form onSubmit={(e) => handleSubmit(e)}>
+            <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Add New Event</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+              <FormControl isInvalid={isError}>
+                <FormLabel my='3'>Event Title</FormLabel>
+                <Input
+                  color='gray'
+                  placeholder='custom placeholder'
+                  _placeholder={{ opacity: 0.4, color: 'inherit' }}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <FormLabel my='3'>Event Address</FormLabel>
+                <Input
+                  color='gray'
+                  placeholder='custom placeholder'
+                  _placeholder={{ opacity: 0.4, color: 'inherit' }}
+                  onChange={(e) => setAddress(e.target.value)}
+                />
+                <FormLabel my='3'>Event City</FormLabel>
+                <Input
+                  color='gray'
+                  placeholder='custom placeholder'
+                  _placeholder={{ opacity: 0.4, color: 'inherit' }}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+                <FormLabel my='3'>Event Category</FormLabel>
+                <Select placeholder='Select option' onChange={(e) => setCategoryId(e.target.value)}>
+                  <option value= '1' >SepakBola</option>
+                  <option value= '2'>Basket</option>
+                  <option value= '3'>Futsal</option>
+                  <option value= '4'>Bola Voli</option>
+                  <option value= '5'>Badminton</option>
+                  <option value= '6'>Bersepeda</option>
+                  <option value= '7'>Tenis Lapangan</option>
+                  <option value= '8'>Tenis Meja</option>
+                  <option value= '9'>Renang</option>
+                  <option value= '10'>Beladiri</option>
+                </Select>
 
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant='ghost'>Secondary Action</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+                <FormLabel my='3'>Starting Date</FormLabel>
+                <Input
+                  color='gray'
+                  placeholder='custom placeholder'
+                  _placeholder={{ opacity: 0.4, color: 'inherit' }}
+                  onChange={(e) => setStartDate(e.target.value)}
+                />
+                <FormLabel my='3'>Ending Date Date</FormLabel>
+                <Input
+                  color='gray'
+                  placeholder='custom placeholder'
+                  _placeholder={{ opacity: 0.4, color: 'inherit' }}
+                  onChange={(e) => setEndDate(e.target.value)}
+                />
+                <FormLabel my='3'>Maximum People</FormLabel>
+                <Input
+                  color='gray'
+                  placeholder='custom placeholder'
+                  _placeholder={{ opacity: 0.4, color: 'inherit' }}
+                  onChange={(e) => setMaximumPeople(e.target.value)}
+                />
+              </FormControl>
+              </ModalBody>
 
+              <ModalFooter>
+                <button type="submit" onClick={(e) => handleSubmit(e)}>Submit</button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </form>
         <Box
         mt={'30px'}
         >
@@ -182,6 +222,7 @@ const Home = () => {
           getEvents && loading === false ?
             getEvents.map(data => (
               <CardEvent
+              key = {data.id}
               address = {data.address}
               category = {data.category_name}
               city = {data.city}
