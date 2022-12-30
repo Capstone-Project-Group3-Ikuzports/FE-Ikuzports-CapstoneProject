@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardBody, CardFooter, Stack, Heading, Button, Text, Image, Flex, Spacer, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from '@chakra-ui/react'
+import { Card, CardBody, CardFooter, Stack, Heading, Button, Text, Image, Flex, Box, Spacer, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from '@chakra-ui/react'
 import {AiFillFrown} from 'react-icons/ai'
 import {BsFillTrashFill} from 'react-icons/bs'
 import { useDisclosure } from '@chakra-ui/react'
@@ -13,7 +13,7 @@ const CardMyClub = () => {
         direction={{ base: 'column', sm: 'row' }}
         overflow='hidden'
         variant='outline'
-        w={843}
+        w={'100%'}
         h={267}
         boxShadow="xl"
         rounded='xl'
@@ -21,19 +21,20 @@ const CardMyClub = () => {
         <Image
             objectFit='cover'
             maxW={{ base: '100%', sm: '251px' }}
-            w={800}
+            w={"30%"}
             src='https://www.logo.wine/a/logo/Ryzen/Ryzen-RYZEN-White-Dark-Background-Logo.wine.svg'
             alt='Logo'
         />
 
-        <Stack h={200}>
+        <Stack h={200} w={'100%'}>
             <CardBody pb='0' h={200}>
-            <Flex gap='120'>
-                <Heading size='xl' w={180}>Team Intel</Heading>
-                <Spacer></Spacer>
-                <Button variant='solid' colorScheme='green' px="10">
-                Joined
-                </Button>
+            <Flex>
+                <Heading size='xl' w={'100%'}>Team Intel</Heading>
+                <Box pl='30%'>
+                    <Button variant='solid' colorScheme='green' px="10">
+                    Joined
+                    </Button>
+                </Box>
             </Flex>
             
 
