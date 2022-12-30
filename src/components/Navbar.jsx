@@ -35,17 +35,14 @@ const Navbar = () => {
 
   //=== API GET DATA USER ===//
   const getUser = async () => {
-    await axios
-      .get(URLgetUser, config)
-      .then((res) => {
-        setData(res.data.data);
-      })
-      .catch((err) => console.log(err));
+    await axios.get(URLgetUser, config).then((res) => {
+      setData(res.data.data);
+    });
   };
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [getUser]);
 
   const logout = useCallback(() => {
     Swal.fire({
@@ -73,7 +70,7 @@ const Navbar = () => {
   }, []);
 
   return (
-<Box w={"100vw"} bg="brand.200" px={4} pos='sticky' top={0} zIndex={1}>
+    <Box w={"100vw"} bg="brand.200" px={4} pos="sticky" top={0} zIndex={1}>
       <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
         <Box>
           <Image
@@ -100,7 +97,7 @@ const Navbar = () => {
             </Box>
             <Menu px={1}>
               <Text color={"primary.100"} pt={"4"} fontSize="md">
-                {user ? user.name : ""}
+                {user ? data?.name : ""}
               </Text>
               <MenuButton
                 as={Button}

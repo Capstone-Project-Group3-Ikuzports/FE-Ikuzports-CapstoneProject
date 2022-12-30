@@ -3,8 +3,11 @@ import {
   Button,
   Flex,
   FormControl,
+  FormHelperText,
   FormLabel,
   Input,
+  InputGroup,
+  InputRightElement,
   Radio,
   RadioGroup,
   Stack,
@@ -18,6 +21,11 @@ import UploadFiles from "../../components/UploadFiles";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import {
+  AiFillCheckCircle,
+  AiFillEye,
+  AiFillEyeInvisible,
+} from "react-icons/ai";
 
 const Register = () => {
   const [name, setName] = useState(" ");
@@ -29,6 +37,10 @@ const Register = () => {
   const [file, setFiles] = useState(null);
 
   const navigate = useNavigate();
+
+  //=== SET PASSWORD ===//
+  const [show, setShow] = React.useState(false);
+  const handleClick = () => setShow(!show);
 
   //=== SET PREVIOUS IMAGE ===//
   const [prev, setPrev] = useState("");
@@ -59,7 +71,15 @@ const Register = () => {
         });
         navigate("/login");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          text: `${err.response.data.message}`,
+          timer: 3000,
+          showConfirmButton: true,
+        });
+      });
   };
 
   return (
@@ -82,21 +102,39 @@ const Register = () => {
               type="text"
               border={"2px"}
               onChange={(e) => setName(e.target.value)}
+              placeholder={`Alterra Sport`}
+              _placeholder={{ fontSize: "sm" }}
             />
             <FormLabel color={"brand.300"}>Email</FormLabel>
             <Input
               id="email"
               type="email"
               border={"2px"}
+              placeholder={`ikuzport@gmail.com`}
+              _placeholder={{ fontSize: "sm" }}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <FormLabel color={"brand.300"}>Password</FormLabel>
-            <Input
-              id="password"
-              type="password"
-              border={"2px"}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <Flex>
+              <FormLabel color={"brand.300"}>Password</FormLabel>
+            </Flex>
+            <InputGroup>
+              <Input
+                type={show ? "text" : "password"}
+                border={"2px"}
+                placeholder={`example : Asdqwe123!`}
+                _placeholder={{ fontSize: "sm" }}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <InputRightElement mr={2}>
+                <Button h="1.75rem" size="xs" onClick={handleClick}>
+                  {show ? (
+                    <AiFillEye size={20} color={"#00008B"} />
+                  ) : (
+                    <AiFillEyeInvisible size={20} color={"#00008B"} />
+                  )}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
           </FormControl>
           <FormControl>
             <Flex>

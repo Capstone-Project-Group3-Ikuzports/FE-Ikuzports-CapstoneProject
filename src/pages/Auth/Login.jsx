@@ -8,6 +8,9 @@ import {
   Image,
   Input,
   Text,
+  InputGroup,
+  InputRightElement,
+  FormHelperText,
 } from "@chakra-ui/react";
 import HeroLogin from "../../components/HeroLogin";
 import { updateUser } from "../../redux/reducer/reducer";
@@ -17,13 +20,19 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+
+import { useSelector } from "react-redux";
 
 const Login = () => {
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState(" ");
-  // const [cookies, setCookies] = useCookies(["userToken"]); // useCookies
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  //=== SET PASSWORD ===//
+  const [show, setShow] = React.useState(false);
+  const handleClick = () => setShow(!show);
 
   //=== URL API ===//
   const UrlLogin = "https://rubahmerah.site/auth";
@@ -51,11 +60,11 @@ const Login = () => {
         }
       })
       .catch((err) => {
-        console.log(err); // dell after prod
+        console.log(); // dell after prod
         Swal.fire({
           position: "center",
           icon: "error",
-          title: "Email or Password incorrect",
+          text: `'${err.response.data.message}'`,
           showConfirmButton: true,
         });
       });
@@ -85,12 +94,24 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
               <FormLabel color={"brand.300"}>Password</FormLabel>
-              <Input
-                id="password"
-                type="password"
-                border={"2px"}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <InputGroup>
+                <Input
+                  type={show ? "text" : "password"}
+                  id="password"
+                  border={"2px"}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <InputRightElement mr={2}>
+                  <Button h="1.75rem" size="xs" onClick={handleClick}>
+                    {show ? (
+                      <AiFillEye size={20} color={"#00008B"} />
+                    ) : (
+                      <AiFillEyeInvisible size={20} color={"#00008B"} />
+                    )}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+
               <Button
                 type="submit"
                 bg="brand.300"
