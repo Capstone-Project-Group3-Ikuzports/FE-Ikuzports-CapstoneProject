@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, CardBody, Stack, Heading, Text, Image} from '@chakra-ui/react'
-import {AiFillFrown} from 'react-icons/ai'
+
 
 const CardClub = ({diKlik, kota, category, totalMember, member, name, gambar}) => {
   return (

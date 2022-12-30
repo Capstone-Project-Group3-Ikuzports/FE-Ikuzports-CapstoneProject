@@ -1,7 +1,7 @@
 import React from "react";
 import CardEvent from '../components/Home/CardEvent'
 import Navbar from '../components/Navbar'
-import { Box, Stack, Text, Flex, Image, Button, Select, FormControl, FormLabel, Spinner, Card,  CardBody, Input, Heading, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, } from '@chakra-ui/react'
+import { Box, Stack, Text, Flex, Image, Button, Select, FormControl, FormLabel, Spinner, Card,  CardBody, Input, Heading, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from '@chakra-ui/react'
 import { FiUser } from "react-icons/fi";
 import { useState } from "react";
 import { useEffect } from "react";
