@@ -35,7 +35,10 @@ const Home = () => {
     const [maximum_people, setMaximumPeople] = useState('')
 
     const config = {
-      headers: {Authorization : `Bearer ${token}`},
+      headers: {
+        Authorization : `Bearer ${token}`,
+        "content-type" : "multipart/form-data",
+      },
     }
     console.log(config)
 
@@ -52,34 +55,46 @@ const Home = () => {
       })
     }
 
-    const addEvent = async () => {
-      await axios.post(`https://rubahmerah.site/events`, {name, address, city, category_id, start_date, end_date, image_event, maximum_people}, config)
-      .then(response => {
-        console.log(response.MSG)
-      })
-      .catch(err => {
-        console.log(error)
-      })
-    }
 
+  
     const handleSubmit = (e) => {
-      addEvent()
+      const config = {
+        headers: {
+          Authorization : `Bearer ${token}`,
+          "content-type" : "multipart/form-data",
+        },
+      }
+
       e.preventDefault();
-      setName(''),
-      setAddress(''),
-      setCity(''),
-      setCategoryId(''),
-      setEndDate(''),
-      setStartDate(''),
-      setImageEvent(''),
-      setMaximumPeople('')
+      let formerData = new FormData()
+      formerData.append("name", name) 
+      formerData.append("address", address) 
+      formerData.append("city", city) 
+      formerData.append("category_id", category_id) 
+      formerData.append("start_date", start_date) 
+      formerData.append("end_date", end_date) 
+      formerData.append("maximum_people", maximum_people) 
+      console.log([... formerData])
+
+        const addEvent = async () => {
+        await axios.post(`https://rubahmerah.site/events`, formerData, config )
+        .then(response => {
+          console.log(response.MSG)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
+
+      addEvent()
     }
 
     useEffect(() => {
       getEvent()
     }, [])
 
-    console.log(name)
+
+  console.log(name)
   return(
     <Layout>
     <div>
@@ -131,7 +146,8 @@ const Home = () => {
                   onChange={(e) => setCity(e.target.value)}
                 />
                 <FormLabel my='3'>Event Category</FormLabel>
-                <Select placeholder='Select option'>
+                <Select placeholder='Select option' onChange={(e) => setCategoryId(e.target.value)}>
+
                   <option value= '1' >SepakBola</option>
                   <option value= '2'>Basket</option>
                   <option value= '3'>Futsal</option>
@@ -169,9 +185,9 @@ const Home = () => {
               </ModalBody>
 
               <ModalFooter>
-                <Button colorScheme='blue' mr={3} type='submit' onClick={() => addEvent()}>
-                  Add Event
-                </Button>
+
+                <button type="submit" onClick={(e) => handleSubmit(e)}>Submit</button>
+
               </ModalFooter>
             </ModalContent>
           </Modal>
