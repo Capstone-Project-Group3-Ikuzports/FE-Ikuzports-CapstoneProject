@@ -13,6 +13,7 @@ const CardEvent = ({address, category, city, selesai, gambar, total, name, mulai
         backgroundColor={'white'}
         mt={'50px'}
         shadow='xl'
+        _hover={{cursor: 'pointer'}}
         >
         <Image
           objectFit='cover'

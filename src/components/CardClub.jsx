@@ -15,6 +15,7 @@ const CardClub = ({diKlik, kota, category, totalMember, member, name, gambar}) =
         rounded='xl'
         bg='white'
         onClick={diKlik}
+        _hover={{cursor: 'pointer'}}
         >
         <Image
             objectFit='cover'
@@ -26,7 +27,7 @@ const CardClub = ({diKlik, kota, category, totalMember, member, name, gambar}) =
 
         <Stack h={200}>
             <CardBody pb='0' h={200}>
-             <Heading size='xl' w={180}>{name}</Heading>
+             <Heading textTransform={'uppercase'} size='xl' w={180}>{name}</Heading>
             <Text py='2' fontSize='xl'>
                 Member : {member} / {totalMember}
             </Text>

@@ -81,21 +81,24 @@ const Navbar = () => {
             alt={"logo"}
             h={"20"}
             onClick={() => navigate("/")}
+            _hover={{cursor: 'pointer'}}
           />
         </Box>
 
         <Flex alignItems={"center"}>
           <Stack direction={"row"} spacing={4} color={"primary.100"}>
-            <Box pt={3}>
+            <Box _hover={{cursor: 'pointer'}} pt={3}>
               <AiOutlineShoppingCart
                 size={35}
                 onClick={() => navigate("/store")}
+                _hover={{cursor: 'pointer'}}
               />
             </Box>
-            <Box pt={3}>
+            <Box _hover={{cursor: 'pointer'}} pt={3}>
               <FiUsers
                 size={30}
                 onClick={() => navigate("/clublist")}
+                _hover={{cursor: 'pointer'}}
               ></FiUsers>
             </Box>
             <Menu px={1}>
