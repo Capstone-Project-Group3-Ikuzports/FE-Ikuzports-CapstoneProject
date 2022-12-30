@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardBody, Stack, Heading, Text, Image, CardFooter, Button, Flex} from '@chakra-ui/react'
+import { Card, CardBody, Stack, Heading, Text, Image, CardFooter, Flex} from '@chakra-ui/react'
 
 const CardEvent = ({address, category, city, selesai, gambar, total, name, mulai, status, user, diKlik}) => {
 
@@ -13,6 +13,7 @@ const CardEvent = ({address, category, city, selesai, gambar, total, name, mulai
         backgroundColor={'white'}
         mt={'50px'}
         shadow='xl'
+        _hover={{cursor: 'pointer'}}
         >
         <Image
           objectFit='cover'

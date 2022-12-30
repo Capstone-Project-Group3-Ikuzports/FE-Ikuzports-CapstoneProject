@@ -1,11 +1,43 @@
 import React from 'react'
 import Navbar from '../../components/Navbar'
 import {AiOutlineArrowLeft, AiOutlineSearch} from 'react-icons/ai'
-import {Stack,CardBody,Heading,CardFooter,Box, Text, Flex, Divider, Button, SimpleGrid, Card, ButtonGroup, Select, Input, InputGroup, InputLeftElement,Image } from "@chakra-ui/react";
-import CardProduct from '../../components/Store/CardProduct'
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import {Spinner, Box, Text, Flex, Divider, SimpleGrid, Select, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import CardClub from '../../components/CardClub';
 import Layout from '../../components/Layout';
 
 const ClubList = () => {
+  const [getMyClub, setGetMyClub] = useState('')
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
+  const currentUser = useSelector((state) => state.users.currentUser)
+  const token = currentUser.token
+  const config = {
+    headers: {Authorization : `Bearer ${token}`},
+  }
+  console.log(token)
+
+  const getMyClubData = async () => {
+    await axios.get(`https://rubahmerah.site/clubs`, config)
+    .then((response) => {
+      setLoading(true)
+      setGetMyClub(response.data.data)
+      setLoading(false)
+      console.log(response.data.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
+  useEffect(() => {
+    getMyClubData()
+  }, [])
+  
   return (
 <Layout>
       <Box p='8' px={'10%'} w={'100vw'} h={'100%'} overflowX='hidden'>
@@ -39,32 +71,34 @@ const ClubList = () => {
         </Box>
         </Flex>
         <SimpleGrid columns={{sm:2, md:4}} gap={8}>
-        <Card
-  direction={{ base: 'column', sm: 'row' }}
-  overflow='hidden'
-  variant='outline'
-><Image
-    objectFit='cover'
-    maxW={{ base: '100%', sm: '100px' }}
-    src='https://www.servethehome.com/wp-content/uploads/2016/12/AMD-Ryzen-Logo.png'
-    alt='Caffe Latte'
-  />
-  <Stack>
-    <CardBody>
-      <Heading size='md'>TEAM AMD</Heading>
-
-      <Text py='2'>
-    Member
-      </Text>
-      <Text py='2'>
-    BasketBall
-      </Text>
-      <Text py='2'>
-    Bogor
-      </Text>
-    </CardBody>
-  </Stack>
-</Card>
+        {getMyClub && loading === false ?
+          getMyClub.map(data => (
+            <CardClub
+            key = {data.id}
+            name = {data.name}
+            member = {data.joined_member}
+            totalMember = {data.member_total}
+            category = {data.category_name}
+            kota= {data.city}
+            gambar = {data.logo}
+            diKlik = {() => {
+              navigate('/detailclub', {
+                state : {
+                  id : data.id
+                }
+              })
+            }}
+            />
+          ))
+          : <Spinner
+          thickness='4px'
+          speed='0.65s'
+          emptyColor='gray.200'
+          color='blue.500'
+          size='xl'
+        />
+        }
+        
         </SimpleGrid>
       </Box>
       </Layout>

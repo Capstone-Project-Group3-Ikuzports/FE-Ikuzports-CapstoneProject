@@ -1,7 +1,7 @@
 import React from "react";
 import CardEvent from '../components/Home/CardEvent'
 import Navbar from '../components/Navbar'
-import { Box, Stack, Text, Flex, Image, Button, Select, FormControl, FormLabel, FormErrorMessage, FormHelperText, Card,  CardBody, Input, Heading, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, } from '@chakra-ui/react'
+import { Box, Stack, Text, Flex, Image, Button, Select, FormControl, FormLabel, Spinner, Card,  CardBody, Input, Heading, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from '@chakra-ui/react'
 import { FiUser } from "react-icons/fi";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -232,13 +232,19 @@ const Home = () => {
               }}
               />
             ))
-            : <p>Hehe</p>
+            : <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='blue.500'
+            size='xl'
+          />
         }
         </Box>
           </div>
           <div className="full-width">
             <Box mt={'6%'} ml={'20%'} w={'100%'} position="sticky" top={"0"}>
-            <Button backgroundColor={"white"} shadow={'xl'} w={'70%'} mb={"8%"} px={"5%"} color="brand.700" rounded="full">Find your own club now </Button>
+            <Button backgroundColor={"white"} shadow={'xl'} w={'70%'} mb={"8%"} px={"5%"} onClick={() => navigate('/clublist')} color="brand.700" rounded="full">Find your own club now </Button>
               <Card
                 direction={{ base: 'column', sm: 'row' }}
                 overflow='hidden'

@@ -1,40 +1,41 @@
 import React from 'react'
 import { Card, CardBody, Stack, Heading, Text, Image} from '@chakra-ui/react'
-import {AiFillFrown} from 'react-icons/ai'
 
-const CardClub = () => {
+
+const CardClub = ({diKlik, kota, category, totalMember, member, name, gambar}) => {
   return (
     <div>
          <Card
         direction={{ base: 'column', sm: 'row' }}
         overflow='hidden'
         variant='outline'
-        w={576}
-        h={271}
-        mx={100}
-        my={100}
+        w={'160%'}
+        h={'110%'}
         boxShadow="xl"
         rounded='xl'
+        bg='white'
+        onClick={diKlik}
+        _hover={{cursor: 'pointer'}}
         >
         <Image
             objectFit='cover'
             maxW={{ base: '100%', sm: '251px' }}
             w={800}
-            src='https://www.logo.wine/a/logo/Ryzen/Ryzen-RYZEN-White-Dark-Background-Logo.wine.svg'
+            src={gambar}
             alt='Logo'
         />
 
         <Stack h={200}>
             <CardBody pb='0' h={200}>
-             <Heading size='xl' w={180}>Team Intel</Heading>
+             <Heading textTransform={'uppercase'} size='xl' w={180}>{name}</Heading>
             <Text py='2' fontSize='xl'>
-                Member : 11/30
+                Member : {member} / {totalMember}
             </Text>
             <Text py='2' fontSize='xl'>
-                 BasketBall
+                 {category}
             </Text>
             <Text py='2' fontSize='xl'>
-                Tanggerang Selatan
+                {kota}
             </Text>
             </CardBody>
         </Stack>
