@@ -4,7 +4,7 @@ import { MdUpload } from "react-icons/md";
 
 const UploadFiles = ({ onChange, prev, prevSize }) => {
   return (
-    <Box display={"flex"}>
+    <Box display={"flex"} bgColor={"brand.100"}>
       <form
         action=""
         className="uploadFile"

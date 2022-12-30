@@ -19,7 +19,7 @@ export const ButtonCancel = ({ onClick }) => {
 };
 
 // === SAVE === //
-export const ButtonSave = ({ onClick }) => {
+export const ButtonSave = ({ onClick, isLoading }) => {
   return (
     <Button
       w={20}
@@ -28,6 +28,8 @@ export const ButtonSave = ({ onClick }) => {
       color={"primary.100"}
       _hover={{ bgColor: "primary.300" }}
       onClick={onClick}
+      spinnerPlacement="start"
+      isLoading={isLoading}
     >
       Save
     </Button>
