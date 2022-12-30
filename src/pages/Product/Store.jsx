@@ -5,17 +5,25 @@ import { Box, Text, Flex, Divider, Button, SimpleGrid, Card, ButtonGroup, Select
 import CardProduct from '../../components/Store/CardProduct'
 import Layout from '../../components/Layout';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
+
 
 const Store = () => {
+  const currentUser = useSelector((state) => state.users.currentUser)
+  const token = currentUser.token
+
+  const config = {
+    headers: {Authorization : `Bearer ${token}`},
+  }
 const [product,setProduct] = useState([]);
+const navi = useNavigate();
 
 const getProduct = () =>{
   axios
-  .get('https://rubahmerah.site/products',
-  {headers:{authorization : `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NzI1MDM3OTQsIm5hbWUiOiJNaWNoYWVsIEpvcmRhbiIsInJvbGUiOiJVc2VyIiwidXNlcklkIjoyfQ.N86NGjluPa99D1OC2EzgtZVuDdaA-BAj54ywsIPIYo4`}})
+  .get('https://rubahmerah.site/products',config)
   .then(res=>{
     setProduct(res.data.data)
-    console.log("ini adahlah",res.data.data)
   })
 }
 
@@ -64,9 +72,15 @@ useEffect(()=>
         
         {product.map((item)=>(
               <CardProduct 
+              key={item.id}
               image=''
               nama={item.name}
-              harga={item.price}/>
+              harga={item.price}
+              bilaClick={()=>{navi('/detailstore', {
+                state : {
+                  id : item.id
+                }
+              })}}/>
         ))}
     
        
