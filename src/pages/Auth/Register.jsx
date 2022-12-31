@@ -3,7 +3,6 @@ import {
   Button,
   Flex,
   FormControl,
-  FormHelperText,
   FormLabel,
   Input,
   InputGroup,
@@ -14,18 +13,14 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import HeroLogin from "../../components/HeroLogin";
-import "../../styles/uploadFile.css";
-import UploadFiles from "../../components/UploadFiles";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import React, { useState } from "react";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import {
-  AiFillCheckCircle,
-  AiFillEye,
-  AiFillEyeInvisible,
-} from "react-icons/ai";
+import HeroLogin from "../../components/HeroLogin";
+import UploadFiles from "../../components/UploadFiles";
+import "../../styles/uploadFile.css";
 
 const Register = () => {
   const [name, setName] = useState(" ");

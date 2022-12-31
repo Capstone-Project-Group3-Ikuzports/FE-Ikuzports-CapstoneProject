@@ -9,21 +9,20 @@ import {
   Input,
   Radio,
   RadioGroup,
+  Skeleton,
   Spacer,
   Stack,
   Text,
   Textarea,
-  Spinner,
 } from "@chakra-ui/react";
-import React, { useCallback, useState } from "react";
+import axios from "axios";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { ButtonBack, ButtonCancel, ButtonSave } from "../components/Button";
-import UploadFiles from "../components/UploadFiles";
 import Layout from "../components/Layout";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import axios from "axios";
+import UploadFiles from "../components/UploadFiles";
 import { clearUser } from "../redux/reducer/reducer";
 
 const Profile = () => {
@@ -77,10 +76,8 @@ const Profile = () => {
     console.log([...form]);
 
     setIsLoading(true);
-    <Spinner size="xl" />;
     await axios.put(urlUser, form, configPutNPost).then((res) => {
       console.log(res);
-      getUser();
       setIsLoading(false);
       Swal.fire({
         position: "center",
@@ -90,6 +87,7 @@ const Profile = () => {
         timer: 2000,
       });
     });
+    getUser();
   };
 
   const delUser = async () => {
@@ -128,11 +126,24 @@ const Profile = () => {
     if (!user.token) navigate("/");
   }, [user.token]);
   return (
-    <Layout>
+    <Layout image={data.user_image} name={data.name}>
+      {isLoading ? (
+        <Box
+          // bgColor={"#FFFFFF"}
+          position={"fixed"}
+          w={"full"}
+          h={"full"}
+          zIndex={10}
+          top={0}
+          bottom={0}
+          bgColor="blackAlpha.200"
+          cursor={"no-drop"}
+        />
+      ) : (
+        ""
+      )}
       <Box p="8" px={"10%"} w={"100vw"} overflowX="hidden" minH={"90vh"}>
-        <Flex onClick={() => navigate("/")} _hover={{ cursor: "pointer" }}>
-          <ButtonBack />
-        </Flex>
+        <ButtonBack />
         <Flex>
           <Box w={"25vw"}>
             <Text fontSize={"5xl"} textAlign={"start"} as="u">
@@ -140,13 +151,18 @@ const Profile = () => {
             </Text>
 
             <Box display={"flex"} flexDirection={"column"} pt={5}>
-              <Image
-                src={data.user_image}
-                rounded={"full"}
-                w={"56"}
-                h={"56"}
-                objectFit={"cover"}
-              />
+              {isLoading ? (
+                <Skeleton rounded={"full"} w={"56"} h={"56"} />
+              ) : (
+                <Image
+                  src={data.user_image}
+                  rounded={"full"}
+                  w={"56"}
+                  h={"56"}
+                  objectFit={"cover"}
+                />
+              )}
+
               <Text as={"h2"} fontSize={"lg"} fontWeight={"bold"} pt={2}>
                 {data.name}
               </Text>
@@ -162,7 +178,7 @@ const Profile = () => {
                   border={"2px"}
                   defaultValue={data.name}
                   onChange={(e) => setName(e.currentTarget.value)}
-                  bgColor={"brand.100"}
+                  bgColor={"#FFFFFF"}
                 />
                 <FormLabel color={"brand.300"}>Email</FormLabel>
                 <Input
@@ -172,7 +188,7 @@ const Profile = () => {
                   mb={4}
                   defaultValue={data.email}
                   onChange={(e) => setEmail(e.currentTarget.value)}
-                  bgColor={"brand.100"}
+                  bgColor={"#FFFFFF"}
                 />
                 <UploadFiles
                   prev={prev}
@@ -199,7 +215,7 @@ const Profile = () => {
                     type="number"
                     border={"2px"}
                     w={"50%"}
-                    bgColor={"brand.100"}
+                    bgColor={"#FFFFFF"}
                     defaultValue={data.phone_number}
                     onChange={(e) => setPhone(e.currentTarget.value)}
                   />
@@ -227,7 +243,7 @@ const Profile = () => {
                   id="textarea"
                   type="textarea"
                   border={"2px"}
-                  bgColor={"brand.100"}
+                  bgColor={"#FFFFFF"}
                   defaultValue={data.address}
                   onChange={(e) => setAddress(e.currentTarget.value)}
                 />

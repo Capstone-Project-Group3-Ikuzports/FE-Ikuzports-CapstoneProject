@@ -21,28 +21,26 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { clearUser } from "../redux/reducer/reducer.js";
 
-const Navbar = () => {
+const Navbar = ({ name, image }) => {
   const [data, setData] = useState();
   const user = useSelector((state) => state.users.currentUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  //=== CONFIG GET USER ===//
-  const URLgetUser = `https://rubahmerah.site/users/${user.id}`;
-  const config = {
+  //=== API GET DATA USER ===//
+  const urlUser = `https://rubahmerah.site/users/${user.id}`; // URL GET, PUT, & DELETE
+  const configGetNDelete = {
     headers: { Authorization: `Bearer ${user.token}` },
   };
-
-  //=== API GET DATA USER ===//
   const getUser = async () => {
-    await axios.get(URLgetUser, config).then((res) => {
+    await axios.get(urlUser, configGetNDelete).then((res) => {
       setData(res.data.data);
     });
   };
 
   useEffect(() => {
     getUser();
-  }, [getUser]);
+  }, []);
 
   const logout = useCallback(() => {
     Swal.fire({
@@ -70,7 +68,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <Box w={"100vw"} bg="brand.200" px={4} pos="sticky" top={0} zIndex={1}>
+    <Box w={"100vw"} bg="brand.200" px={4} pos="sticky" top={0} zIndex={2}>
       <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
         <Box>
           <Image
@@ -78,29 +76,29 @@ const Navbar = () => {
             alt={"logo"}
             h={"20"}
             onClick={() => navigate("/")}
-            _hover={{cursor: 'pointer'}}
+            _hover={{ cursor: "pointer" }}
           />
         </Box>
 
         <Flex alignItems={"center"}>
           <Stack direction={"row"} spacing={4} color={"primary.100"}>
-            <Box _hover={{cursor: 'pointer'}} pt={3}>
+            <Box _hover={{ cursor: "pointer" }} pt={3}>
               <AiOutlineShoppingCart
                 size={35}
                 onClick={() => navigate("/store")}
-                _hover={{cursor: 'pointer'}}
+                _hover={{ cursor: "pointer" }}
               />
             </Box>
-            <Box _hover={{cursor: 'pointer'}} pt={3}>
+            <Box _hover={{ cursor: "pointer" }} pt={3}>
               <FiUsers
                 size={30}
                 onClick={() => navigate("/clublist")}
-                _hover={{cursor: 'pointer'}}
+                _hover={{ cursor: "pointer" }}
               ></FiUsers>
             </Box>
             <Menu px={1}>
               <Text color={"primary.100"} pt={"4"} fontSize="md">
-                {user ? data?.name : ""}
+                {user && name ? name : data?.name ? data?.name : ""}
               </Text>
               <MenuButton
                 as={Button}
@@ -108,7 +106,16 @@ const Navbar = () => {
                 variant={"link"}
                 cursor={"pointer"}
               >
-                <Avatar size={"md"} src={data?.user_image} />
+                <Avatar
+                  size={"md"}
+                  src={
+                    user && image
+                      ? image
+                      : data?.user_image
+                      ? data?.user_image
+                      : ""
+                  }
+                />
               </MenuButton>
               <Box>
                 <MenuList alignItems={"center"} textColor={"primary.200"}>

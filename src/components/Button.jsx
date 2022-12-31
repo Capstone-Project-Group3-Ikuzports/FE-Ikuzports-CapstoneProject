@@ -1,6 +1,7 @@
-import React from "react";
 import { Button, Text } from "@chakra-ui/react";
+import React from "react";
 import { BiArrowBack } from "react-icons/bi";
+import { useNavigate } from "react-router";
 
 // === CANCEL === //
 export const ButtonCancel = ({ onClick }) => {
@@ -37,13 +38,15 @@ export const ButtonSave = ({ onClick, isLoading }) => {
 };
 
 // === BACK === //
-export const ButtonBack = ({ onClick }) => {
+export const ButtonBack = () => {
+  const navigate = useNavigate();
+
   return (
     <Button
       size={"md"}
       variant={"ghost"}
       _hover={{ bg: "#2E5984", color: "#eaeaea" }}
-      onClick={onClick}
+      onClick={() => navigate(-1)}
     >
       <BiArrowBack size={"28"} />
       <Text fontSize={"lg"} ml="0.5em">
