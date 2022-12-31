@@ -31,9 +31,7 @@ const EditClub = () => {
   return (
     <Layout>
       <Box p="8" px={"10%"} w={"100vw"} overflowX="hidden" minH={"90vh"}>
-        <Flex onClick={() => navigate("/")} _hover={{ cursor: "pointer" }}>
-          <ButtonBack />
-        </Flex>
+        <ButtonBack />
         <Flex>
           <Box w={"25vw"}>
             <Text fontSize={"5xl"} textAlign={"start"} as="u">
