@@ -5,7 +5,7 @@ import {BsFillTrashFill} from 'react-icons/bs'
 import { useDisclosure } from '@chakra-ui/react'
 
 
-const CardMyClub = () => {
+const CardMyClub = ({category, city, name, total, logo, join, status}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <div>
@@ -22,14 +22,14 @@ const CardMyClub = () => {
             objectFit='cover'
             maxW={{ base: '100%', sm: '251px' }}
             w={"30%"}
-            src='https://www.logo.wine/a/logo/Ryzen/Ryzen-RYZEN-White-Dark-Background-Logo.wine.svg'
+            src={logo}
             alt='Logo'
         />
 
         <Stack h={200} w={'100%'}>
             <CardBody pb='0' h={200}>
             <Flex>
-                <Heading size='xl' w={'100%'}>Team Intel</Heading>
+                <Heading size='xl' w={'100%'}>{name}</Heading>
                 <Box pl='30%'>
                     <Button variant='solid' colorScheme='green' px="10">
                     Joined
@@ -39,16 +39,16 @@ const CardMyClub = () => {
             
 
             <Text py='2'>
-                Member : 11/30
+                Member : {join} / {total}
             </Text>
             <Text pb='2'>
-                Category BasketBall
+                Category {category}
             </Text>
             <Text pb='2'>
-                Location : Tanggerang Timur
+                Location : {city}
             </Text>
             <Text pb='2'>
-                STATUS : OWNER
+                STATUS : {status}
             </Text>
             </CardBody>
             <CardFooter pt='0' mt='-5' justify='end'>

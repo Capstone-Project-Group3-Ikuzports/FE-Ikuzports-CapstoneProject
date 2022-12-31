@@ -4,9 +4,12 @@ import Navbar from '../components/Navbar'
 import { Box, Stack, Text, Flex, Image, Button, Select, FormControl, FormLabel, Spinner, Card,  CardBody, Input, Heading, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from '@chakra-ui/react'
 import { FiUser } from "react-icons/fi";
 import { useState } from "react";
+import { ButtonCreate } from "../components/Button";
 import { useEffect } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
+import Swal from "sweetalert2";
+import UploadFiles from "../components/UploadFiles";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
@@ -31,7 +34,8 @@ const Home = () => {
     const [category_id, setCategoryId] = useState('')
     const [start_date, setStartDate] = useState('')
     const [end_date, setEndDate] = useState('')
-    const [image_event, setImageEvent] = useState('')
+    const [files, setFiles] = useState()
+    const [prev, setPrev] = useState()
     const [maximum_people, setMaximumPeople] = useState('')
 
     const config = {
@@ -55,39 +59,46 @@ const Home = () => {
       })
     }
 
-
-  
-    const handleSubmit = (e) => {
-      const config = {
-        headers: {
-          Authorization : `Bearer ${token}`,
-          "content-type" : "multipart/form-data",
-        },
-      }
-
-      e.preventDefault();
-      let formerData = new FormData()
-      formerData.append("name", name) 
-      formerData.append("address", address) 
-      formerData.append("city", city) 
-      formerData.append("category_id", category_id) 
-      formerData.append("start_date", start_date) 
-      formerData.append("end_date", end_date) 
-      formerData.append("maximum_people", maximum_people) 
-      console.log([... formerData])
-
         const addEvent = async () => {
+        const formerData = new FormData()
+        formerData.append("name", name) 
+        formerData.append("address", address) 
+        formerData.append("city", city) 
+        formerData.append("category_id", category_id) 
+        formerData.append("start_date", start_date) 
+        formerData.append("end_date", end_date) 
+        formerData.append("maximum_people", maximum_people) 
+        formerData.append("image_event", files)
+        console.log([... formerData])
+
+        const config = {
+          headers: {
+            Authorization : `Bearer ${token}`,
+            "content-type" : "multipart/form-data",
+          },
+        }
+
         await axios.post(`https://rubahmerah.site/events`, formerData, config )
         .then(response => {
-          console.log(response.MSG)
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: `Create account successfully `,
+            showConfirmButton: false,
+            timer: 500,
+          });
+          navigate("/");
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            text: `failed`,
+            showConfirmButton: true,
+            timer: 500,
+          });
         })
       }
-
-      addEvent()
-    }
 
     useEffect(() => {
       getEvent()
@@ -95,6 +106,7 @@ const Home = () => {
 
 
   console.log(name)
+  console.log(files)
   return(
     <Layout>
     <div>
@@ -112,11 +124,10 @@ const Home = () => {
               </Box>
               <Text px={'5'} onClick={onOpen} my='auto' fontSize={'2xl'} ml={'50px'} w={'80%'} p={3} _hover={{cursor: "pointer", backgroundColor: "gray.100",}} rounded='full' color='gray.500'>Start Posting Now</Text>
             </Flex>
-            <Button justify='end' onClick={onOpen} justifyContent='end' px='10' backgroundColor={'brand.300'} _hover={{bg: '#2E5984'}} color={'white'} ml={'82%'}>Post</Button>
+            <Button justify='end' onClick={onOpen} justifyContent='end' px='10' backgroundColor={'brand.300'} _hover={{bg: 'primary.300'}} color={'white'} ml={'82%'}>Post</Button>
           </CardBody>
         </Card>
 
-        <form onSubmit={(e) => handleSubmit(e)}>
             <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
@@ -145,6 +156,18 @@ const Home = () => {
                   _placeholder={{ opacity: 0.4, color: 'inherit' }}
                   onChange={(e) => setCity(e.target.value)}
                 />
+                <FormLabel my='3'>Event Banner</FormLabel>
+                <UploadFiles
+                  prev={prev}
+                  prevSize={"xl"}
+                  onChange={({ target: { files } }) => {
+                    files[0] && setFiles(files[0].name);
+                    if (files) {
+                      setPrev(URL.createObjectURL(files[0]));
+                      setFiles(files[0]);
+                    }
+                  }}
+                />
                 <FormLabel my='3'>Event Category</FormLabel>
                 <Select placeholder='Select option' onChange={(e) => setCategoryId(e.target.value)}>
 
@@ -163,6 +186,7 @@ const Home = () => {
                 <FormLabel my='3'>Starting Date</FormLabel>
                 <Input
                   color='gray'
+                  pattern="[0-9]{4}-[1-12]{2}-[0-9]{2}"
                   placeholder='custom placeholder'
                   _placeholder={{ opacity: 0.4, color: 'inherit' }}
                   onChange={(e) => setStartDate(e.target.value)}
@@ -170,6 +194,8 @@ const Home = () => {
                 <FormLabel my='3'>Ending Date Date</FormLabel>
                 <Input
                   color='gray'
+                  type={'number'}
+                  pattern="[0-9]{4}-[1-9]{2}-[0-9]{2}"
                   placeholder='custom placeholder'
                   _placeholder={{ opacity: 0.4, color: 'inherit' }}
                   onChange={(e) => setEndDate(e.target.value)}
@@ -183,15 +209,11 @@ const Home = () => {
                 />
               </FormControl>
               </ModalBody>
-
               <ModalFooter>
-
-                <button type="submit" onClick={(e) => handleSubmit(e)}>Submit</button>
-
+              <ButtonCreate onClick={addEvent} />
               </ModalFooter>
             </ModalContent>
           </Modal>
-        </form>
         <Box
         mt={'30px'}
         >

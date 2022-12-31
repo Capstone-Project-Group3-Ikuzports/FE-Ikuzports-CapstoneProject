@@ -80,6 +80,13 @@ const Myclub = () => {
                     getMyClub.map(data => (
                       <CardMyClub
                       key = {data.id}
+                      category = {data.category}
+                      city = {data.city}
+                      join = {data.joined_member}
+                      logo = {data.logo}
+                      total = {data.member_total}
+                      name = {data.name}
+                      status = {data.status}
                       />
                     ))
                     : <Spinner

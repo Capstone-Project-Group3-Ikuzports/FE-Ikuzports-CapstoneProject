@@ -9,7 +9,7 @@ const CardClub = ({diKlik, kota, category, totalMember, member, name, gambar}) =
         direction={{ base: 'column', sm: 'row' }}
         overflow='hidden'
         variant='outline'
-        w={'160%'}
+        w={'100%'}
         h={'110%'}
         boxShadow="xl"
         rounded='xl'
@@ -19,15 +19,15 @@ const CardClub = ({diKlik, kota, category, totalMember, member, name, gambar}) =
         >
         <Image
             objectFit='cover'
-            maxW={{ base: '100%', sm: '251px' }}
-            w={800}
+            maxW={{ base: '100%', sm: '40%' }}
+            w={'40%'}
             src={gambar}
             alt='Logo'
         />
 
         <Stack h={200}>
             <CardBody pb='0' h={200}>
-             <Heading textTransform={'uppercase'} size='xl' w={180}>{name}</Heading>
+             <Heading textTransform={'uppercase'} size='md' w={'100%'}>{name}</Heading>
             <Text py='2' fontSize='xl'>
                 Member : {member} / {totalMember}
             </Text>
