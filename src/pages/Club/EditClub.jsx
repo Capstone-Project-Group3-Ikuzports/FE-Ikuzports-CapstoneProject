@@ -29,14 +29,14 @@ const EditClub = () => {
   const [prev, setPrev] = useState();
   const [files, setFiles] = useState();
   return (
-<Layout>
+    <Layout>
       <Box p="8" px={"10%"} w={"100vw"} overflowX="hidden" minH={"90vh"}>
         <Flex onClick={() => navigate("/")} _hover={{ cursor: "pointer" }}>
           <ButtonBack />
         </Flex>
         <Flex>
           <Box w={"25vw"}>
-            <Text fontSize={"5xl"} textAlign={"start"} as='u'>
+            <Text fontSize={"5xl"} textAlign={"start"} as="u">
               Edit Club
             </Text>
             <Box display={"flex"} flexDirection={"column"} pt={5}>
@@ -58,7 +58,7 @@ const EditClub = () => {
             <Center>
               <FormControl px={5}>
                 <FormLabel color={"brand.300"}>Club Name</FormLabel>
-                <Input id="name" type="text" border={"2px"} />
+                <Input id="name" type="text" border={"2px"} bgColor="#ffffff" />
                 <FormLabel color={"brand.300"}>Logo Picture</FormLabel>
                 <UploadFiles
                   prev={prev}
@@ -80,24 +80,75 @@ const EditClub = () => {
                   </FormLabel>
                 </Flex>
                 <Flex gap={5}>
-                  <Input id="number" type="number" border={"2px"} w={"50%"} />
-                  <Select w={"50%"} color={"brand.300"}>
-                    <option value="option1">Futsal</option>
-                    <option value="option2">Football</option>
-                    <option value="option3">Badminton</option>
-                    <option value="option3">Swimming</option>
-                    <option value="option3">Archer</option>
+                  <Input
+                    min={10}
+                    max={100}
+                    id="number"
+                    type="number"
+                    border={"2px"}
+                    w={"50%"}
+                    bgColor={"#FFFFFF"}
+                    onChange={(e) => setMemberTotal(e.currentTarget.value)}
+                  />
+                  <Select
+                    w={"50%"}
+                    color={"brand.300"}
+                    bgColor={"#FFFFFF"}
+                    onChange={(e) => setCity(e.currentTarget.value)}
+                    defaultValue="jakarta"
+                  >
+                    <option value="Jakarta">Jakarta</option>
+                    <option value="Bogor">Bogor</option>
+                    <option value="Bandung">Bandung</option>
+                  </Select>
+                  <Select
+                    w={"50%"}
+                    color={"brand.300"}
+                    bgColor={"#FFFFFF"}
+                    onChange={(e) => setCategory(e.currentTarget.value)}
+                    defaultValue="1"
+                  >
+                    <option value="1">Football</option>
+                    <option value="2">Basket ball</option>
+                    <option value="3">Futsal</option>
+                    <option value="4">Volley ball</option>
+                    <option value="5">Badminton</option>
+                    <option value="6">Cycle </option>
+                    <option value="7">court tennis</option>
+                    <option value="8">table tennis</option>
+                    <option value="9">Swimming</option>
+                    <option value="10">Self-defense</option>
                   </Select>
                 </Flex>
 
                 <FormLabel color={"brand.300"}>Address</FormLabel>
-                <Textarea id="textarea" type="textarea" border={"2px"} />
+                <Textarea
+                  id="textarea"
+                  type="textarea"
+                  border={"2px"}
+                  bgColor="#ffffff"
+                />
                 <FormLabel color={"brand.300"}>Desc</FormLabel>
-                <Textarea id="textarea" type="textarea" border={"2px"} />
+                <Textarea
+                  id="textarea"
+                  type="textarea"
+                  border={"2px"}
+                  bgColor="#ffffff"
+                />
                 <FormLabel color={"brand.300"}>Rules</FormLabel>
-                <Textarea id="textarea" type="textarea" border={"2px"} />
+                <Textarea
+                  id="textarea"
+                  type="textarea"
+                  border={"2px"}
+                  bgColor="#ffffff"
+                />
                 <FormLabel color={"brand.300"}>Requirement</FormLabel>
-                <Textarea id="textarea" type="textarea" border={"2px"} />
+                <Textarea
+                  id="textarea"
+                  type="textarea"
+                  border={"2px"}
+                  bgColor="#ffffff"
+                />
               </FormControl>
             </Center>
           </Box>
@@ -114,7 +165,8 @@ const EditClub = () => {
           </ButtonGroup>
         </Flex>
       </Box>
-      </Layout>
-)};
+    </Layout>
+  );
+};
 
 export default EditClub;
