@@ -34,6 +34,7 @@ const Home = () => {
     const [category_id, setCategoryId] = useState('')
     const [start_date, setStartDate] = useState('')
     const [end_date, setEndDate] = useState('')
+    const [description, setDescription] = useState('')
     const [files, setFiles] = useState()
     const [prev, setPrev] = useState()
     const [maximum_people, setMaximumPeople] = useState('')
@@ -68,6 +69,7 @@ const Home = () => {
         formerData.append("start_date", start_date) 
         formerData.append("end_date", end_date) 
         formerData.append("maximum_people", maximum_people) 
+        formerData.append("description", description) 
         formerData.append("image_event", files)
         console.log([... formerData])
 
@@ -83,7 +85,7 @@ const Home = () => {
           Swal.fire({
             position: "center",
             icon: "success",
-            text: `Create account successfully `,
+            text: `Create Event successfully `,
             showConfirmButton: false,
             timer: 500,
           });
@@ -138,23 +140,30 @@ const Home = () => {
                 <FormLabel my='3'>Event Title</FormLabel>
                 <Input
                   color='gray'
-                  placeholder='custom placeholder'
+                  placeholder='Your event name'
                   _placeholder={{ opacity: 0.4, color: 'inherit' }}
                   onChange={(e) => setName(e.target.value)}
                 />
                 <FormLabel my='3'>Event Address</FormLabel>
                 <Input
                   color='gray'
-                  placeholder='custom placeholder'
+                  placeholder='Your event address'
                   _placeholder={{ opacity: 0.4, color: 'inherit' }}
                   onChange={(e) => setAddress(e.target.value)}
                 />
                 <FormLabel my='3'>Event City</FormLabel>
                 <Input
                   color='gray'
-                  placeholder='custom placeholder'
+                  placeholder='Where your event take place'
                   _placeholder={{ opacity: 0.4, color: 'inherit' }}
                   onChange={(e) => setCity(e.target.value)}
+                />
+                <FormLabel my='3'>Event Description</FormLabel>
+                <Input
+                  color='gray'
+                  placeholder='Give your event a description'
+                  _placeholder={{ opacity: 0.4, color: 'inherit' }}
+                  onChange={(e) => setDescription(e.target.value)}
                 />
                 <FormLabel my='3'>Event Banner</FormLabel>
                 <UploadFiles
@@ -169,7 +178,7 @@ const Home = () => {
                   }}
                 />
                 <FormLabel my='3'>Event Category</FormLabel>
-                <Select placeholder='Select option' onChange={(e) => setCategoryId(e.target.value)}>
+                <Select placeholder='Your event category' onChange={(e) => setCategoryId(e.target.value)}>
 
                   <option value= '1' >SepakBola</option>
                   <option value= '2'>Basket</option>
@@ -187,7 +196,7 @@ const Home = () => {
                 <Input
                   color='gray'
                   pattern="[0-9]{4}-[1-12]{2}-[0-9]{2}"
-                  placeholder='custom placeholder'
+                  placeholder='When your event start'
                   _placeholder={{ opacity: 0.4, color: 'inherit' }}
                   onChange={(e) => setStartDate(e.target.value)}
                 />
@@ -196,14 +205,14 @@ const Home = () => {
                   color='gray'
                   type={'number'}
                   pattern="[0-9]{4}-[1-9]{2}-[0-9]{2}"
-                  placeholder='custom placeholder'
+                  placeholder='When your event End'
                   _placeholder={{ opacity: 0.4, color: 'inherit' }}
                   onChange={(e) => setEndDate(e.target.value)}
                 />
                 <FormLabel my='3'>Maximum People</FormLabel>
                 <Input
                   color='gray'
-                  placeholder='custom placeholder'
+                  placeholder='Maximum People your event can hold'
                   _placeholder={{ opacity: 0.4, color: 'inherit' }}
                   onChange={(e) => setMaximumPeople(e.target.value)}
                 />
@@ -282,7 +291,7 @@ const Home = () => {
           </div>
           <div className="full-width">
             <Box mt={'6%'} ml={'20%'} w={'100%'} position="sticky" top={"0"}>
-            <Button backgroundColor={"white"} shadow={'xl'} w={'70%'} mb={"8%"} px={"5%"} onClick={() => navigate('/clublist')} color="brand.700" rounded="full">Find your own club now </Button>
+            <Button backgroundColor={"brand.300"} shadow={'xl'} w={'70%'} mb={"8%"} px={"5%"} py={'2%'} _hover={{bg: "primary.300"}} onClick={() => navigate('/clublist')} color="white" rounded="xl">Find your own club now </Button>
               <Card
                 direction={{ base: 'column', sm: 'row' }}
                 overflow='hidden'

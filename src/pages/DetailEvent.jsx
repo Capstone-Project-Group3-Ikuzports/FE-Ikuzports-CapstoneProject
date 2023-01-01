@@ -13,6 +13,7 @@ import {
   ModalCloseButton,
   getSlideTransition,
 } from "@chakra-ui/react";
+import Swal from "sweetalert2";
 import { Image } from "@chakra-ui/image";
 import axios from "axios";
 import { AiOutlineArrowLeft } from "react-icons/ai";
@@ -35,14 +36,12 @@ const DetailEvent = () => {
 
   const location = useLocation();
   const detail = location?.state?.id;
-  console.log(detail);
 
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-  console.log(config);
-  const [getDetails, setGetDetails] = useState([]);
 
+  const [getDetails, setGetDetails] = useState([]);
   const getDetailEvent = async () => {
     await axios
       .get(`https://rubahmerah.site/events/${detail}`, config)
@@ -58,6 +57,35 @@ const DetailEvent = () => {
   useEffect(() => {
     getDetailEvent();
   }, []);
+
+  const [event_id, setEventId] = useState('')
+  const onSubmitHandler = async() => {
+    const form = new FormData()
+    form.append("event_id", detail)
+    console.log([... form])
+
+    await axios.post(`https://rubahmerah.site/participants`, form, config)
+    .then((response) => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        text: `Join Event successfully `,
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      navigate("/detailevent");
+    })
+    .catch((err) => {
+      console.log(err)
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        text: `failed`,
+        showConfirmButton: true,
+        timer: 1000,
+      });
+    })
+  }
 
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -81,26 +109,7 @@ const DetailEvent = () => {
           </Text>
         </Flex>
         <Text mt={"30px"} fontSize={"xl"} w={"1300px"}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum. Sed ut
-          perspiciatis unde omnis iste natus error sit voluptatem accusantium
-          doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
-          inventore veritatis et quasi architecto beatae vitae dicta sunt
-          explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-          odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-          voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum
-          quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam
-          eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-          voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem
-          ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
-          consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate
-          velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum
-          fugiat quo voluptas nulla pariatur?
+          {getDetails.description}
         </Text>
         <Flex mt={"30px"}>
           <SlCalender size={50} />
@@ -123,7 +132,8 @@ const DetailEvent = () => {
         <Stack w={"200px"} ml="auto">
           <Button
             backgroundColor="brand.300"
-            onClick={onOpen}
+            onClick={onSubmitHandler}
+            onChange={(e) => setEventId(e.target.value)}
             color={"white"}
             px={20}
             py={5}
