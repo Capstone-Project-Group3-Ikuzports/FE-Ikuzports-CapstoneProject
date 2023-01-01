@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
 
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
@@ -23,16 +24,16 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register/" element={<Register />} />
         <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/detailevent" element={<DetailEvent />} />
-        <Route path="/store" element={<Store />} />
         <Route path="/detailstore" element={<DetailStore />} />
+        <Route path="/store" element={<Store />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/clublist" element={<ClubList />} />
         <Route path="/myproduct" element={<MyProduct />} />
         <Route path="/myclub" element={<Myclub />} />
         <Route path="/editclub" element={<EditClub />} />
         <Route path="/detailclub" element={<DetailClub />} />
         <Route path="/addnewclub" element={<AddNewClub />} />
-        <Route path="/clublist" element={<ClubList />} />
         <Route path="/clubjoin" element={<ClubJoin />} />
       </Routes>
     </BrowserRouter>
