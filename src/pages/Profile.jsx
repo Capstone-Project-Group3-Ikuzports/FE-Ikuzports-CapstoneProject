@@ -223,7 +223,8 @@ const Profile = () => {
                     pl={3}
                     colorScheme={"purple"}
                     color={"brand.300"}
-                    defaultValue={`${data.gender}` ? "Male" : "Female"}
+                    defaultValue={data.gender}
+                    key={data.gender}
                   >
                     <Stack direction="row">
                       <Radio value="Male" onChange={() => setGender("Male")}>

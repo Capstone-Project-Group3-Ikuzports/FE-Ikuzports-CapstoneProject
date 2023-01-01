@@ -40,7 +40,6 @@ const Navbar = ({ name, image }) => {
       setData(res.data.data);
     });
   };
-  console.log(disable);
 
   useEffect(() => {
     getUser();
