@@ -26,8 +26,16 @@ import Sample from "../../assets/logo-text-blue.png";
 import Layout from "../../components/Layout";
 
 const EditClub = () => {
-  const [prev, setPrev] = useState();
+  const [name, setName] = useState("");
   const [files, setFiles] = useState();
+  const [memberTotal, setMemberTotal] = useState("");
+  const [city, setCity] = useState("");
+  const [category, setCategory] = useState("");
+  const [rule, setRule] = useState("");
+  const [desc, setDesc] = useState("");
+  const [address, setAddress] = useState("");
+  const [require, setRequire] = useState("");
+  const [prev, setPrev] = useState();
   return (
     <Layout>
       <Box p="8" px={"10%"} w={"100vw"} overflowX="hidden" minH={"90vh"}>
@@ -97,7 +105,14 @@ const EditClub = () => {
                   >
                     <option value="Jakarta">Jakarta</option>
                     <option value="Bogor">Bogor</option>
+                    <option value="Depok">Depok</option>
+                    <option value="Bekasi">Bekasi</option>
+                    <option value="Tangerang">Tangerang</option>
                     <option value="Bandung">Bandung</option>
+                    <option value="Malang">Malang</option>
+                    <option value="Surabaya">Surabaya</option>
+                    <option value="Jogjakarya">Jogjakarya</option>
+                    <option value="Semarang">Semarang</option>
                   </Select>
                   <Select
                     w={"50%"}

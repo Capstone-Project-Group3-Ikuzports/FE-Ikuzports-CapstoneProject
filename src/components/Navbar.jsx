@@ -27,6 +27,9 @@ const Navbar = ({ name, image }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // === DISABLE AVA ===//
+  const [disable, setDisable] = useState("");
+
   //=== API GET DATA USER ===//
   const urlUser = `https://rubahmerah.site/users/${user.id}`; // URL GET, PUT, & DELETE
   const configGetNDelete = {
@@ -37,10 +40,12 @@ const Navbar = ({ name, image }) => {
       setData(res.data.data);
     });
   };
+  console.log(disable);
 
   useEffect(() => {
     getUser();
-  }, []);
+    if (!user.token) setDisable(true);
+  }, [user]);
 
   const logout = useCallback(() => {
     Swal.fire({
@@ -94,7 +99,7 @@ const Navbar = ({ name, image }) => {
                 size={30}
                 onClick={() => navigate("/clublist")}
                 _hover={{ cursor: "pointer" }}
-              ></FiUsers>
+              />
             </Box>
             <Menu px={1}>
               <Text color={"primary.100"} pt={"4"} fontSize="md">
@@ -104,7 +109,7 @@ const Navbar = ({ name, image }) => {
                 as={Button}
                 rounded={"full"}
                 variant={"link"}
-                cursor={"pointer"}
+                disabled={disable}
               >
                 <Avatar
                   size={"md"}
