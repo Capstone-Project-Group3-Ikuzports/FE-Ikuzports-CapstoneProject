@@ -2,24 +2,36 @@ import React from 'react'
 import { Card, Flex, CardBody, Button, Text, Image, Stack, Divider, Heading, Spacer, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from '@chakra-ui/react'
 import {BsFillTrashFill} from 'react-icons/bs'
 import { useDisclosure } from '@chakra-ui/react';
+import axios from 'axios';
 
 
-const CardMyProduct = () => {
+
+const CardMyProduct = ({name,desc,price,image,id}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
-  return (
+    
+const del=()=>{
+    axios
+    .delete(`https://rubahmerah.site/products/${id}`)
+    .then(res=>
+        console.log(res)
+    )
+    .catch(err=>console.log(err)) 
+}
+
+    return (
     <div>
         <div> 
         <Card maxW='sm' bg='white' _hover={{cursor: 'pointer'}}>
         <CardBody>
             <Image
-            src='https://images.hothardware.com/contentimages/article/3079/content/small_samsung-980-angle.jpg'
+            src={image}
             alt='Green double couch with wooden legs'
             borderRadius='lg'
             mx='auto'
             />
             <Stack mt='3' spacing='3'>
             <Flex>
-                <Heading size='md'>SSD SAMSUNG 980 EVO 1TB</Heading>
+                <Heading size='md'>{name}</Heading>
                 <Spacer></Spacer>
                 <BsFillTrashFill onClick={onOpen} size={25}color={'red'}/>
             </Flex>
@@ -33,20 +45,18 @@ const CardMyProduct = () => {
                 </ModalBody>
 
                 <ModalFooter>
-                    <Button bg='white' variant={'outline'} px={10}  mr={3} onClick={onClose}>
+                    <Button bg='white' variant={'outline'} px={10}  mr={3} onClick={del}>
                     Yes
                     </Button>
-                    <Button bg='white' variant={'outline'} px={10} >No</Button>
+                    <Button bg='white' variant={'outline'} px={10}  onClick={onClose}>No</Button>
                 </ModalFooter>
                 </ModalContent>
             </Modal>
             <Text>
-                This sofa is perfect for modern tropical spaces, baroque inspired
-                spaces, earthy toned spaces and for people who love a chic design with a
-                sprinkle of vintage design.
+                {desc}
             </Text>
             <Text color='blue.600' as='b' fontSize='2xl'>
-                Rp 420.000
+                {price}
             </Text>
             </Stack>
         </CardBody>
