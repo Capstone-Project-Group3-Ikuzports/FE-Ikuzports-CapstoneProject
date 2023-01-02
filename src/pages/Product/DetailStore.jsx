@@ -1,33 +1,48 @@
 import {
   Box,
-  ButtonGroup,
   Center,
   Flex,
-  FormControl,
-  FormLabel,
   Image,
-  Input,
-  Radio,
-  RadioGroup,
-  Spacer,
-  Stack,
-  Text,
-  Textarea,
+  Text
 } from "@chakra-ui/react";
-import React, { useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-import {
-  ButtonBack,
-  ButtonBuy,
-  ButtonCancel,
-  ButtonSave,
-} from "../../components/Button";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import Sample1 from "../../assets/sampleJersey1.jpeg";
 import Sample2 from "../../assets/sampleJersey2.jpg";
 import Sample3 from "../../assets/sampleJersey3.jpeg";
+import {
+  ButtonBack,
+  ButtonBuy
+} from "../../components/Button";
 import Layout from "../../components/Layout";
-const DetailStore = () => {
+
+
+const DetailStore = ({id}) => {
+  const currentUser = useSelector((state) => state.users.currentUser)
+  const token = currentUser.token
+
+  const config = {
+    headers: {Authorization : `Bearer ${token}`},
+  }
+  const location = useLocation()
+  const idStore = location?.state?.id
+
+  const [productId,setProductId] = useState([])
+  
+  const getProductId =()=>{
+    axios
+    .get(`https://rubahmerah.site/products/${idStore}`,config)
+    .then(res=>{
+      setProductId(res.data.data)
+      
+    })
+  }
+
+  useEffect(
+    ()=>getProductId(),[]
+  )
   return (
     <Layout>
       <Box p="8" px={"10%"} w={"100vw"} overflowX="hidden" minH={"90vh"}>
@@ -48,19 +63,19 @@ const DetailStore = () => {
             <Text fontWeight={"semibold"}>Descrption</Text>
             <Text
               lineHeight={"4"}
-            >{`${"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea accusamus excepturi voluptatibus voluptas, perferendis incidunt id hic necessitatibus. Quia delectus magni officiis doloribus id facere placeat culpa reiciendis doloremque "}`}</Text>
+            >{`${productId.description}`}</Text>
           </Box>
           <Box w={"50vw"}>
             <Text
               as={"h6"}
               fontSize={"6xl"}
               fontWeight={"semibold"}
-            >{`${"Jersey argentina"}`}</Text>
+            >{`${productId.name}`}</Text>
             <Text as={"h3"} fontSize={"4xl"} fontWeight={"hairline"}>
-              {`Rp ${"350000"}`}
+              {`Rp ${productId.price}`}
             </Text>
             <Text as={"h2"} fontSize={"2xl"} fontWeight={"normal"} pb={"28"}>
-              {`Seller : ${"Ghiyas Skuillow"}`}
+              {`Seller : ${productId.user_name}`}
             </Text>
             <ButtonBuy />
           </Box>
