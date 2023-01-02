@@ -20,9 +20,12 @@ import { ButtonBack, ButtonClear, ButtonSave } from "../../components/Button";
 import Layout from "../../components/Layout";
 import UploadFiles from "../../components/UploadFiles";
 import Swal from "sweetalert2";
+import { useLocation } from "react-router-dom";
 
 const EditClub = () => {
   const user = useSelector((state) => state.users.currentUser); // STATE GLOBAL
+  const location = useLocation();
+  const id = location.state.club_id;
 
   const [data, setData] = useState("");
   const [name, setName] = useState("");
@@ -38,7 +41,7 @@ const EditClub = () => {
 
   const navigate = useNavigate();
 
-  const urlIdClub = `https://rubahmerah.site/clubs/6`; // URL GET, PUT, & DELETE
+  const urlIdClub = `https://rubahmerah.site/clubs/${id}`; // URL GET, PUT, & DELETE
   const configPutNPost = {
     headers: {
       Authorization: `Bearer ${user.token}`,
