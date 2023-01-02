@@ -40,13 +40,14 @@ const AddNewClub = () => {
     const form = new FormData();
     form.append("name", name);
     form.append("address", address);
-    form.append("city", city);
-    form.append("category_id", category);
+    form.append("city", !city ? "Jakarta" : city);
+    form.append("category_id", !category ? 1 : category);
     form.append("description", desc);
     form.append("rule", rule);
-    form.append("member_total", memberTotal);
+    form.append("member_total", !memberTotal ? 10 : memberTotal);
     form.append("requirement", require);
     form.append("logo", files);
+    console.log([...form]);
 
     console.log([...form]);
     const urlAddClub = `https://rubahmerah.site/clubs`; // URL GET, PUT, & DELETE
@@ -59,6 +60,7 @@ const AddNewClub = () => {
     await axios
       .post(urlAddClub, form, configPutNPost)
       .then((res) => {
+        console.log(res);
         Swal.fire({
           position: "center",
           icon: "success",
@@ -69,10 +71,11 @@ const AddNewClub = () => {
         navigate("/myclub");
       })
       .catch((err) => {
+        console.log(err);
         Swal.fire({
           position: "center",
           icon: "error",
-          text: `failed`,
+          text: `${err.response.data.message}`,
           showConfirmButton: true,
           timer: 2000,
         });
@@ -136,14 +139,13 @@ const AddNewClub = () => {
                     border={"2px"}
                     w={"50%"}
                     bgColor={"#FFFFFF"}
-                    onChange={(e) => setMemberTotal(e.target.value)}
+                    onChange={(e) => setMemberTotal(e.currentTarget.value)}
                   />
                   <Select
                     w={"50%"}
                     color={"brand.300"}
                     bgColor={"#FFFFFF"}
-                    onChange={(e) => setCity(e.target.value)}
-                    defaultValue="jakarta"
+                    onChange={(e) => setCity(e.currentTarget.value)}
                   >
                     <option value="Jakarta">Jakarta</option>
                     <option value="Bogor">Bogor</option>
@@ -160,7 +162,7 @@ const AddNewClub = () => {
                     w={"50%"}
                     color={"brand.300"}
                     bgColor={"#FFFFFF"}
-                    onChange={(e) => setCategory(e.target.value)}
+                    onChange={(e) => setCategory(e.currentTarget.value)}
                     defaultValue="1"
                   >
                     <option value="1">Football</option>

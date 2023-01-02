@@ -11,13 +11,15 @@ import {
   InputGroup,
   InputRightElement,
   Text,
+  SimpleGrid,
 } from "@chakra-ui/react";
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { AiTwotoneContainer } from "react-icons/ai";
 import { BsGearFill } from "react-icons/bs";
 import { RiSendPlaneFill } from "react-icons/ri";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Sample from "../../assets/sample.png";
 import {
   ButtonAddActivity,
   ButtonAddPhoto,
@@ -28,8 +30,94 @@ import CardGallery from "../../components/ClubJoin/CardGallery";
 import ChatDiscuss from "../../components/ClubJoin/ChatDiscuss";
 import Layout from "../../components/Layout";
 
+// 10 ganti dengan params
+const urlIdClub = `https://rubahmerah.site/clubs/10`;
+const urlActivityIdClub = `https://rubahmerah.site/clubs/10/activities`;
+const urlChatIdClub = `https://rubahmerah.site/clubs/10/chats`;
+const urladdChat = `https://rubahmerah.site/chats`;
+const urlGetGaleries = `https://rubahmerah.site/galeries`;
+
 const ClubJoin = () => {
+  const user = useSelector((state) => state.users.currentUser);
+  const [data, setData] = useState([]);
+  const [activities, setActivities] = useState([]);
+  const [chat, setChat] = useState([]);
+  const [message, setMessage] = useState("");
+  const [galeries, setGaleries] = useState([]);
+  // console.log(galeries);
+  console.log(data);
+
   const navigate = useNavigate();
+
+  const configPutNPost = {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+      "content-type": "multipart/form-data",
+    },
+  };
+  const configGetNDelete = {
+    headers: { Authorization: `Bearer ${user.token}` },
+  };
+
+  //=== GET CLUB BY ID ===//
+  const getClubID = async () => {
+    await axios
+      .get(urlIdClub, configGetNDelete)
+      .then((res) => {
+        setData(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  //=== GET ACTIVITY CLUB ===//
+  const getClubActivity = async () => {
+    await axios
+      .get(urlActivityIdClub, configGetNDelete)
+      .then((res) => {
+        setActivities(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  //=== GET CHAT CLUB ===//
+  const getClubChat = async () => {
+    await axios
+      .get(urlChatIdClub, configGetNDelete)
+      .then((res) => {
+        setChat(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  const getGaleries = async () => {
+    await axios
+      .get(urlGetGaleries, configGetNDelete)
+      .then((res) => {
+        setGaleries(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  //=== POST CHAT CLUB ===//
+  const postChat = async () => {
+    const chat = new FormData();
+    chat.append("user_id", user.id);
+    chat.append("club_id", data.category_id);
+    chat.append("message", message);
+    console.log([...chat]);
+    setMessage("");
+
+    await axios
+      .post(urladdChat, chat, configPutNPost)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+    getClubChat();
+  };
+
+  useEffect(() => {
+    getGaleries();
+    getClubID();
+    getClubActivity();
+    getClubChat();
+  }, []);
+
   return (
     <Layout>
       <Box p="8" px={"10%"} w={"100vw"} overflowX="hidden">
@@ -41,7 +129,7 @@ const ClubJoin = () => {
             <Box>
               <Flex align={"center"}>
                 <Image
-                  src={Sample}
+                  src={data.logo}
                   rounded={"full"}
                   w={"44"}
                   h={"44"}
@@ -53,7 +141,7 @@ const ClubJoin = () => {
                     fontSize={"3rem"}
                     fontWeight={"bold"}
                     color={"brand.300"}
-                  >{`${"team intel".toUpperCase()}`}</Text>
+                  >{`${data?.name?.toUpperCase()}`}</Text>
                   <Text
                     as={"a"}
                     fontSize={"1.2em"}
@@ -61,7 +149,7 @@ const ClubJoin = () => {
                     _hover={{ color: "primary.500" }}
                     cursor={"pointer"}
                   >
-                    {`Member : ${"33/50"}`}
+                    {`Member : ${data.joined_member} / ${data.member_total} `}
                   </Text>
                   <Text
                     as={"p"}
@@ -69,7 +157,7 @@ const ClubJoin = () => {
                     color={"primary.200"}
                     fontSize={"1.2em"}
                   >
-                    {`Category : ${"Basketball"}`}
+                    {`Category : ${data.category_name}`}
                   </Text>
                 </Box>
               </Flex>
@@ -79,21 +167,29 @@ const ClubJoin = () => {
                 fontWeight={"medium"}
                 color={"primary.200"}
                 fontSize={"1.2em"}
-              >{`Address : ${"Jl. Raya cibinong - Keradenan Perum Artha Sentosa No.47 RT.04/11"}`}</Text>
+              >{`Address : ${data.address}`}</Text>
               <Text color={"brand.300"} fontSize={20}>
                 Club Description
               </Text>
-              <Text color={"primary.200"}>
-                {`${"Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, a maxime quod vel eligendi cum.Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, a maxime quod vel eligendi cum.Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, a maxime quod vel eligendi cum."}`}
-              </Text>
+              <Text color={"primary.200"}>{`${data.description}`}</Text>
             </Box>
             <Box>
               <Box py={2}>
+                {}
                 <ButtonAddActivity />
               </Box>
               <Flex flexDirection={"column"} gap={2}>
-                <CardActivity />
-                <CardActivity />
+                {activities.map((data) => (
+                  <CardActivity
+                    key={data.id}
+                    title={data.name}
+                    start_time={data.start_time}
+                    end_time={data.end_time}
+                    location={data.location}
+                    activity_detail={data.activity_detail}
+                    day={data.day}
+                  />
+                ))}
               </Flex>
             </Box>
           </Box>
@@ -103,7 +199,17 @@ const ClubJoin = () => {
                 <AiTwotoneContainer size={40} cursor={"pointer"} />
               </Box>
               <Box _hover={{ color: "primary.400" }}>
-                <BsGearFill size={40} cursor={"pointer"} />
+                <BsGearFill
+                  size={40}
+                  cursor={"pointer"}
+                  onClick={() =>
+                    navigate("/editClub", {
+                      state: {
+                        club_id: activities[0].club_id,
+                      },
+                    })
+                  }
+                />
               </Box>
             </Flex>
             <Card variant={"filled"} h={"xl"} bgColor={"white"}>
@@ -112,58 +218,33 @@ const ClubJoin = () => {
               </CardHeader>
 
               {/* AKAN DIBUAT COMPONENT UNTUK MAPPING */}
-              <CardBody overflow={"scroll"}>
-                <ChatDiscuss
-                  align={"left"}
-                  User={"Rendra Andrianysah"}
-                  Message={"Halo Halo"}
-                />
-                <ChatDiscuss
-                  align={"left"}
-                  User={"Rendra Andrianysah"}
-                  Message={"Halo Halo"}
-                />
-                <ChatDiscuss
-                  align={"left"}
-                  User={"Rendra Andrianysah"}
-                  Message={"Halo Halo"}
-                />
-                <ChatDiscuss
-                  align={"left"}
-                  User={"Ethan"}
-                  Message={"Halo Halo"}
-                />
-                <ChatDiscuss
-                  justify={"end"}
-                  User={""}
-                  align={"left"}
-                  Message={"Halo Halo"}
-                />
-                <ChatDiscuss
-                  // justify={"end"}
-                  User={"Ghiyas"}
-                  align={"left"}
-                  Message={"Haii"}
-                />
-                <ChatDiscuss
-                  // justify={"end"}
-                  User={"Rendra"}
-                  align={"left"}
-                  Message={"Puyeng puyeng"}
-                />
-                <ChatDiscuss
-                  justify={"end"}
-                  User={""}
-                  align={"left"}
-                  Message={"mantap mantap"}
-                ></ChatDiscuss>
+              <CardBody overflow={"auto"}>
+                {chat.map((data) => (
+                  <ChatDiscuss
+                    key={data.id}
+                    justify={user.id === data.user_id ? "end" : "start"}
+                    align={user.id === data.user_id ? "right" : "left"}
+                    user={user.id === data.user_id ? data.user_name : ""}
+                    Message={data.message}
+                  />
+                ))}
               </CardBody>
 
               <CardFooter border={"1px"} borderColor={"primary.100"} p={0}>
                 <InputGroup>
-                  <Input placeholder={"Send message here..."} />
-                  <InputRightElement width="4.5rem">
-                    <Button h="1.75rem" size="md" variant={"ghost"}>
+                  <Input
+                    className="input-chat"
+                    placeholder={"Send message here..."}
+                    onChange={(e) => setMessage(e.target.value)}
+                    value={message}
+                  />
+                  <InputRightElement width="4.5rem" type={"submit"}>
+                    <Button
+                      h="1.75rem"
+                      size="md"
+                      variant={"ghost"}
+                      onClick={postChat}
+                    >
                       <RiSendPlaneFill size={20} color={"#4483c2"} />
                     </Button>
                   </InputRightElement>
@@ -174,9 +255,22 @@ const ClubJoin = () => {
         </Flex>
         <Box>
           <Box py={4}>
-            <ButtonAddPhoto />
+            <Card variant={"filled"}>
+              <CardBody>
+                <SimpleGrid
+                  spacing={8}
+                  w={"100%"}
+                  h={"30%"}
+                  columns={{ sm: 2, md: 4 }}
+                >
+                  {galeries.map((data) => {
+                    if (data.club_id === activities[0]?.club_id)
+                      return <CardGallery image={data.url} />;
+                  })}
+                </SimpleGrid>
+              </CardBody>
+            </Card>
           </Box>
-          <CardGallery />
         </Box>
       </Box>
     </Layout>

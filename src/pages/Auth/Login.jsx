@@ -60,7 +60,7 @@ const Login = () => {
         }
       })
       .catch((err) => {
-        console.log(); // dell after prod
+        console.log(err.response.data.message); // dell after prod
         Swal.fire({
           position: "center",
           icon: "error",

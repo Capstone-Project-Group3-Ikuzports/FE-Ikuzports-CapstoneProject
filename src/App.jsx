@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
+import "./index.css";
 
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";

@@ -13,9 +13,9 @@ const ChatDiscuss = ({ User, Message, align, justify }) => {
       >
         <Box px={0} py={1} m={2}>
           <Text textColor={"brand.200"} fontWeight={"bold"}>
-            {`${User}`}
+            {User}
           </Text>
-          <Text>{`${Message}`}</Text>
+          <Text>{Message}</Text>
         </Box>
       </Box>
     </Flex>
