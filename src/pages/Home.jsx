@@ -19,14 +19,12 @@ import Layout from "../components/Layout";
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
     const [input, setInput] = useState('')
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const handleInputChange = (e) => setInput(e.target.value)
     const isError = input === ' '
     const currentUser = useSelector((state) => state.users.currentUser)
     const token = currentUser.token
     const navigate = useNavigate()
-    console.log(currentUser)
-    console.log(token)
 
     const [getEvents, setGetEvents] = useState([])
     const [name, setName] = useState('')
@@ -39,6 +37,10 @@ const Home = () => {
     const [files, setFiles] = useState()
     const [prev, setPrev] = useState()
     const [maximum_people, setMaximumPeople] = useState('')
+    const [skeleton] = useState([1])
+    const [page, setPage] = useState(1)
+    const [getClubNew, setGetClubNew] = useState([])
+    const [loadingClub, setLoadingClub] = useState(false)
 
     const config = {
       headers: {
@@ -46,18 +48,44 @@ const Home = () => {
         "content-type" : "multipart/form-data",
       },
     }
-    console.log(config)
 
-    const getEvent = async () => {
-      await axios.get(`https://rubahmerah.site/events`, config)
+    const currentPost = getClubNew.slice(0, 3)
+    
+    useEffect(() => {
+      getEvent()
+      getClub()
+    }, [])
+
+    const getClub = async() => {
+      await axios.get(`https://rubahmerah.site/clubs`, config)
       .then((response) => {
-        setLoading(true)
-        setGetEvents(response.data.data)
-        setLoading(false)
+        setLoadingClub(true)
+        setGetClubNew(response.data.data)
+        setLoadingClub(false)
         console.log(response.data.data)
       })
       .catch((err) => {
-        err
+        console.log(err)
+      })
+    }
+
+    const getEvent = async() => {
+      await axios.get(`https://rubahmerah.site/events?page=${page}`, config)
+      .then((response) => {
+        const  results  = response.data.data
+        console.log(response.data.data)
+        const newPage = page + 1;
+        const temp = [...getEvents]
+        temp.push(...results)
+        setGetEvents(temp)
+        setPage(newPage)
+
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(() => {
+        setLoading(false)
       })
     }
 
@@ -103,13 +131,10 @@ const Home = () => {
         })
       }
 
-    useEffect(() => {
-      getEvent()
-    }, [])
 
 
-  console.log(name)
-  console.log(files)
+
+
   return(
     <Layout>
     <div>
@@ -256,14 +281,10 @@ const Home = () => {
           <option value='option3'>Yogyakarta</option>
         </Select>
         </Flex>
-        <InfiniteScroll
-        pageStart={0}
-        loadMore={getEvents}
-        hasMore={true || false}
-        loader={<div className="loader" key={0}>Loading ...</div>}>
         {
-          getEvents && loading === false ?
-            getEvents.map(data => (
+          loading 
+           ? skeleton.map((item) => <Spinner/>)
+           : getEvents.map((data) => (
               <CardEvent
               key = {data.id}
               address = {data.address}
@@ -284,51 +305,51 @@ const Home = () => {
                 })
               }}
               />
-            ))
-            : <Spinner
-            thickness='4px'
-            speed='0.65s'
-            emptyColor='gray.200'
-            color='blue.500'
-            size='xl'
-          />
+           ))   
         }
-        </InfiniteScroll>
+        <Button mt={'2%'} backgroundColor={'brand.300'} _hover={{bg: 'primary.300'}} color={'white'} onClick={() => {getEvent()}}>Load More Event</Button>
         </Box>
           </div>
           <div className="full-width">
             <Box mt={'6%'} ml={'20%'} w={'100%'} position="sticky" top={"0"}>
             <Button backgroundColor={"brand.300"} shadow={'xl'} w={'70%'} mb={"8%"} px={"5%"} py={'2%'} _hover={{bg: "primary.300"}} onClick={() => navigate('/clublist')} color="white" rounded="xl">Find your own club now </Button>
-              <Card
-                direction={{ base: 'column', sm: 'row' }}
-                overflow='hidden'
-                variant='filled'
-                w={'80%'}
-                backgroundColor={'white'}
-                mb={"5%"}
-              >
-              <Image
-                objectFit='cover'
-                maxW={{ base: '100%', sm: '300px' }}
-                src='https://www.servethehome.com/wp-content/uploads/2016/12/AMD-Ryzen-Logo.png'
-                alt='Caffe Latte'
-              />
+             
                 <Stack>
-                  <CardBody pb={'0'}>
-                    <Heading size='md'>Team Ryzen</Heading>
+                  {currentPost && loadingClub === false ?
+                    currentPost && currentPost.map((data) => (
+                       <Card
+                        direction={{ base: 'column', sm: 'row' }}
+                        overflow='hidden'
+                        variant='filled'
+                        w={'80%'}
+                        backgroundColor={'white'}
+                        mb={"5%"}
+                      >
+                    <Image
+                      objectFit='cover'
+                      maxW={{ base: '100%', sm: '300px' }}
+                      src={data.logo}
+                      alt='Caffe Latte'
+                    />
+                        <CardBody pb={'0'}>
+                    <Heading size='md'>{data.name}</Heading>
 
                     <Text py='1'>
-                     Member: 11/20
+                     Member: {data.joined_member} / {data.member_total}
                     </Text>
                     <Text pb='1'>
-                     Football
+                     {data.category_name}
                     </Text>
                     <Text pb='1'>
-                     Jakarta Selatan
+                     {data.city}
                     </Text>
                   </CardBody>
+                </Card>
+                    ))
+                    : <p>HEHEHEHEHE</p>
+                  }
                 </Stack>
-              </Card>
+
             </Box>
           </div>
         </Flex>
