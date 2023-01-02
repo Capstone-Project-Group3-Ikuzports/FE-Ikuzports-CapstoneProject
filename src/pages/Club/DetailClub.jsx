@@ -1,5 +1,6 @@
 import React from "react";
 import CardGallery from "../../components/ClubJoin/CardGallery";
+import Swal from "sweetalert2";
 import { Box, Flex, Stack, StackDivider, Text, Image, Card, CardHeader, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from "@chakra-ui/react";
 import {AiOutlineArrowLeft, AiOutlineSearch} from 'react-icons/ai'
 import { useDisclosure } from "@chakra-ui/react";
@@ -12,14 +13,18 @@ import { useSelector } from "react-redux";
 import Layout from "../../components/Layout";
 import axios from "axios";
 
+
 const DetailClub = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const navigate = useNavigate()
+
   const location = useLocation()
   const id = location?.state?.id
 
   const currentUser = useSelector((state) => state.users.currentUser)
   const token = currentUser.token
+  const idUser = currentUser.id
+  console.log(idUser)
 
   const config = {
     headers: {Authorization : `Bearer ${token}`},
@@ -38,6 +43,35 @@ const DetailClub = () => {
     })
     .catch((err) => {
       console.log(err)
+    })
+  }
+  const [status, setStatus] = useState('')
+  const onSubmitHandler = async() => {
+    const form = new FormData()
+    form.append("user_id", idUser )
+    form.append("club_id", id)
+    form.append("status", "requested")
+
+    await axios.post(`https://rubahmerah.site/members`,form ,config)
+    .then((response) => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        text: `Join Event successfully `,
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      navigate("/detailevent");
+    })
+    .catch((err) => {
+      console.log(err)
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        text: `failed`,
+        showConfirmButton: true,
+        timer: 1000,
+      });
     })
   }
 
@@ -94,7 +128,7 @@ const DetailClub = () => {
               <Button bg='red' color='white' mr={3} onClick={onClose}>
                 Cancel
               </Button>
-              <Button bg='black' color='white'>Accept</Button>
+              <Button bg='black' onClick={onSubmitHandler} color='white'>Accept</Button>
             </ModalFooter>
           </ModalContent>
         </Modal>

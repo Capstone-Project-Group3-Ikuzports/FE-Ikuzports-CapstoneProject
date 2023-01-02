@@ -1,6 +1,6 @@
 import React from "react";
+import InfiniteScroll from "react-infinite-scroller";
 import CardEvent from '../components/Home/CardEvent'
-import Navbar from '../components/Navbar'
 import { Box, Stack, Text, Flex, Image, Button, Select, FormControl, FormLabel, Spinner, Card,  CardBody, Input, Heading, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from '@chakra-ui/react'
 import { FiUser } from "react-icons/fi";
 import { useState } from "react";
@@ -13,6 +13,7 @@ import UploadFiles from "../components/UploadFiles";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
+
 
 
 const Home = () => {
@@ -255,6 +256,11 @@ const Home = () => {
           <option value='option3'>Yogyakarta</option>
         </Select>
         </Flex>
+        <InfiniteScroll
+        pageStart={0}
+        loadMore={getEvents}
+        hasMore={true || false}
+        loader={<div className="loader" key={0}>Loading ...</div>}>
         {
           getEvents && loading === false ?
             getEvents.map(data => (
@@ -287,6 +293,7 @@ const Home = () => {
             size='xl'
           />
         }
+        </InfiniteScroll>
         </Box>
           </div>
           <div className="full-width">
