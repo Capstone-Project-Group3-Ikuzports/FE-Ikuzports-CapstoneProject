@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { CookiesProvider } from "react-cookie";
 import { persistStore } from "redux-persist";
-
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import App from "./App";
 import "./index.css";
 import store from "./redux/store";
@@ -42,6 +42,9 @@ const theme = extendTheme({
 
 let persistor = persistStore(store);
 
+const client_id =
+  "45633693374-njv5m2bp04t3civhmppuh6qroo5tr70v.apps.googleusercontent.com";
+
 const rootElement = document.getElementById("root");
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
@@ -49,7 +52,9 @@ ReactDOM.createRoot(rootElement).render(
       <PersistGate persistor={persistor}>
         <CookiesProvider>
           <ChakraProvider theme={theme}>
-            <App />
+            <GoogleOAuthProvider clientId={client_id}>
+              <App />
+            </GoogleOAuthProvider>
           </ChakraProvider>
         </CookiesProvider>
       </PersistGate>

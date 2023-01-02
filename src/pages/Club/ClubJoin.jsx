@@ -10,8 +10,8 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Text,
   SimpleGrid,
+  Text,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -224,7 +224,7 @@ const ClubJoin = () => {
                     key={data.id}
                     justify={user.id === data.user_id ? "end" : "start"}
                     align={user.id === data.user_id ? "right" : "left"}
-                    user={user.id === data.user_id ? data.user_name : ""}
+                    User={user.id === data.user_id ? "" : data.user_name}
                     Message={data.message}
                   />
                 ))}
@@ -257,7 +257,9 @@ const ClubJoin = () => {
           <Box py={4}>
             <Card variant={"filled"}>
               <CardBody>
+                <ButtonAddPhoto />
                 <SimpleGrid
+                  pt={4}
                   spacing={8}
                   w={"100%"}
                   h={"30%"}

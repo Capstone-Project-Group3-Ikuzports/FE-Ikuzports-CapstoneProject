@@ -150,13 +150,13 @@ const AddNewClub = () => {
                     <option value="Jakarta">Jakarta</option>
                     <option value="Bogor">Bogor</option>
                     <option value="Depok">Depok</option>
-                    <option value="Bekasi">Bekasi</option>
                     <option value="Tangerang">Tangerang</option>
+                    <option value="Bekasi">Bekasi</option>
                     <option value="Bandung">Bandung</option>
+                    <option value="Semarang">Semarang</option>
                     <option value="Malang">Malang</option>
                     <option value="Surabaya">Surabaya</option>
                     <option value="Jogjakarya">Jogjakarya</option>
-                    <option value="Semarang">Semarang</option>
                   </Select>
                   <Select
                     w={"50%"}
