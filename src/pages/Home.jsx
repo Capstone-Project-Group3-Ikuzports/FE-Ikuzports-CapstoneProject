@@ -322,12 +322,15 @@ const Home = () => {
                         overflow='hidden'
                         variant='filled'
                         w={'80%'}
+                        h={'30%'}
                         backgroundColor={'white'}
-                        mb={"5%"}
+                        my={"20px"}
+                        _hover={{cursor: 'pointer'}}
                       >
                     <Image
                       objectFit='cover'
-                      maxW={{ base: '100%', sm: '300px' }}
+                      maxW={{ base: '100%', sm: '40%' }}
+                      maxH={{ base: '100%', sm: '40%' }}
                       src={data.logo}
                       alt='Caffe Latte'
                     />
