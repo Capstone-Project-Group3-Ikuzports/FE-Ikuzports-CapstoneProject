@@ -1,5 +1,5 @@
 import React from "react";
-import InfiniteScroll from "react-infinite-scroller";
+
 import CardEvent from '../components/Home/CardEvent'
 import { Box, Stack, Text, Flex, Image, Button, Select, FormControl, FormLabel, Spinner, Card,  CardBody, Input, Heading, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from '@chakra-ui/react'
 import { FiUser } from "react-icons/fi";
@@ -256,11 +256,7 @@ const Home = () => {
           <option value='option3'>Yogyakarta</option>
         </Select>
         </Flex>
-        <InfiniteScroll
-        pageStart={0}
-        loadMore={getEvents}
-        hasMore={true || false}
-        loader={<div className="loader" key={0}>Loading ...</div>}>
+       
         {
           getEvents && loading === false ?
             getEvents.map(data => (
@@ -292,8 +288,7 @@ const Home = () => {
             color='blue.500'
             size='xl'
           />
-        }
-        </InfiniteScroll>
+            }
         </Box>
           </div>
           <div className="full-width">
