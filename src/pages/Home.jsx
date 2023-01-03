@@ -39,7 +39,7 @@ import Layout from "../components/Layout";
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const handleInputChange = (e) => setInput(e.target.value);
   const isError = input === " ";
   const currentUser = useSelector((state) => state.users.currentUser);
@@ -57,6 +57,10 @@ const Home = () => {
   const [files, setFiles] = useState();
   const [prev, setPrev] = useState();
   const [maximum_people, setMaximumPeople] = useState("");
+  const [skeleton] = useState([1])
+  const [page, setPage] = useState(1)
+  const [getClubNew, setGetClubNew] = useState([])
+  const [loadingClub, setLoadingClub] = useState(false)
 
   const config = {
     headers: {
@@ -65,17 +69,37 @@ const Home = () => {
     },
   };
 
+  const getClub = async() => {
+    await axios.get(`https://rubahmerah.site/clubs`, config)
+    .then((response) => {
+      setLoadingClub(true)
+      setGetClubNew(response.data.data)
+      console.log(response.data.data)
+      setLoadingClub(false)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+  const getClubSlice = getClubNew.slice(0,3)
+
   const getEvent = async () => {
     await axios
-      .get(`https://rubahmerah.site/events`, config)
+      .get(`https://rubahmerah.site/events?page=${page}`, config)
       .then((response) => {
-        setLoading(true);
-        setGetEvents(response.data.data);
-        setLoading(false);
+        const result = response.data.data
+        const newPage = page + 1
+        const temp = [...getEvents]
+        temp.push(...result)
+        setGetEvents(temp);
+        setPage(newPage)
       })
       .catch((err) => {
-        err;
-      });
+        console.log(err)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   };
 
   const addEvent = async () => {
@@ -89,7 +113,7 @@ const Home = () => {
     formerData.append("maximum_people", maximum_people);
     formerData.append("description", description);
     formerData.append("image_event", files);
-
+    console.log([...formerData])
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -122,6 +146,7 @@ const Home = () => {
 
   useEffect(() => {
     getEvent();
+    getClub()
   }, []);
 
   return (
@@ -254,7 +279,6 @@ const Home = () => {
                       <FormLabel my="3">Ending Date Date</FormLabel>
                       <Input
                         color="gray"
-                        type={"number"}
                         pattern="[0-9]{4}-[1-9]{2}-[0-9]{2}"
                         placeholder="When your event End"
                         _placeholder={{ opacity: 0.4, color: "inherit" }}
@@ -326,42 +350,43 @@ const Home = () => {
                   </Select>
                 </Flex>
 
-                {getEvents && loading === false ? (
-                  getEvents.map((data) => (
-                    <CardEvent
-                      key={data.id}
-                      address={data.address}
-                      category={data.category_name}
-                      city={data.city}
-                      selesai={data.end_date}
-                      gambar={data.image_event}
-                      total={data.maximum_people}
-                      name={data.name}
-                      mulai={data.start_date}
-                      status={data.status}
-                      user={data.total_participant}
-                      diKlik={() => {
-                        navigate("/detailevent", {
-                          state: {
-                            id: data.id,
-                          },
-                        });
+                {
+                  loading 
+                  ? skeleton.map((item) => <Spinner/>)
+                  : getEvents.map((data) => (
+                      <CardEvent
+                      key = {data.id}
+                      address = {data.address}
+                      category = {data.category_name}
+                      city = {data.city}
+                      selesai = {data.end_date}
+                      gambar = {data.image_event}
+                      total = {data.maximum_people}
+                      name = {data.name}
+                      mulai = {data.start_date}
+                      status= {data.status}
+                      user = {data.total_participant}
+                      diKlik = {() => {
+                        navigate('/detailevent', {
+                          state : {
+                            id : data.id
+                          }
+                        })
                       }}
-                    />
-                  ))
-                ) : (
-                  <Spinner
-                    thickness="4px"
-                    speed="0.65s"
-                    emptyColor="gray.200"
-                    color="blue.500"
-                    size="xl"
-                  />
-                )}
+                      />
+                  ))   
+                }
+                <Button 
+                onClick={getEvent}  
+                backgroundColor={"brand.300"}
+                _hover={{ bg: "primary.300" }}
+                color={"white"}
+                mt={10}
+                >Load More Events</Button>
               </Box>
             </div>
             <div className="full-width">
-              <Box mt={"6%"} ml={"20%"} w={"100%"} position="sticky" top={"0"}>
+              <Box mt={"6%"} ml={"16%"} w={"100%"} position="sticky" top={"0"}>
                 <Button
                   backgroundColor={"brand.300"}
                   shadow={"xl"}
@@ -376,30 +401,37 @@ const Home = () => {
                 >
                   Find your own club now{" "}
                 </Button>
-                <Card
-                  direction={{ base: "column", sm: "row" }}
-                  overflow="hidden"
-                  variant="filled"
-                  w={"80%"}
-                  backgroundColor={"white"}
-                  mb={"5%"}
-                >
-                  <Image
-                    objectFit="cover"
-                    maxW={{ base: "100%", sm: "300px" }}
-                    src="https://www.servethehome.com/wp-content/uploads/2016/12/AMD-Ryzen-Logo.png"
-                    alt="Caffe Latte"
-                  />
-                  <Stack>
-                    <CardBody pb={"0"}>
-                      <Heading size="md">Team Ryzen</Heading>
-
-                      <Text py="1">Member: 11/20</Text>
-                      <Text pb="1">Football</Text>
-                      <Text pb="1">Jakarta Selatan</Text>
-                    </CardBody>
-                  </Stack>
-                </Card>
+                {getClubSlice && loadingClub === false ?
+                  getClubSlice.map((item) => (
+                    <Card
+                    direction={{ base: "column", sm: "row" }}
+                    overflow="hidden"
+                    variant="filled"
+                    w={"80%"}
+                    backgroundColor={"white"}
+                    mb={"5%"}
+                  >
+                    <Image
+                      objectFit="cover"
+                      maxW={{ base: "100%", sm: "30%",}}
+                      maxH={{ base: "100%", sm: "30%",}}
+                      src={item.logo}
+                      alt="Caffe Latte"
+                    />
+                    <Stack>
+                      <CardBody w={'100%'} pb={"0"}>
+                        <Heading size="md">{item.name}</Heading>
+  
+                        <Text py="1">Member: {item.joined_member} / {item.member_total}</Text>
+                        <Text pb="1">{item.category_name}</Text>
+                        <Text pb="1">{item.city}</Text>
+                      </CardBody>
+                    </Stack>
+                  </Card>
+                  ))
+                  : <p>HEHEHEH</p>
+                }
+                
               </Box>
             </div>
           </Flex>
