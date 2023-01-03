@@ -61,9 +61,7 @@ const CardMyClub = ({
                 {name}
               </Heading>
               <Box pl="30%">
-                <Button variant="solid" colorScheme="green" px="10">
-                  Joined
-                </Button>
+                <Text bg={"brand.200"} color='white' w={100} mx='auto' textAlign={'center'} rounded='lg' p={3} as='b'>{status}</Text>
               </Box>
             </Flex>
 

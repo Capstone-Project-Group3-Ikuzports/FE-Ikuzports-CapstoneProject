@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { ButtonBack } from '../../components/Button';
 import axios from 'axios';
 import {Spinner, Box, Text, Flex, Divider, SimpleGrid, Select, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import CardClub from '../../components/CardClub';
@@ -41,15 +42,12 @@ const ClubList = () => {
   return (
 <Layout>
       <Box p='8' px={'10%'} w={'100vw'} h={'100%'} overflowX='hidden'>
-        <Flex onClick={() => navigate("/")} _hover={{cursor: 'pointer'}}>
-        <AiOutlineArrowLeft size={41}/> 
-        <Text fontSize={'2xl'} as='b' ml='10px'>Back</Text>
-        </Flex>
-        <Text fontSize={'6xl'}>Club List</Text>
-        <Divider w="17%" orientation='horizontal' />
+        <ButtonBack />
         <Flex>
-        <Box  ml={'57%'}>
-          <Flex mb='30px'>
+        <Text fontSize={'5xl'}>Club List</Text>
+        <Flex mt={4} mb='30px' ml='auto'>
+        <Box>
+          <Flex>
            <Select w={'200px'} bg='white' mr='30px' variant='filled' boxShadow={'xl'} placeholder='Filled'>
            <option value='option1'>Option 1</option>
            <option value='option2'>Option 2</option>
@@ -70,6 +68,8 @@ const ClubList = () => {
           </Flex>
         </Box>
         </Flex>
+        </Flex>
+        <Divider w="17%" orientation='horizontal' />
         <SimpleGrid columns={{sm:2, md:4}} gap={8}>
         {getMyClub && loading === false ?
           getMyClub.map(data => (

@@ -1,8 +1,9 @@
 import React from "react";
 import CardGallery from "../../components/ClubJoin/CardGallery";
 import Swal from "sweetalert2";
-import { Box, Flex, Stack, StackDivider, Text, Image, Card, CardHeader, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from "@chakra-ui/react";
-import {AiOutlineArrowLeft, AiOutlineSearch} from 'react-icons/ai'
+import { Box, Flex, Text, Image, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from "@chakra-ui/react";
+import {AiOutlineArrowLeft} from 'react-icons/ai'
+import { ButtonBack } from "../../components/Button";
 import { useDisclosure } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -83,10 +84,7 @@ const DetailClub = () => {
   return (
   <Layout>
          <Box p='8' px={'10%'} w={'100vw'}>
-         <Flex onClick={() => navigate("/")} _hover={{cursor: 'pointer'}}>
-             <AiOutlineArrowLeft size={41}/> 
-             <Text fontSize={'2xl'} as='b' ml='10px'>Back</Text>
-         </Flex>
+            <ButtonBack/>
             <Flex mb={20}>
             <Box w={'70%'}>
               <Flex>
@@ -114,7 +112,7 @@ const DetailClub = () => {
           </Flex>
       
       <Box ml='auto' justif='end' w={'131px'}>
-        <Button bg='brand.300' onClick={onOpen} color={'white'} px={'50px'} mt={10}>Join</Button>
+        <Button bg='brand.300' _hover={{bg: "brand.200"}} onClick={onOpen} color={'white'} px={'50px'} mt={10}>Join</Button>
         <Modal isOpen={isOpen} onClose={onClose} h={'100px'}>
           <ModalOverlay />
           <ModalContent>

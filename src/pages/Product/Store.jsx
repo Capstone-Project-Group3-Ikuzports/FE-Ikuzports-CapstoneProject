@@ -3,6 +3,7 @@ import React,{useState,useEffect} from 'react'
 import {AiOutlineArrowLeft, AiOutlineSearch} from 'react-icons/ai'
 import {CardFooter,CardBody,Heading,CardHeader,Spinner,Box, Text, Flex, Divider, Button, SimpleGrid, Card, ButtonGroup, Select, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import CardProduct from '../../components/Store/CardProduct'
+import { ButtonBack } from '../../components/Button';
 import Layout from '../../components/Layout';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
@@ -43,15 +44,10 @@ getProduct(),[filterCate]
   return (
 <Layout>
       <Box p='8' px={'10%'} w={'100vw'} h={'100%'} overflowX='hidden'>
-        <Flex onClick={() => navigate("/")} _hover={{cursor: 'pointer'}}>
-        <AiOutlineArrowLeft size={41}/> 
-        <Text fontSize={'2xl'} as='b' ml='10px'>Back</Text>
-        </Flex>
-        <Text fontSize={'5xl'} as='u' textColor={'brand.300'}>Store</Text>
-        <Divider w="17%" orientation='horizontal' />
+        <ButtonBack/>
         <Flex>
-        <Box  ml={'57%'}>
-          <Flex mb='30px'>
+        <Text fontSize={'5xl'} textColor={'brand.300'}>Store</Text>
+        <Flex mb='30px' ml='auto' mt={4}>
            <Select w={'200px'} value={filterCate} onChange={(e)=>{ setFilterCate(e.target.value) }} bg='white' mr='30px' variant='filled' boxShadow={'xl'} placeholder='Category'>
                   <option value= '1'>Sepatu</option>
                   <option value= '2'>Jersey</option>
@@ -62,16 +58,16 @@ getProduct(),[filterCate]
                   <option value= '7'>Aksesoris</option>
            </Select>
            <Select w={'200px'} bg='white' mr='30px' variant='filled' boxShadow={'xl'} placeholder='City'>
-           <option value=''>Jakarta</option>
-           <option value=''>Bogor</option>
-           <option value=''>Depok</option>
-           <option value=''>Tangerang</option>
-           <option value=''>Bekasi</option>
-           <option value=''>Bandung</option>
-           <option value=''>Semarang</option>
-           <option value=''>Malang</option>
-           <option value=''>Surabaya</option>
-           <option value=''>Jogjakarta</option>
+                  <option value=''>Jakarta</option>
+                  <option value=''>Bogor</option>
+                  <option value=''>Depok</option>
+                  <option value=''>Tangerang</option>
+                  <option value=''>Bekasi</option>
+                  <option value=''>Bandung</option>
+                  <option value=''>Semarang</option>
+                  <option value=''>Malang</option>
+                  <option value=''>Surabaya</option>
+                  <option value=''>Jogjakarta</option>
            </Select>
            <InputGroup w={'250px'} boxShadow={'xl'} varian='filled'>
               <InputLeftElement
@@ -81,6 +77,10 @@ getProduct(),[filterCate]
               <Input type='tel' bg='white' placeholder='Search Product' />
             </InputGroup>
           </Flex>
+        </Flex>
+        <Divider w="17%" orientation='horizontal' />
+        <Flex>
+        <Box  ml={'57%'}>
         </Box>
         </Flex>
         <SimpleGrid columns={{sm:2, md:4}} gap={8}>

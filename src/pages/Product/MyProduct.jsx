@@ -2,6 +2,7 @@ import React from 'react';
 import { useState,useEffect } from 'react';
 import { Box, Button, Divider, Flex, FormLabel, Input, InputGroup, InputLeftAddon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, SimpleGrid, Text, Textarea, useDisclosure } from "@chakra-ui/react";
 import axios from 'axios';
+import { ButtonBack } from '../../components/Button';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
@@ -86,15 +87,15 @@ const modalPost = async ()=>{
   return (
  <Layout>
       <Box p='8' px={'10%'} w={'100vw'} h={'100%'}  overflowX='hidden'>
-        <Flex onClick={() => navigate("/")} _hover={{cursor: 'pointer'}}>
-        <AiOutlineArrowLeft size={41}/> 
-        <Text fontSize={'2xl'} as='b' ml='10px'>Back</Text>
+        <ButtonBack/>
+        <Flex>
+        <Text fontSize={'5xl'}>My Product</Text>
+        <Button backgroundColor={'brand.300'} verticalAlign={'center'} mt={4} ml='auto' hover={{bg: "brand.200"}} onClick={onOpen} color='white' px={10}>Add a Product</Button>
         </Flex>
-        <Text fontSize={'5xl'} as='u'>My Product</Text>
+        
         <Divider w="17%" orientation='horizontal' />
         <Flex>
         <Box  ml='auto' mb={10} >
-           <Button backgroundColor={'brand.300'} onClick={onOpen} color='white' px={10}>Add a Product</Button>
            <Modal isOpen={isOpen} onClose={onClose} >
               <ModalOverlay/>
               <ModalContent backgroundColor={'brand.100'}>

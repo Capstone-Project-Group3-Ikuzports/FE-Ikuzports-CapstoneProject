@@ -195,7 +195,7 @@ const Home = () => {
                     justifyContent="end"
                     px="10"
                     backgroundColor={"brand.300"}
-                    _hover={{ bg: "primary.300" }}
+                    _hover={{ bg: "brand.200" }}
                     color={"white"}
                     ml={"82%"}
                   >
@@ -379,7 +379,7 @@ const Home = () => {
                 <Button 
                 onClick={getEvent}  
                 backgroundColor={"brand.300"}
-                _hover={{ bg: "primary.300" }}
+                _hover={{ bg: "brand.200" }}
                 color={"white"}
                 mt={10}
                 >Load More Events</Button>
@@ -394,7 +394,7 @@ const Home = () => {
                   mb={"8%"}
                   px={"5%"}
                   py={"2%"}
-                  _hover={{ bg: "primary.300" }}
+                  _hover={{ bg: "brand.200" }}
                   onClick={() => navigate("/clublist")}
                   color="white"
                   rounded="xl"
