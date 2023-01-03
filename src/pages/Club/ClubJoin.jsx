@@ -10,8 +10,11 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Center,
   SimpleGrid,
   Text,
+  HStack,
+  VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -29,13 +32,9 @@ import CardActivity from "../../components/ClubJoin/CardActivity";
 import CardGallery from "../../components/ClubJoin/CardGallery";
 import ChatDiscuss from "../../components/ClubJoin/ChatDiscuss";
 import Layout from "../../components/Layout";
+import { useLocation } from "react-router-dom";
 
 // 10 ganti dengan params
-const urlIdClub = `https://rubahmerah.site/clubs/10`;
-const urlActivityIdClub = `https://rubahmerah.site/clubs/10/activities`;
-const urlChatIdClub = `https://rubahmerah.site/clubs/10/chats`;
-const urladdChat = `https://rubahmerah.site/chats`;
-const urlGetGaleries = `https://rubahmerah.site/galeries`;
 
 const ClubJoin = () => {
   const user = useSelector((state) => state.users.currentUser);
@@ -45,8 +44,17 @@ const ClubJoin = () => {
   const [message, setMessage] = useState("");
   const [galeries, setGaleries] = useState([]);
   // console.log(galeries);
-  console.log(data);
+  const location = useLocation();
+  const id_club = location?.state.id;
+  // console.log(id_club);
+  // console.log(data);
 
+  // === URL === //
+  const urlIdClub = `https://rubahmerah.site/clubs/${id_club}`;
+  const urlActivityIdClub = `https://rubahmerah.site/clubs/${id_club}/activities`;
+  const urlChatIdClub = `https://rubahmerah.site/clubs/${id_club}/chats`;
+  const urlGetGaleriesIdClub = `https://rubahmerah.site/clubs/${id_club}/galeries`;
+  const urladdChat = `https://rubahmerah.site/chats`;
   const navigate = useNavigate();
 
   const configPutNPost = {
@@ -65,6 +73,7 @@ const ClubJoin = () => {
       .get(urlIdClub, configGetNDelete)
       .then((res) => {
         setData(res.data.data);
+        // console.log(res);
       })
       .catch((err) => console.log(err));
   };
@@ -74,32 +83,43 @@ const ClubJoin = () => {
       .get(urlActivityIdClub, configGetNDelete)
       .then((res) => {
         setActivities(res.data.data);
+        // console.log(res);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
   //=== GET CHAT CLUB ===//
   const getClubChat = async () => {
     await axios
       .get(urlChatIdClub, configGetNDelete)
       .then((res) => {
         setChat(res.data.data);
+        // console.log(res);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
+  //=== GET GALERIES ===//
   const getGaleries = async () => {
     await axios
-      .get(urlGetGaleries, configGetNDelete)
+      .get(urlGetGaleriesIdClub, configGetNDelete)
       .then((res) => {
         setGaleries(res.data.data);
+        // console.log(res);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   //=== POST CHAT CLUB ===//
   const postChat = async () => {
     const chat = new FormData();
     chat.append("user_id", user.id);
-    chat.append("club_id", data.category_id);
+    chat.append("club_id", data.id);
     chat.append("message", message);
     console.log([...chat]);
     setMessage("");
@@ -175,21 +195,28 @@ const ClubJoin = () => {
             </Box>
             <Box>
               <Box py={2}>
-                {}
                 <ButtonAddActivity />
               </Box>
               <Flex flexDirection={"column"} gap={2}>
-                {activities.map((data) => (
-                  <CardActivity
-                    key={data.id}
-                    title={data.name}
-                    start_time={data.start_time}
-                    end_time={data.end_time}
-                    location={data.location}
-                    activity_detail={data.activity_detail}
-                    day={data.day}
-                  />
-                ))}
+                {activities ? (
+                  <Box w={"50vw"} bgColor={"white"} h={"20vw"}>
+                    <Flex justifyContent={"center"}>
+                      <Text fontSize={"4xl"}>No Activities</Text>
+                    </Flex>
+                  </Box>
+                ) : (
+                  activities.map((data) => (
+                    <CardActivity
+                      key={data.id}
+                      title={data.name}
+                      start_time={data.start_time}
+                      end_time={data.end_time}
+                      location={data.location}
+                      activity_detail={data.activity_detail}
+                      day={data.day}
+                    />
+                  ))
+                )}
               </Flex>
             </Box>
           </Box>
@@ -205,7 +232,7 @@ const ClubJoin = () => {
                   onClick={() =>
                     navigate("/editClub", {
                       state: {
-                        club_id: activities[0].club_id,
+                        club_id: data.id,
                       },
                     })
                   }
@@ -256,7 +283,7 @@ const ClubJoin = () => {
         <Box>
           <Box py={4}>
             <Card variant={"filled"}>
-              <CardBody>
+              <CardBody minH={"40vh"}>
                 <ButtonAddPhoto />
                 <SimpleGrid
                   pt={4}
@@ -265,10 +292,9 @@ const ClubJoin = () => {
                   h={"30%"}
                   columns={{ sm: 2, md: 4 }}
                 >
-                  {galeries.map((data) => {
-                    if (data.club_id === activities[0]?.club_id)
-                      return <CardGallery image={data.url} />;
-                  })}
+                  {galeries.map((data) => (
+                    <CardGallery image={data.url} key={data.id} />
+                  ))}
                 </SimpleGrid>
               </CardBody>
             </Card>

@@ -17,7 +17,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { transform } from "framer-motion";
-import { ButtonBuy } from "../../components/Button";
+import { ButtonBack, ButtonBuy } from "../../components/Button";
 
 const Myclub = () => {
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ const Myclub = () => {
         setLoading(true);
         setGetMyClub(response.data.data);
         setLoading(false);
-        console.log(response.data.data);
+        // console.log(response.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -51,17 +51,7 @@ const Myclub = () => {
   return (
     <Layout>
       <Box p="8" px={"10%"} w={"100vw"} h={"100vh"} overflowX="hidden">
-        <Flex onClick={() => navigate("/")} _hover={{ cursor: "pointer" }}>
-          <Button
-            variant={"ghost"}
-            _hover={{ bg: "#2E5984", color: "#eaeaea" }}
-          >
-            <BiArrowBack size={"28"} />
-            <Text fontSize={"lg"} ml="0.5em">
-              Back
-            </Text>
-          </Button>
-        </Flex>
+        <ButtonBack />
         <Text fontSize={"4xl"}>My Club</Text>
         <Divider w="17%" orientation="horizontal" />
         <Box justify="end" ml={"92%"} justifyContent={"end"}>
@@ -95,6 +85,13 @@ const Myclub = () => {
                     total={data.member_total}
                     name={data.name}
                     status={data.status}
+                    onClick={() =>
+                      navigate("/clubjoin", {
+                        state: {
+                          id: data.club_id,
+                        },
+                      })
+                    }
                   />
                 );
               }
