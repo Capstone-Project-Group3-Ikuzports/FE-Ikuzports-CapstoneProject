@@ -2,8 +2,14 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 import * as ReactDOM from "react-dom/client";
 import React from "react";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { CookiesProvider } from "react-cookie";
+import { persistStore } from "redux-persist";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import App from "./App";
-
+import "./index.css";
+import store from "./redux/store";
 const colors = {
   brand: {
     100: "#F2F6FA",
@@ -19,16 +25,39 @@ const colors = {
   primary: {
     100: "#eaeaea",
     200: "#454545",
+    300: "#0000e5",
+    400: "#4483c2",
+    500: "#ff1443",
+    600: "#3ba74f",
   },
 };
 
-const theme = extendTheme({ colors });
+const theme = extendTheme({
+  colors,
+  fonts: {
+    heading: `'Montserrat', sans-serif`,
+    body: `'Montserrat', sans-serif`,
+  },
+});
+
+let persistor = persistStore(store);
+
+const client_id =
+  "45633693374-njv5m2bp04t3civhmppuh6qroo5tr70v.apps.googleusercontent.com";
 
 const rootElement = document.getElementById("root");
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <App />
-    </ChakraProvider>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <CookiesProvider>
+          <ChakraProvider theme={theme}>
+            <GoogleOAuthProvider clientId={client_id}>
+              <App />
+            </GoogleOAuthProvider>
+          </ChakraProvider>
+        </CookiesProvider>
+      </PersistGate>
+    </Provider>
   </React.StrictMode>
 );

@@ -1,3 +1,4 @@
+
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -15,13 +16,31 @@
   -webkit-text-size-adjust: 100%;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+
+
+.hehe{
+  background-image: url('/FE-Ikuzports-CapstoneProject/src/assets/logo-background.png');
+  height: 100vh;
 }
-a:hover {
-  color: #535bf2;
+
+.full-width{
+  width: 100%;
+}
+
+.no-scroll-home{
+  overflow-x: hidden;
+  background-color: white;
+  height: 100vh;
+}
+.no-scroll-event{
+  overflow-x: hidden;
+  background-color: white;
+  height: 100%;
+}
+.no-scroll-store{
+  overflow-x: hidden;
+  background-color: #F2F6FA;
+  height: 100vh;
 }
 
 body {
@@ -30,6 +49,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -48,23 +69,33 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+
+
 
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
   }
-  a:hover {
-    color: #747bff;
-  }
+
   button {
     background-color: #f9f9f9;
   }
+}
+
+
+.hr-profile{
+  border: 2px solid #454545;
+  width: 6rem;
+
+}
+
+.hr-add-club{
+  border: 2px solid #454545;
+  width: 12rem;
+}
+
+.hr-edit-club{
+  border: 2px solid #454545;
+  width: 9rem;
 }
