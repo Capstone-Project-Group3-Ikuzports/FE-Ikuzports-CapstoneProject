@@ -1,6 +1,5 @@
 import React from "react";
 import CardMyClub from "../../components/MyClub/CardMyClub";
-import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -16,8 +15,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { transform } from "framer-motion";
-import { ButtonBack, ButtonBuy } from "../../components/Button";
+import {ButtonBack} from "../../components/Button";
 
 const Myclub = () => {
   const navigate = useNavigate();
@@ -62,6 +60,7 @@ const Myclub = () => {
             justify="end"
             justifyContent={"end"}
             bg={"brand.300"}
+            _hover={{bg: "brand.200"}}
             color="white"
             justifyItems="end"
             onClick={() => navigate("/addnewclub")}

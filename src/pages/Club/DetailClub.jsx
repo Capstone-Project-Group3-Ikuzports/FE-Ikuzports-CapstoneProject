@@ -1,8 +1,6 @@
 import React from "react";
-import CardGallery from "../../components/ClubJoin/CardGallery";
 import Swal from "sweetalert2";
 import { Box, Flex, Text, Image, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from "@chakra-ui/react";
-import {AiOutlineArrowLeft} from 'react-icons/ai'
 import { ButtonBack } from "../../components/Button";
 import { useDisclosure } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";

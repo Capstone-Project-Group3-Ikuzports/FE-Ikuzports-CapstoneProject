@@ -1,5 +1,4 @@
 import React from "react";
-
 import CardEvent from "../components/Home/CardEvent";
 import {
   Box,

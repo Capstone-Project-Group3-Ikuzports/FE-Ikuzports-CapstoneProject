@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react'
-
-import {AiOutlineArrowLeft, AiOutlineSearch} from 'react-icons/ai'
-import {CardFooter,CardBody,Heading,CardHeader,Spinner,Box, Text, Flex, Divider, Button, SimpleGrid, Card, ButtonGroup, Select, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import {AiOutlineSearch} from 'react-icons/ai'
+import {CardFooter,Heading,CardHeader,Box, Text, Flex, Divider, Button, SimpleGrid, Card, ButtonGroup, Select, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import CardProduct from '../../components/Store/CardProduct'
 import { ButtonBack } from '../../components/Button';
 import Layout from '../../components/Layout';
@@ -29,17 +28,9 @@ const getProduct = () =>{
   })
 }
 
-
-useEffect(()=>
-getProduct(),[filterCate]
-)
-
-
-
-
-
-
-  
+  useEffect(()=>
+  getProduct(),[filterCate]
+  )
 
   return (
 <Layout>

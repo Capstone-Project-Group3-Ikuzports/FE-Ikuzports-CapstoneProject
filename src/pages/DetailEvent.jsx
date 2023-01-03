@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "../components/Navbar";
 import { Text, Flex, Box, Stack } from "@chakra-ui/layout";
 import {
   Button,
@@ -11,12 +10,10 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  getSlideTransition,
 } from "@chakra-ui/react";
 import Swal from "sweetalert2";
 import { Image } from "@chakra-ui/image";
 import axios from "axios";
-import { AiOutlineArrowLeft } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { SlCalender } from "react-icons/sl";
 import { SiGooglemaps } from "react-icons/si";
@@ -131,7 +128,8 @@ const DetailEvent = () => {
         </Flex>
         <Stack w={"200px"} ml="auto">
           <Button
-            backgroundColor="brand.300"
+            bg={"brand.300"} 
+            _hover={{bg: "brand.200"}}
             onClick={onSubmitHandler}
             onChange={(e) => setEventId(e.target.value)}
             color={"white"}
@@ -151,7 +149,7 @@ const DetailEvent = () => {
             <ModalBody mx="auto">Join Succes</ModalBody>
 
             <ModalFooter mx="auto">
-              <Button colorScheme="blue" px={10} onClick={onClose}>
+              <Button bg={"brand.300"} _hover={{bg: "brand.200"}} color='white' px={10} onClick={onClose}>
                 Ok
               </Button>
             </ModalFooter>

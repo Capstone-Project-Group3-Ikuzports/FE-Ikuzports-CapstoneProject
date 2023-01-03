@@ -1,6 +1,5 @@
 import React from 'react'
-import Navbar from '../../components/Navbar'
-import {AiOutlineArrowLeft, AiOutlineSearch} from 'react-icons/ai'
+import {AiOutlineSearch} from 'react-icons/ai'
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
