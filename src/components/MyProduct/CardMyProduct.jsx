@@ -3,18 +3,22 @@ import { Card, Flex, CardBody, Button, Text, Image, Stack, Divider, Heading, Spa
 import {BsFillTrashFill} from 'react-icons/bs'
 import { useDisclosure } from '@chakra-ui/react';
 import axios from 'axios';
-
+import { useSelector } from 'react-redux';
 
 
 const CardMyProduct = ({name,desc,price,image,id}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
-    
+    const currentUser = useSelector((state) => state.users.currentUser)
+    const token = currentUser.token
+  
+    const config = {
+      headers: {Authorization : `Bearer ${token}`}
+    }
+   
 const del=()=>{
     axios
-    .delete(`https://rubahmerah.site/products/${id}`)
-    .then(res=>
-        console.log(res)
-    )
+    .delete(`https://rubahmerah.site/products/${id}`,config)
+    .then(res=>console.log(res))
     .catch(err=>console.log(err)) 
 }
 

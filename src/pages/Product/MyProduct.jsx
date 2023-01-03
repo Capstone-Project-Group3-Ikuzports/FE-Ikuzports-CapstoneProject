@@ -30,9 +30,9 @@ const navi = useNavigate();
 const [myProduct,setMyProduct] = useState([])
 const [product_name, setName] = useState('')
 const [desc, setDesc] = useState('')
-const [price, setPrice] = useState('')
+const [price, setPrice] = useState()
 const [upload_image, setImage] = useState(null)
-const [category_item, setCategory] = useState('')
+const [category_item, setCategory] = useState()
 const [city, setCity] = useState('')
 
 const getMyProduct = () =>{
@@ -49,16 +49,16 @@ getMyProduct(),[]
 
 const modalPost = async ()=>{
   const form = new FormData();
-    form.append("product_name", product_name);
-    form.append("desc", desc);
-    form.append("price", price);
+    form.append("name", product_name);
+    form.append("price",price);
+    form.append("description", desc);
     // form.append("upload_image", upload_image);
-    form.append("category_item", category_item);
+    form.append("itemcategory_id", category_item);
     form.append("city", city);
-
+    console.log([...form])
 
     await axios
-    .post('https://rubahmerah.site/products/', form,configPutNPost )
+    .post('https://rubahmerah.site/products/',form,configPutNPost )
     .then(() => {
       Swal.fire({
         position: "center",
@@ -107,8 +107,8 @@ const modalPost = async ()=>{
                   <Textarea placeholder='Description' bg='white' onChange={(e) => setDesc(e.target.value) }></Textarea>
                   <FormLabel mt={5}>Price</FormLabel>
                   <InputGroup bg='white'>
-                    <InputLeftAddon bg='white' children='Rp' onChange={(e) => setPrice(e.target.value) }/>
-                    <Input type='tel' placeholder='Price' />
+                    <InputLeftAddon bg='white' children='Rp' />
+                    <Input type='number' placeholder='Price' onChange={(e) => setPrice(e.target.value) }/>
                   </InputGroup>
                   <FormLabel mt={5} >Upload Image</FormLabel>
                   <InputGroup bg='white'>
@@ -126,16 +126,16 @@ const modalPost = async ()=>{
            </Select>
 
            <Select onChange={(e) => setCity(e.target.value)} mt={'5'} placeholder='City' w={'400px'}  bg='white' mr='30px' variant='filled' boxShadow={'xl'}>
-           <option value=''>Jakarta</option>
-           <option value=''>Bogor</option>
-           <option value=''>Depok</option>
-           <option value=''>Tangerang</option>
-           <option value=''>Bekasi</option>
-           <option value=''>Bandung</option>
-           <option value=''>Semarang</option>
-           <option value=''>Malang</option>
-           <option value=''>Surabaya</option>
-           <option value=''>Jogjakarta</option>
+           <option value='Jakarta'>Jakarta</option>
+           <option value='Bogor'>Bogor</option>
+           <option value='Depok'>Depok</option>
+           <option value='Tanggerang'>Tanggerang</option>
+           <option value='Bekasi'>Bekasi</option>
+           <option value='Bandung'>Bandung</option>
+           <option value='Semarang'>Semarang</option>
+           <option value='Malang'>Malang</option>
+           <option value='Surabaya'>Surabaya</option>
+           <option value='Jogjakarta'>Jogjakarta</option>
            </Select>
                   
                   </ModalBody>
