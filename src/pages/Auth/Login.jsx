@@ -33,21 +33,41 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [credential, setCredential] = useState();
-  const [dataGoogle, setDataGoogle] = useState();
+  // const [credential, setCredential] = useState();
+  // const [dataGoogle, setDataGoogle] = useState();
   // console.log(GoogleJwt);
   // console.log(dataGoogle);
   // let decoded = jwt_decode(tokenResponse.credential);
   // setDataGoogle(decoded);
 
   // === TEST OAUTH1 === //
+  const [dataGoogle, setDataGoogle] = useState();
   const loginOAuth1 = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      console.log("CARA 1", tokenResponse);
-      // let decoded = jwt_decode(tokenResponse.access_token);
-      // console.log(decoded);
+    onSuccess: async (tokenResponse) => {
+      // console.log("CARA 1", tokenResponse);
+      setDataGoogle(tokenResponse);
+      // console.log(dataGoogle);
+      console.log("data", dataGoogle);
+      await loginGoogle();
     },
   });
+
+  const urlLoginGoogle = "https://rubahmerah.site/auth/google";
+
+  const loginGoogle = async () => {
+    const form = new FormData();
+    form.append("acces_token", dataGoogle.access_token);
+    form.append("authuser", dataGoogle.authuser);
+    form.append("expires_in", dataGoogle.expires_in);
+    form.append("prompt", dataGoogle.prompt);
+    form.append("scope", dataGoogle.scope);
+    form.append("token_type", dataGoogle.token_type);
+    console.log("login", [...form]);
+    await axios
+      .post(urlLoginGoogle, form)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
 
   // === TEST OAUTH2 === //
   const loginOAuth2 = useGoogleLogin({
@@ -172,7 +192,8 @@ const Login = () => {
                 w={"full"}
                 mt={4}
                 onClick={() => {
-                  // loginOAuth1();
+                  // loginGoogle();
+                  loginOAuth1();
                   // loginOAuth2();
                   // loginOAuth3();
                 }}
@@ -183,7 +204,7 @@ const Login = () => {
 
               {/* LOGIN DEFAULT BY GOOGLE */}
               <Center pt={2}>
-                {/* <GoogleLogin
+                <GoogleLogin
                   size="large"
                   // shape="rectangular"
                   onSuccess={(credentialResponse) => {
@@ -191,12 +212,12 @@ const Login = () => {
                     // setCredential(credentialResponse);
                     let decoded = jwt_decode(credentialResponse.credential);
                     console.log("DECODE CREDENTIAL CARA 4", decoded);
-                    setDataGoogle(decoded);
+                    // setDataGoogle(decoded);
                   }}
                   onError={() => {
                     console.log("Login Failed");
                   }}
-                /> */}
+                />
               </Center>
 
               <Text color={"#4545458d"} pt={2} fontWeight={"semi-bold"}>

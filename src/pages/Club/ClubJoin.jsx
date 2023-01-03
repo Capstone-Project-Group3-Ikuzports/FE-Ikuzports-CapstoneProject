@@ -199,12 +199,6 @@ const ClubJoin = () => {
               </Box>
               <Flex flexDirection={"column"} gap={2}>
                 {activities ? (
-                  <Box w={"50vw"} bgColor={"white"} h={"20vw"}>
-                    <Flex justifyContent={"center"}>
-                      <Text fontSize={"4xl"}>No Activities</Text>
-                    </Flex>
-                  </Box>
-                ) : (
                   activities.map((data) => (
                     <CardActivity
                       key={data.id}
@@ -216,6 +210,12 @@ const ClubJoin = () => {
                       day={data.day}
                     />
                   ))
+                ) : (
+                  <Box w={"50vw"} bgColor={"white"} h={"20vw"}>
+                    <Flex justifyContent={"center"}>
+                      <Text fontSize={"4xl"}>No Activities</Text>
+                    </Flex>
+                  </Box>
                 )}
               </Flex>
             </Box>
