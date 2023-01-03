@@ -428,7 +428,7 @@ const Home = () => {
                     </Stack>
                   </Card>
                   ))
-                  : <p>HEHEHEH</p>
+                  : <Spinner/>
                 }
                 
               </Box>
