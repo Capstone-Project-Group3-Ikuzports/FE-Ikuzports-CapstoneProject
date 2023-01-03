@@ -21,14 +21,58 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { GoogleLogin } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
 
 import { useSelector } from "react-redux";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState(" ");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [credential, setCredential] = useState();
+  const [dataGoogle, setDataGoogle] = useState();
+  // console.log(GoogleJwt);
+  // console.log(dataGoogle);
+  // let decoded = jwt_decode(tokenResponse.credential);
+  // setDataGoogle(decoded);
+
+  // === TEST OAUTH1 === //
+  const loginOAuth1 = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      console.log("CARA 1", tokenResponse);
+      // let decoded = jwt_decode(tokenResponse.access_token);
+      // console.log(decoded);
+    },
+  });
+
+  // === TEST OAUTH2 === //
+  const loginOAuth2 = useGoogleLogin({
+    onSuccess: async (response) => {
+      try {
+        const data = await axios.get(
+          `https://www.googleapis.com/oauth2/v3/userinfo`,
+          {
+            headers: {
+              Authorization: `Bearer ${response.access_token}`,
+            },
+          }
+        );
+        console.log("CARA 2", data);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  });
+
+  // === TEST OAUTH3 === //
+  const loginOAuth3 = useGoogleLogin({
+    onSuccess: (codeResponse) => console.log("CARA 3", codeResponse),
+    flow: "auth-code",
+  });
 
   //=== SET PASSWORD ===//
   const [show, setShow] = React.useState(false);
@@ -46,7 +90,7 @@ const Login = () => {
       })
       .then((res) => {
         const { data } = res.data;
-        // console.log(data); // dell after prod
+        console.log(data); // dell after prod
         if (data) {
           Swal.fire({
             position: "center",
@@ -111,7 +155,6 @@ const Login = () => {
                   </Button>
                 </InputRightElement>
               </InputGroup>
-
               <Button
                 type="submit"
                 bg="brand.300"
@@ -123,10 +166,39 @@ const Login = () => {
               >
                 Sign in
               </Button>
-              <Button bg="brand.100" color={"primary.200"} w={"full"} mt={4}>
+              <Button
+                bg="brand.100"
+                color={"primary.200"}
+                w={"full"}
+                mt={4}
+                onClick={() => {
+                  // loginOAuth1();
+                  // loginOAuth2();
+                  // loginOAuth3();
+                }}
+              >
                 <Image src="../src/assets/google.png" w={"8"} mx={1} />
                 Sign in with Google
               </Button>
+
+              {/* LOGIN DEFAULT BY GOOGLE */}
+              <Center pt={2}>
+                {/* <GoogleLogin
+                  size="large"
+                  // shape="rectangular"
+                  onSuccess={(credentialResponse) => {
+                    console.log("CARA 4", credentialResponse);
+                    // setCredential(credentialResponse);
+                    let decoded = jwt_decode(credentialResponse.credential);
+                    console.log("DECODE CREDENTIAL CARA 4", decoded);
+                    setDataGoogle(decoded);
+                  }}
+                  onError={() => {
+                    console.log("Login Failed");
+                  }}
+                /> */}
+              </Center>
+
               <Text color={"#4545458d"} pt={2} fontWeight={"semi-bold"}>
                 Dont you have an Account?
                 <Link to="/register" color="brand.300">

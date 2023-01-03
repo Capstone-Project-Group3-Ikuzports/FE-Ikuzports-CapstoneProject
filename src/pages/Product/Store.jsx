@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 
 import {AiOutlineArrowLeft, AiOutlineSearch} from 'react-icons/ai'
-import { Box, Text, Flex, Divider, Button, SimpleGrid, Card, ButtonGroup, Select, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import {CardFooter,CardBody,Heading,CardHeader,Spinner,Box, Text, Flex, Divider, Button, SimpleGrid, Card, ButtonGroup, Select, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import CardProduct from '../../components/Store/CardProduct'
 import Layout from '../../components/Layout';
 import axios from 'axios';
@@ -17,19 +17,27 @@ const Store = () => {
     headers: {Authorization : `Bearer ${token}`},
   }
 const [product,setProduct] = useState([]);
+const [filterCate,setFilterCate] = useState('');
 const navi = useNavigate();
 
 const getProduct = () =>{
   axios
-  .get('https://rubahmerah.site/products',config)
+  .get(`https://rubahmerah.site/products?itemcategory_id=${filterCate}&name=&city=&pages`,config)
   .then(res=>{
-    setProduct(res.data.data)
+    setProduct(res.data.data) 
   })
 }
 
+
 useEffect(()=>
-  getProduct(),[]
+getProduct(),[filterCate]
 )
+
+
+
+
+
+
   
 
   return (
@@ -44,8 +52,8 @@ useEffect(()=>
         <Flex>
         <Box  ml={'57%'}>
           <Flex mb='30px'>
-           <Select w={'200px'} bg='white' mr='30px' variant='filled' boxShadow={'xl'} placeholder='Category'>
-                  <option value= '1' >Sepatu</option>
+           <Select w={'200px'} value={filterCate} onChange={(e)=>{ setFilterCate(e.target.value) }} bg='white' mr='30px' variant='filled' boxShadow={'xl'} placeholder='Category'>
+                  <option value= '1'>Sepatu</option>
                   <option value= '2'>Jersey</option>
                   <option value= '3'>Bola</option>
                   <option value= '4'>Raket</option>
@@ -54,9 +62,16 @@ useEffect(()=>
                   <option value= '7'>Aksesoris</option>
            </Select>
            <Select w={'200px'} bg='white' mr='30px' variant='filled' boxShadow={'xl'} placeholder='City'>
-           <option value='option1'>Option 1</option>
-           <option value='option2'>Option 2</option>
-           <option value='option3'>Option 3</option>
+           <option value=''>Jakarta</option>
+           <option value=''>Bogor</option>
+           <option value=''>Depok</option>
+           <option value=''>Tangerang</option>
+           <option value=''>Bekasi</option>
+           <option value=''>Bandung</option>
+           <option value=''>Semarang</option>
+           <option value=''>Malang</option>
+           <option value=''>Surabaya</option>
+           <option value=''>Jogjakarta</option>
            </Select>
            <InputGroup w={'250px'} boxShadow={'xl'} varian='filled'>
               <InputLeftElement
@@ -70,10 +85,10 @@ useEffect(()=>
         </Flex>
         <SimpleGrid columns={{sm:2, md:4}} gap={8}>
         
-        {product.map((item)=>(
+        {product != null ? (product.map((item)=>(
               <CardProduct 
               key={item.id}
-              image=''
+              image={item.product_image != null ? item.product_image[0].url : "https://www.hostpapa.com/knowledgebase/wp-content/uploads/2018/04/1-13.png"}
               nama={item.name}
               harga={item.price}
               bilaClick={()=>{navi('/detailstore', {
@@ -81,9 +96,16 @@ useEffect(()=>
                   id : item.id
                 }
               })}}/>
-        ))}
-    
-       
+              ))) :  <Card align='center' w={'8xl'} >
+              <CardHeader>
+                <Heading size='3xl' color={'brand.300'}>There is no item on this category yet </Heading>
+              </CardHeader>
+              <CardFooter>
+                 <Button bg='brand.300' color={'brand.100'} onClick={()=>{navi('/myproduct')}}>Lets GO sell something </Button>
+              </CardFooter>
+            </Card>
+           
+            }
         </SimpleGrid>
       </Box>
       </Layout>

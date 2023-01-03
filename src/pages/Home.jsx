@@ -1,5 +1,5 @@
 import React from "react";
-import InfiniteScroll from "react-infinite-scroller";
+
 import CardEvent from '../components/Home/CardEvent'
 import { Box, Stack, Text, Flex, Image, Button, Select, FormControl, FormLabel, Spinner, Card,  CardBody, Input, Heading, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from '@chakra-ui/react'
 import { FiUser } from "react-icons/fi";
@@ -281,6 +281,7 @@ const Home = () => {
           <option value='option3'>Yogyakarta</option>
         </Select>
         </Flex>
+
         {
           loading 
            ? skeleton.map((item) => <Spinner/>)
@@ -307,6 +308,15 @@ const Home = () => {
               />
            ))   
         }
+            ))
+            : <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='blue.500'
+            size='xl'
+          />
+            }
         <Button mt={'2%'} backgroundColor={'brand.300'} _hover={{bg: 'primary.300'}} color={'white'} onClick={() => {getEvent()}}>Load More Event</Button>
         </Box>
           </div>
