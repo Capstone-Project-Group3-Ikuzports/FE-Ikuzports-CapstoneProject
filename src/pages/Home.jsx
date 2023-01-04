@@ -6,7 +6,6 @@ import {
   Text,
   Flex,
   Image,
-  Button,
   Select,
   FormControl,
   FormLabel,
@@ -34,6 +33,7 @@ import UploadFiles from "../components/UploadFiles";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
+import Button from '../components/Baru/Button'
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -188,18 +188,7 @@ const Home = () => {
                       Start Posting Now
                     </Text>
                   </Flex>
-                  <Button
-                    justify="end"
-                    onClick={onOpen}
-                    justifyContent="end"
-                    px="10"
-                    backgroundColor={"brand.300"}
-                    _hover={{ bg: "brand.200" }}
-                    color={"white"}
-                    ml={"82%"}
-                  >
-                    Post
-                  </Button>
+                  <Button textContent="Post" textColor="white"/>
                 </CardBody>
               </Card>
 
