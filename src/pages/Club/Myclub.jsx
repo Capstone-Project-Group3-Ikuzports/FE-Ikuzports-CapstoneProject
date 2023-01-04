@@ -8,6 +8,8 @@ import {
   Divider,
   SimpleGrid,
   Spinner,
+  CardBody,
+  Heading,
 } from "@chakra-ui/react";
 import {Buttons} from "../../components/Baru/ButtonBack";
 import Layout from "../../components/Layout";
@@ -16,6 +18,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import {ButtonBack} from "../../components/Baru/ButtonBack";
+import CardEventClub from "../../components/Baru/CardEventClub";
 
 const Myclub = () => {
   const navigate = useNavigate();
@@ -66,23 +69,29 @@ const Myclub = () => {
                 (" ");
               } else {
                 return (
-                  <CardMyClub
-                    key={data.id}
-                    category={data.category}
-                    city={data.city}
-                    join={data.joined_member}
-                    logo={data.logo}
-                    total={data.member_total}
-                    name={data.name}
-                    status={data.status}
-                    onClick={() =>
-                      navigate("/clubjoin", {
-                        state: {
-                          id: data.club_id,
-                        },
-                      })
+                  <CardEventClub linkGambar={data.logo} onClick={() => navigate('/clubjoin', {
+                    state : {
+                      id: data.id
                     }
-                  />
+                  })}>
+                    <CardBody pb="0" h={200}>
+                      <Flex>
+                        <Heading size="xl" w={"100%"}>
+                          {data.name}
+                        </Heading>
+                        <Box pl="30%">
+                          <Text bg={"brand.200"} color='white' w={100} mx='auto' pt={"20px"} textAlign={'center'} rounded='lg' p={3} as='b'>{data.status}</Text>
+                        </Box>
+                      </Flex>
+
+                      <Text py="2">
+                        Member : {data.joined_member} / {data.member_total}
+                      </Text>
+                      <Text pb="2">Category {data.category}</Text>
+                      <Text pb="2">Location : {data.city}</Text>
+                      <Text pb="2">STATUS : {data.status}</Text>
+                    </CardBody>
+                  </CardEventClub>
                 );
               }
             })

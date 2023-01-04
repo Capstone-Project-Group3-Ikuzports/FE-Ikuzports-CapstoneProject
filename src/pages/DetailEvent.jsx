@@ -126,7 +126,7 @@ const DetailEvent = () => {
           </Text>
         </Flex>
         <Stack w={"200px"} ml="auto">
-          <Button
+          <Buttons
             openTrigger={onSubmitHandler}
             changeTrigger={(e) => setEventId(e.target.value)}
             textContent="Join Event"/>
@@ -141,9 +141,9 @@ const DetailEvent = () => {
             <ModalBody mx="auto">Join Succes</ModalBody>
 
             <ModalFooter mx="auto">
-              <Button bg={"brand.300"} _hover={{bg: "brand.200"}} color='white' px={10} onClick={onClose}>
+              <Buttons bg={"brand.300"} _hover={{bg: "brand.200"}} color='white' px={10} onClick={onClose}>
                 Ok
-              </Button>
+              </Buttons>
             </ModalFooter>
           </ModalContent>
         </Modal>

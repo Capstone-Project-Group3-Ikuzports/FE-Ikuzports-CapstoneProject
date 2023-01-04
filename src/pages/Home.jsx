@@ -3,6 +3,7 @@ import CardEvent from "../components/Home/CardEvent";
 import {
   Box,
   Stack,
+  Spacer,
   Text,
   Flex,
   Image,
@@ -23,6 +24,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import { FiUser } from "react-icons/fi";
+import CardEventClub from '../components/Baru/CardEventClub'
 import { useState } from "react";
 import { ButtonCreate } from "../components/Baru/ButtonBack";
 import { useEffect } from "react";
@@ -337,28 +339,28 @@ const Home = () => {
 
                 {
                   loading 
-                  ? skeleton.map((item) => <Spinner/>)
-                  : getEvents.map((data) => (
-                      <CardEvent
-                      key = {data.id}
-                      address = {data.address}
-                      category = {data.category_name}
-                      city = {data.city}
-                      selesai = {data.end_date}
-                      gambar = {data.image_event}
-                      total = {data.maximum_people}
-                      name = {data.name}
-                      mulai = {data.start_date}
-                      status= {data.status}
-                      user = {data.total_participant}
-                      diKlik = {() => {
+                  ? skeleton.map((data) => <Spinner/>)
+                  : getEvents.map((item) => (
+                      <CardEventClub linkGambar={item.image_event} onClick={() => {
                         navigate('/detailevent', {
-                          state : {
-                            id : data.id
+                          state: {
+                            id: item.id
                           }
                         })
-                      }}
-                      />
+                      }}>
+                        <CardBody w={'100%'} px={'70px'} pb={"0"}>
+                        <Heading size="md" mb={5}>{item.name}</Heading>
+                        <Flex>
+                          <Text>{item.start_date}</Text>
+                          <Spacer></Spacer>
+                          <Text>{item.end_date}</Text>
+                        </Flex>
+                        <Text py="1">Slot : {item.total_participant} / {item.maximum_people}</Text>
+                        <Text pb="1">Address : {item.address}</Text>
+                        <Text pb="1">City : {item.city}</Text>
+                        <Text pb="1">Category : {item.category_name}</Text>
+                      </CardBody>
+                      </CardEventClub>
                   ))   
                 }
                 <Box mt={10}>
@@ -376,32 +378,18 @@ const Home = () => {
 
                 {getClubSlice && loadingClub === false ?
                   getClubSlice.map((item) => (
-                    <Card
-                    direction={{ base: "column", sm: "row" }}
-                    overflow="hidden"
-                    variant="filled"
-                    w={"80%"}
-                    backgroundColor={"white"}
-                    mb={"5%"}
-                    mt={10}
-                  >
-                    <Image
-                      objectFit="cover"
-                      maxW={{ base: "100%", sm: "30%",}}
-                      maxH={{ base: "100%", sm: "30%",}}
-                      src={item.logo}
-                      alt="Caffe Latte"
-                    />
-                    <Stack>
+                    <CardEventClub linkGambar={item.logo} key={item.id} onClick={() => navigate('/detailclub', {
+                      state : {
+                        id: item.id
+                      }
+                    })}>
                       <CardBody w={'100%'} pb={"0"}>
                         <Heading size="md">{item.name}</Heading>
-  
                         <Text py="1">Member: {item.joined_member} / {item.member_total}</Text>
                         <Text pb="1">{item.category_name}</Text>
                         <Text pb="1">{item.city}</Text>
                       </CardBody>
-                    </Stack>
-                  </Card>
+                    </CardEventClub>
                   ))
                   : <Spinner/>
                 }

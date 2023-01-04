@@ -6,9 +6,10 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ButtonBack } from '../../components/Baru/ButtonBack';
 import axios from 'axios';
-import {Spinner, Box, Text, Flex, Divider, SimpleGrid, Select, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import {Spinner, Box, Text, Flex, Divider, SimpleGrid, Select, Input, InputGroup, InputLeftElement, CardBody, Heading } from "@chakra-ui/react";
 import CardClub from '../../components/CardClub';
 import Layout from '../../components/Layout';
+import CardEventClub from '../../components/Baru/CardEventClub';
 
 const ClubList = () => {
   const [getMyClub, setGetMyClub] = useState('')
@@ -72,22 +73,18 @@ const ClubList = () => {
         <SimpleGrid columns={{sm:2, md:4}} gap={8}>
         {getMyClub && loading === false ?
           getMyClub.map(data => (
-            <CardClub
-            key = {data.id}
-            name = {data.name}
-            member = {data.joined_member}
-            totalMember = {data.member_total}
-            category = {data.category_name}
-            kota= {data.city}
-            gambar = {data.logo}
-            diKlik = {() => {
-              navigate('/detailclub', {
-                state : {
-                  id : data.id
-                }
-              })
-            }}
-            />
+            <CardEventClub linkGambar={data.logo} onClick={() => navigate('/detailclub', {
+              state : {
+                id: data.id
+              }
+            })}>
+              <CardBody w={'100%'} pb={"0"}>
+                <Heading size="md" mb={5}>{data.name}</Heading>
+                <Text py="1">Member : {data.joined_member} / {data.member_total}</Text>
+                <Text pb="1">{data.category_name}</Text>
+                <Text pb="1">{data.city}</Text>
+              </CardBody>
+            </CardEventClub>
           ))
           : <Spinner
           thickness='4px'

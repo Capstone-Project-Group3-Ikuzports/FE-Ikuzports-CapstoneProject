@@ -1,8 +1,9 @@
 import React from 'react'
+import { Stack, Card, Image } from '@chakra-ui/react'
 
-const Card = ({children, linkGambar}) => {
+const CardEventClub = ({children, linkGambar, onClick}) => {
   return (
-    <div>
+    <div onClick={onClick}>
       <Card
         direction={{ base: 'column', sm: 'row' }}
         overflow='hidden'
@@ -11,10 +12,12 @@ const Card = ({children, linkGambar}) => {
         mt={'50px'}
         shadow='xl'
         _hover={{cursor: 'pointer'}}
+        h={"200px"}
         >
         <Image
           objectFit='cover'
-          maxW={{ base: '100%', sm: '300px' }}
+          maxW={{ base: '100%', sm: '200px' }}
+          maxH={{ base: '100%', sm: '300px' }}
           src={linkGambar}
           alt='Caffe Latte'
         />
@@ -26,4 +29,4 @@ const Card = ({children, linkGambar}) => {
   )
 }
 
-export default Card
+export default CardEventClub
