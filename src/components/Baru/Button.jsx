@@ -1,7 +1,9 @@
 import React from 'react'
 import { Button } from '@chakra-ui/react'
+import { BiArrowBack } from "react-icons/bi";
+import { useNavigate } from "react-router";
 
-const Button = ({textContent, openTrigger, textColor}) => {
+const Buttons = ({textContent, openTrigger, textColor}) => {
   return (
     <div>
         <Button
@@ -11,7 +13,7 @@ const Button = ({textContent, openTrigger, textColor}) => {
             px="10"
             backgroundColor={"brand.300"}
             _hover={{ bg: "brand.200" }}
-            color={textColor}
+            color={"white"}
             >
             {textContent}
         </Button>
@@ -19,4 +21,4 @@ const Button = ({textContent, openTrigger, textColor}) => {
   )
 }
 
-export default Button
+export default Buttons

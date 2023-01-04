@@ -5,8 +5,7 @@ const CardEvent = ({address, category, city, selesai, gambar, total, name, mulai
 
   return (
     <div onClick={diKlik}>
-
-          <Card
+        <Card
         direction={{ base: 'column', sm: 'row' }}
         overflow='hidden'
         variant='filled'

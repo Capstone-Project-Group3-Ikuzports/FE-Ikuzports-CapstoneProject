@@ -24,16 +24,17 @@ import {
 } from "@chakra-ui/react";
 import { FiUser } from "react-icons/fi";
 import { useState } from "react";
-import { ButtonCreate } from "../components/Button";
+import { ButtonCreate } from "../components/Baru/ButtonBack";
 import { useEffect } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import UploadFiles from "../components/UploadFiles";
+import UploadFiles from "../components/Baru/UploadFiles";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
 import Button from '../components/Baru/Button'
+import Dropdown from "../components/Baru/Dropdown";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -188,7 +189,7 @@ const Home = () => {
                       Start Posting Now
                     </Text>
                   </Flex>
-                  <Button textContent="Post"/>
+                  <Button textContent="Post" openTrigger={onOpen}/>
                 </CardBody>
               </Card>
 
@@ -288,14 +289,7 @@ const Home = () => {
               </Modal>
               <Box mt={"30px"}>
                 <Flex>
-                  <Select
-                    placeholder="City"
-                    variant="filled"
-                    shadow="2xl"
-                    w={220}
-                    backgroundColor={"white"}
-                    mr={"20px"}
-                  >
+                    <Dropdown placeHolderProps={"CoAb-COAB"}>
                     <option value="option1">Jakarta</option>
                     <option value="option2">Bogor</option>
                     <option value="option3">Depok</option>
@@ -303,7 +297,8 @@ const Home = () => {
                     <option value="option3">Bekasi</option>
                     <option value="option3">Bandung</option>
                     <option value="option3">Yogyakarta</option>
-                  </Select>
+                    </Dropdown>
+
                   <Select
                     placeholder="Category"
                     variant="filled"
