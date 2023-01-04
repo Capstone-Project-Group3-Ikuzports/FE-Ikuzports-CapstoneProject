@@ -10,31 +10,23 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Center,
   SimpleGrid,
   Text,
-  HStack,
-  VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { AiTwotoneContainer } from "react-icons/ai";
 import { BsGearFill } from "react-icons/bs";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import {
-  ButtonAddActivity,
-  ButtonAddPhoto,
-  ButtonBack,
-} from "../../components/Button";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ButtonAddActivity, ButtonBack } from "../../components/Button";
 import CardActivity from "../../components/ClubJoin/CardActivity";
 import CardGallery from "../../components/ClubJoin/CardGallery";
 import ChatDiscuss from "../../components/ClubJoin/ChatDiscuss";
+import ModalMember from "../../components/ClubJoin/ModalMember";
+import HandleGaleries from "../../components/ClubJoin/ModalPostGaleries";
+import ModalRules from "../../components/ClubJoin/ModalRules";
 import Layout from "../../components/Layout";
-import { useLocation } from "react-router-dom";
-
-// 10 ganti dengan params
 
 const ClubJoin = () => {
   const user = useSelector((state) => state.users.currentUser);
@@ -43,18 +35,18 @@ const ClubJoin = () => {
   const [chat, setChat] = useState([]);
   const [message, setMessage] = useState("");
   const [galeries, setGaleries] = useState([]);
-  // console.log(galeries);
   const location = useLocation();
   const id_club = location?.state.id;
-  // console.log(id_club);
-  // console.log(data);
 
   // === URL === //
   const urlIdClub = `https://rubahmerah.site/clubs/${id_club}`;
   const urlActivityIdClub = `https://rubahmerah.site/clubs/${id_club}/activities`;
+  const urlMemberIdClub = `https://rubahmerah.site/clubs/${id_club}/members`;
   const urlChatIdClub = `https://rubahmerah.site/clubs/${id_club}/chats`;
   const urlGetGaleriesIdClub = `https://rubahmerah.site/clubs/${id_club}/galeries`;
   const urladdChat = `https://rubahmerah.site/chats`;
+  const urladdGaleries = `https://rubahmerah.site/galeries`;
+
   const navigate = useNavigate();
 
   const configPutNPost = {
@@ -73,10 +65,22 @@ const ClubJoin = () => {
       .get(urlIdClub, configGetNDelete)
       .then((res) => {
         setData(res.data.data);
-        // console.log(res);
       })
       .catch((err) => console.log(err));
   };
+
+  //=== GET MEMBER CLUB ===//
+  const [memberRaw, setMemberRaw] = useState([]);
+
+  const getMember = () => {
+    axios
+      .get(urlMemberIdClub, configGetNDelete)
+      .then((res) => {
+        setMemberRaw(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
   //=== GET ACTIVITY CLUB ===//
   const getClubActivity = async () => {
     await axios
@@ -102,6 +106,7 @@ const ClubJoin = () => {
         console.log(err);
       });
   };
+
   //=== GET GALERIES ===//
   const getGaleries = async () => {
     await axios
@@ -131,7 +136,24 @@ const ClubJoin = () => {
     getClubChat();
   };
 
+  //=== POST PHOTO GALERIES ===//
+  const postGaleries = async (datapost) => {
+    console.log(datapost);
+    const photo = new FormData();
+    photo.append("club_id", data.id);
+    photo.append("caption", datapost.caption);
+    photo.append("url", datapost.file);
+    console.log([...photo]);
+
+    await axios
+      .post(urladdGaleries, photo, configPutNPost)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+    getGaleries();
+  };
+
   useEffect(() => {
+    getMember();
     getGaleries();
     getClubID();
     getClubActivity();
@@ -162,15 +184,12 @@ const ClubJoin = () => {
                     fontWeight={"bold"}
                     color={"brand.300"}
                   >{`${data?.name?.toUpperCase()}`}</Text>
-                  <Text
-                    as={"a"}
-                    fontSize={"1.2em"}
-                    color={"brand.500"}
-                    _hover={{ color: "primary.500" }}
-                    cursor={"pointer"}
-                  >
-                    {`Member : ${data.joined_member} / ${data.member_total} `}
-                  </Text>
+                  <ModalMember
+                    totalmember={data.member_total}
+                    joinedmember={data.joined_member}
+                    memberRaw={memberRaw}
+                  />
+
                   <Text
                     as={"p"}
                     fontWeight={"medium"}
@@ -223,7 +242,7 @@ const ClubJoin = () => {
           <Box display={"flex"} flexDirection={"column"} w={"25vw"}>
             <Flex justify={"end"} gap={2} p={2} color={"brand.200"} pb={24}>
               <Box _hover={{ color: "primary.400" }}>
-                <AiTwotoneContainer size={40} cursor={"pointer"} />
+                <ModalRules body={data.rule} />
               </Box>
               <Box _hover={{ color: "primary.400" }}>
                 <BsGearFill
@@ -246,7 +265,7 @@ const ClubJoin = () => {
 
               {/* AKAN DIBUAT COMPONENT UNTUK MAPPING */}
               <CardBody overflow={"auto"}>
-                {chat.map((data) => (
+                {chat?.map((data) => (
                   <ChatDiscuss
                     key={data.id}
                     justify={user.id === data.user_id ? "end" : "start"}
@@ -266,14 +285,26 @@ const ClubJoin = () => {
                     value={message}
                   />
                   <InputRightElement width="4.5rem" type={"submit"}>
-                    <Button
-                      h="1.75rem"
-                      size="md"
-                      variant={"ghost"}
-                      onClick={postChat}
-                    >
-                      <RiSendPlaneFill size={20} color={"#4483c2"} />
-                    </Button>
+                    {message.length === 0 ? (
+                      <Button
+                        disabled
+                        h="1.75rem"
+                        size="md"
+                        variant={"ghost"}
+                        onClick={postChat}
+                      >
+                        <RiSendPlaneFill size={20} color={"#4483c2"} />
+                      </Button>
+                    ) : (
+                      <Button
+                        h="1.75rem"
+                        size="md"
+                        variant={"ghost"}
+                        onClick={postChat}
+                      >
+                        <RiSendPlaneFill size={20} color={"#4483c2"} />
+                      </Button>
+                    )}
                   </InputRightElement>
                 </InputGroup>
               </CardFooter>
@@ -284,7 +315,7 @@ const ClubJoin = () => {
           <Box py={4}>
             <Card variant={"filled"}>
               <CardBody minH={"40vh"}>
-                <ButtonAddPhoto />
+                <HandleGaleries title={"Add photo"} post={postGaleries} />
                 <SimpleGrid
                   pt={4}
                   spacing={8}
@@ -292,7 +323,7 @@ const ClubJoin = () => {
                   h={"30%"}
                   columns={{ sm: 2, md: 4 }}
                 >
-                  {galeries.map((data) => (
+                  {galeries?.map((data) => (
                     <CardGallery image={data.url} key={data.id} />
                   ))}
                 </SimpleGrid>
