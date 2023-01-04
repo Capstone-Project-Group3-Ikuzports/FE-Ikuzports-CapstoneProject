@@ -188,7 +188,7 @@ const Home = () => {
                       Start Posting Now
                     </Text>
                   </Flex>
-                  <Button textContent="Post" textColor="white"/>
+                  <Button textContent="Post"/>
                 </CardBody>
               </Card>
 
