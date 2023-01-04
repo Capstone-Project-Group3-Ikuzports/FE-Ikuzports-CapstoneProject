@@ -43,6 +43,10 @@ const Home = () => {
   const isError = input === " ";
   const currentUser = useSelector((state) => state.users.currentUser);
   const token = currentUser.token;
+  const currentToken = useSelector((state) => state.access.currentAccess);
+  const tokenAkses = currentToken.access_token;
+  console.log("redux", tokenAkses);
+
   const navigate = useNavigate();
 
   const [getEvents, setGetEvents] = useState([]);
@@ -56,10 +60,10 @@ const Home = () => {
   const [files, setFiles] = useState();
   const [prev, setPrev] = useState();
   const [maximum_people, setMaximumPeople] = useState("");
-  const [skeleton] = useState([1])
-  const [page, setPage] = useState(1)
-  const [getClubNew, setGetClubNew] = useState([])
-  const [loadingClub, setLoadingClub] = useState(false)
+  const [skeleton] = useState([1]);
+  const [page, setPage] = useState(1);
+  const [getClubNew, setGetClubNew] = useState([]);
+  const [loadingClub, setLoadingClub] = useState(false);
 
   const config = {
     headers: {
@@ -68,37 +72,38 @@ const Home = () => {
     },
   };
 
-  const getClub = async() => {
-    await axios.get(`https://rubahmerah.site/clubs`, config)
-    .then((response) => {
-      setLoadingClub(true)
-      setGetClubNew(response.data.data)
-      console.log(response.data.data)
-      setLoadingClub(false)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }
-  const getClubSlice = getClubNew.slice(0,3)
+  const getClub = async () => {
+    await axios
+      .get(`https://rubahmerah.site/clubs`, config)
+      .then((response) => {
+        setLoadingClub(true);
+        setGetClubNew(response.data.data);
+        console.log(response.data.data);
+        setLoadingClub(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const getClubSlice = getClubNew.slice(0, 3);
 
   const getEvent = async () => {
     await axios
       .get(`https://rubahmerah.site/events?page=${page}`, config)
       .then((response) => {
-        const result = response.data.data
-        const newPage = page + 1
-        const temp = [...getEvents]
-        temp.push(...result)
+        const result = response.data.data;
+        const newPage = page + 1;
+        const temp = [...getEvents];
+        temp.push(...result);
         setGetEvents(temp);
-        setPage(newPage)
+        setPage(newPage);
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
       })
       .finally(() => {
-        setLoading(false)
-      })
+        setLoading(false);
+      });
   };
 
   const addEvent = async () => {
@@ -112,7 +117,7 @@ const Home = () => {
     formerData.append("maximum_people", maximum_people);
     formerData.append("description", description);
     formerData.append("image_event", files);
-    console.log([...formerData])
+    console.log([...formerData]);
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -145,7 +150,7 @@ const Home = () => {
 
   useEffect(() => {
     getEvent();
-    getClub()
+    getClub();
   }, []);
 
   return (
@@ -349,39 +354,39 @@ const Home = () => {
                   </Select>
                 </Flex>
 
-                {
-                  loading 
-                  ? skeleton.map((item) => <Spinner/>)
+                {loading
+                  ? skeleton.map((item) => <Spinner />)
                   : getEvents.map((data) => (
                       <CardEvent
-                      key = {data.id}
-                      address = {data.address}
-                      category = {data.category_name}
-                      city = {data.city}
-                      selesai = {data.end_date}
-                      gambar = {data.image_event}
-                      total = {data.maximum_people}
-                      name = {data.name}
-                      mulai = {data.start_date}
-                      status= {data.status}
-                      user = {data.total_participant}
-                      diKlik = {() => {
-                        navigate('/detailevent', {
-                          state : {
-                            id : data.id
-                          }
-                        })
-                      }}
+                        key={data.id}
+                        address={data.address}
+                        category={data.category_name}
+                        city={data.city}
+                        selesai={data.end_date}
+                        gambar={data.image_event}
+                        total={data.maximum_people}
+                        name={data.name}
+                        mulai={data.start_date}
+                        status={data.status}
+                        user={data.total_participant}
+                        diKlik={() => {
+                          navigate("/detailevent", {
+                            state: {
+                              id: data.id,
+                            },
+                          });
+                        }}
                       />
-                  ))   
-                }
-                <Button 
-                onClick={getEvent}  
-                backgroundColor={"brand.300"}
-                _hover={{ bg: "brand.200" }}
-                color={"white"}
-                mt={10}
-                >Load More Events</Button>
+                    ))}
+                <Button
+                  onClick={getEvent}
+                  backgroundColor={"brand.300"}
+                  _hover={{ bg: "brand.200" }}
+                  color={"white"}
+                  mt={10}
+                >
+                  Load More Events
+                </Button>
               </Box>
             </div>
             <div className="full-width">
@@ -400,37 +405,39 @@ const Home = () => {
                 >
                   Find your own club now{" "}
                 </Button>
-                {getClubSlice && loadingClub === false ?
+                {getClubSlice && loadingClub === false ? (
                   getClubSlice.map((item) => (
                     <Card
-                    direction={{ base: "column", sm: "row" }}
-                    overflow="hidden"
-                    variant="filled"
-                    w={"80%"}
-                    backgroundColor={"white"}
-                    mb={"5%"}
-                  >
-                    <Image
-                      objectFit="cover"
-                      maxW={{ base: "100%", sm: "30%",}}
-                      maxH={{ base: "100%", sm: "30%",}}
-                      src={item.logo}
-                      alt="Caffe Latte"
-                    />
-                    <Stack>
-                      <CardBody w={'100%'} pb={"0"}>
-                        <Heading size="md">{item.name}</Heading>
-  
-                        <Text py="1">Member: {item.joined_member} / {item.member_total}</Text>
-                        <Text pb="1">{item.category_name}</Text>
-                        <Text pb="1">{item.city}</Text>
-                      </CardBody>
-                    </Stack>
-                  </Card>
+                      direction={{ base: "column", sm: "row" }}
+                      overflow="hidden"
+                      variant="filled"
+                      w={"80%"}
+                      backgroundColor={"white"}
+                      mb={"5%"}
+                    >
+                      <Image
+                        objectFit="cover"
+                        maxW={{ base: "100%", sm: "30%" }}
+                        maxH={{ base: "100%", sm: "30%" }}
+                        src={item.logo}
+                        alt="Caffe Latte"
+                      />
+                      <Stack>
+                        <CardBody w={"100%"} pb={"0"}>
+                          <Heading size="md">{item.name}</Heading>
+
+                          <Text py="1">
+                            Member: {item.joined_member} / {item.member_total}
+                          </Text>
+                          <Text pb="1">{item.category_name}</Text>
+                          <Text pb="1">{item.city}</Text>
+                        </CardBody>
+                      </Stack>
+                    </Card>
                   ))
-                  : <Spinner/>
-                }
-                
+                ) : (
+                  <Spinner />
+                )}
               </Box>
             </div>
           </Flex>

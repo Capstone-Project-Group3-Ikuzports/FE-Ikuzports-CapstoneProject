@@ -15,7 +15,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import {ButtonBack} from "../../components/Button";
+import { ButtonBack } from "../../components/Button";
 
 const Myclub = () => {
   const navigate = useNavigate();
@@ -51,26 +51,25 @@ const Myclub = () => {
       <Box p="8" px={"10%"} w={"100vw"} h={"100vh"} overflowX="hidden">
         <ButtonBack />
         <Flex>
-        <Text fontSize={"5xl"}>My Club</Text>
-        <Button
+          <Text fontSize={"5xl"}>My Club</Text>
+          <Button
             px="3%"
             ml="auto"
             mt={4}
-            mb='30px'
+            mb="30px"
             justify="end"
             justifyContent={"end"}
             bg={"brand.300"}
-            _hover={{bg: "brand.200"}}
+            _hover={{ bg: "brand.200" }}
             color="white"
             justifyItems="end"
             onClick={() => navigate("/addnewclub")}
           >
             Create a Club
           </Button>
-        </Flex> 
+        </Flex>
         <Divider w="17%" orientation="horizontal" />
-        <Box justify="end" ml={"92%"} justifyContent={"end"}>
-        </Box>
+        <Box justify="end" ml={"92%"} justifyContent={"end"}></Box>
         <SimpleGrid columns={{ sm: 1, md: 2 }} gap={8}>
           {getMyClub && loading === false ? (
             getMyClub.map((data) => {
