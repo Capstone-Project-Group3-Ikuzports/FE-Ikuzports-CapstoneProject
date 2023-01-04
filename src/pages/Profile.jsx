@@ -20,7 +20,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { ButtonBack, ButtonCancel, ButtonSave } from "../components/Button";
+import { ButtonBack, ButtonCancel, ButtonSave } from "../components/Baru/ButtonBack";
 import Layout from "../components/Layout";
 import UploadFiles from "../components/UploadFiles";
 import { clearUser } from "../redux/reducer/reducer";

@@ -33,7 +33,7 @@ import UploadFiles from "../components/Baru/UploadFiles";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
-import Button from '../components/Baru/Button'
+import { ButtonSave, Buttons } from "../components/Baru/ButtonBack";
 import Dropdown from "../components/Baru/Dropdown";
 
 const Home = () => {
@@ -154,7 +154,7 @@ const Home = () => {
       <div>
         <Box p="8" px={"10%"} w={"100vw"} h={"100%"}>
           <Flex>
-            <div>
+            <Box w="60%">
               <Text as="b" fontSize={"2xl"}>
                 Home
               </Text>
@@ -189,7 +189,9 @@ const Home = () => {
                       Start Posting Now
                     </Text>
                   </Flex>
-                  <Button textContent="Post" openTrigger={onOpen}/>
+                  <Box ml='80%'>
+                  <Buttons textContent="Post" openTrigger={onOpen}/>
+                  </Box>
                 </CardBody>
               </Card>
 
@@ -359,31 +361,19 @@ const Home = () => {
                       />
                   ))   
                 }
-                <Button 
-                onClick={getEvent}  
-                backgroundColor={"brand.300"}
-                _hover={{ bg: "brand.200" }}
-                color={"white"}
-                mt={10}
-                >Load More Events</Button>
-              </Box>
-            </div>
-            <div className="full-width">
+                <Box mt={10}>
+                <Buttons 
+                openTrigger={getEvent}  
+                textContent={"Load More Event"}/>
+                </Box>
+                </Box>
+            </Box>
+            <Box w="40%">
               <Box mt={"6%"} ml={"16%"} w={"100%"} position="sticky" top={"0"}>
-                <Button
-                  backgroundColor={"brand.300"}
-                  shadow={"xl"}
-                  w={"70%"}
-                  mb={"8%"}
-                  px={"5%"}
-                  py={"2%"}
-                  _hover={{ bg: "brand.200" }}
-                  onClick={() => navigate("/clublist")}
-                  color="white"
-                  rounded="xl"
-                >
-                  Find your own club now{" "}
-                </Button>
+                <Buttons
+                  openTrigger={() => navigate("/clublist")}
+                  textContent="Find More Club"/>
+
                 {getClubSlice && loadingClub === false ?
                   getClubSlice.map((item) => (
                     <Card
@@ -393,6 +383,7 @@ const Home = () => {
                     w={"80%"}
                     backgroundColor={"white"}
                     mb={"5%"}
+                    mt={10}
                   >
                     <Image
                       objectFit="cover"
@@ -416,7 +407,7 @@ const Home = () => {
                 }
                 
               </Box>
-            </div>
+            </Box>
           </Flex>
         </Box>
       </div>

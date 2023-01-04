@@ -15,7 +15,7 @@ import Sample3 from "../../assets/sampleJersey3.jpeg";
 import {
   ButtonBack,
   ButtonBuy
-} from "../../components/Button";
+} from "../../components/Baru/ButtonBack";
 import Layout from "../../components/Layout";
 
 

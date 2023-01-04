@@ -1,8 +1,10 @@
 import React from 'react';
 import { useState,useEffect } from 'react';
-import { Box, Button, Divider, Flex, FormLabel, Input, InputGroup, InputLeftAddon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, SimpleGrid, Text, Textarea, useDisclosure } from "@chakra-ui/react";
+import { Box, Divider, Flex, FormLabel, Input, InputGroup, InputLeftAddon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, SimpleGrid, Text, Textarea, useDisclosure } from "@chakra-ui/react";
 import axios from 'axios';
-import { ButtonBack } from '../../components/Button';
+import {Buttons} from '../../components/Baru/ButtonBack';
+import {ButtonsCancel} from '../../components/Baru/ButtonBack';
+import { ButtonBack } from '../../components/Baru/ButtonBack';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import Layout from '../../components/Layout';
@@ -86,9 +88,10 @@ const modalPost = async ()=>{
         <ButtonBack/>
         <Flex>
         <Text fontSize={'5xl'}>My Product</Text>
-        <Button bg={"brand.300"} verticalAlign={'center'} mt={4} ml='auto' hover={{bg: "brand.200"}} onClick={onOpen} color='white' px={10}>Add a Product</Button>
+        <Box verticalAlign={'center'} mt={4} ml='auto'>
+        <Buttons openTrigger={onOpen} textContent="Add A Product"/>
+        </Box>
         </Flex>
-        
         <Divider w="17%" orientation='horizontal' />
         <Flex>
         <Box  ml='auto' mb={10} >
@@ -137,10 +140,8 @@ const modalPost = async ()=>{
                   
                   </ModalBody>
                 <ModalFooter>
-                  <Button bg='black' color='white' px={10} mr={3} onClick={modalPost}>
-                    Yes
-                  </Button>
-                  <Button onClick={onClose} backgroundColor='red' color={'white'} px={7}>Cancel</Button>
+                  <Buttons textContent="Yes" mr={"30"} openTrigger={modalPost}/>
+                  <ButtonsCancel textContent="Cancel" openTrigger={onClose}/>
                 </ModalFooter>
               </ModalContent>
             </Modal>

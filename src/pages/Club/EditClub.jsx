@@ -16,7 +16,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { ButtonBack, ButtonClear, ButtonSave } from "../../components/Button";
+import { ButtonBack, ButtonClear, ButtonSave } from "../../components/Baru/ButtonBack";
 import Layout from "../../components/Layout";
 import UploadFiles from "../../components/UploadFiles";
 import Swal from "sweetalert2";

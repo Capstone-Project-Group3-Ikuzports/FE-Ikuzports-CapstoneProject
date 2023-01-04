@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import {AiOutlineSearch} from 'react-icons/ai'
 import {CardFooter,Heading,CardHeader,Box, Text, Flex, Divider, Button, SimpleGrid, Card, ButtonGroup, Select, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import CardProduct from '../../components/Store/CardProduct'
-import { ButtonBack } from '../../components/Button';
+import { ButtonBack } from '../../components/Baru/ButtonBack';
 import Layout from '../../components/Layout';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";

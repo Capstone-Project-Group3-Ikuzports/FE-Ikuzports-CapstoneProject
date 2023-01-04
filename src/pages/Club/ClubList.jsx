@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { ButtonBack } from '../../components/Button';
+import { ButtonBack } from '../../components/Baru/ButtonBack';
 import axios from 'axios';
 import {Spinner, Box, Text, Flex, Divider, SimpleGrid, Select, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import CardClub from '../../components/CardClub';

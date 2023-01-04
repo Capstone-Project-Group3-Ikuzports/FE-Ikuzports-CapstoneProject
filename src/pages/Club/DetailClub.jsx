@@ -1,7 +1,9 @@
 import React from "react";
 import Swal from "sweetalert2";
-import { Box, Flex, Text, Image, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from "@chakra-ui/react";
-import { ButtonBack } from "../../components/Button";
+import { Box, Flex, Text, Image, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from "@chakra-ui/react";
+import {Buttons} from "../../components/Baru/ButtonBack";
+import {ButtonsCancel} from "../../components/Baru/ButtonBack";
+import { ButtonBack } from "../../components/Baru/ButtonBack";
 import { useDisclosure } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -110,7 +112,7 @@ const DetailClub = () => {
           </Flex>
       
       <Box ml='auto' justif='end' w={'131px'}>
-        <Button bg='brand.300' _hover={{bg: "brand.200"}} onClick={onOpen} color={'white'} px={'50px'} mt={10}>Join</Button>
+        <Buttons  openTrigger={onOpen} textContent="Join"/>
         <Modal isOpen={isOpen} onClose={onClose} h={'100px'}>
           <ModalOverlay />
           <ModalContent>
@@ -121,10 +123,8 @@ const DetailClub = () => {
             </ModalBody>
 
             <ModalFooter>
-              <Button bg='red' color='white' mr={3} onClick={onClose}>
-                Cancel
-              </Button>
-              <Button bg='black' onClick={onSubmitHandler} color='white'>Accept</Button>
+              <ButtonsCancel textContent="Cancel" mr="10" openTrigger={onClose}/>
+              <Buttons textContent="Accept" openTrigger={onSubmitHandler}/>
             </ModalFooter>
           </ModalContent>
         </Modal>

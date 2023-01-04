@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { ButtonBack, ButtonClear, ButtonCreate } from "../../components/Button";
+import { ButtonBack, ButtonClear, ButtonCreate } from "../../components/Baru/ButtonBack";
 import UploadFiles from "../../components/UploadFiles";
 import Layout from "../../components/Layout";
 import { useSelector } from "react-redux";

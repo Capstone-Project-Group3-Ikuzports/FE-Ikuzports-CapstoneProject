@@ -6,16 +6,16 @@ import {
   Text,
   Flex,
   Divider,
-  Button,
   SimpleGrid,
   Spinner,
 } from "@chakra-ui/react";
+import {Buttons} from "../../components/Baru/ButtonBack";
 import Layout from "../../components/Layout";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import {ButtonBack} from "../../components/Button";
+import {ButtonBack} from "../../components/Baru/ButtonBack";
 
 const Myclub = () => {
   const navigate = useNavigate();
@@ -52,21 +52,9 @@ const Myclub = () => {
         <ButtonBack />
         <Flex>
         <Text fontSize={"5xl"}>My Club</Text>
-        <Button
-            px="3%"
-            ml="auto"
-            mt={4}
-            mb='30px'
-            justify="end"
-            justifyContent={"end"}
-            bg={"brand.300"}
-            _hover={{bg: "brand.200"}}
-            color="white"
-            justifyItems="end"
-            onClick={() => navigate("/addnewclub")}
-          >
-            Create a Club
-          </Button>
+        <Box verticalAlign={'center'} mt={4} ml='auto'>
+        <Buttons openTrigger={() => navigate("/addnewclub")} textContent="Add A Club"/>
+        </Box>
         </Flex> 
         <Divider w="17%" orientation="horizontal" />
         <Box justify="end" ml={"92%"} justifyContent={"end"}>

@@ -27,7 +27,7 @@ import {
   ButtonAddActivity,
   ButtonAddPhoto,
   ButtonBack,
-} from "../../components/Button";
+} from "../../components/Baru/ButtonBack";
 import CardActivity from "../../components/ClubJoin/CardActivity";
 import CardGallery from "../../components/ClubJoin/CardGallery";
 import ChatDiscuss from "../../components/ClubJoin/ChatDiscuss";

@@ -19,6 +19,49 @@ export const ButtonCancel = ({ onClick }) => {
   );
 };
 
+// === BUTTON FOR ALL === //
+export const Buttons = ({textContent, openTrigger, changeTrigger, ml, mr}) => {
+  return (
+    <div>
+        <Button
+            justify="end"
+            onClick={openTrigger}
+            onChange={changeTrigger}
+            justifyContent="end"
+            px="10"
+            backgroundColor={"brand.300"}
+            _hover={{ bg: "brand.200" }}
+            color={"white"}
+            mr={mr}
+            ml={ml}
+            >
+            {textContent}
+        </Button>
+    </div>
+  )
+}
+
+// === BUTTON CANCEL FOR MODAL AND PAGE === //
+export const ButtonsCancel = ({textContent, openTrigger, textColor, changeTrigger, ml, mr}) => {
+  return (
+    <div>
+        <Button
+            justify="end"
+            onClick={openTrigger}
+            onChange={changeTrigger}
+            justifyContent="end"
+            px="10"
+            backgroundColor={"brand.500"}
+            _hover={{ bg: "brand.900" }}
+            color={"white"}
+            ml={ml}
+            mr={mr}
+            >
+            {textContent}
+        </Button>
+    </div>
+  )
+}
 // === SAVE === //
 export const ButtonSave = ({ onClick, isLoading }) => {
   return (
