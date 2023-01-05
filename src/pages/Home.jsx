@@ -63,6 +63,9 @@ const Home = () => {
   const [page, setPage] = useState(1)
   const [getClubNew, setGetClubNew] = useState([])
   const [loadingClub, setLoadingClub] = useState(false)
+  const [filterCity,setFilterCity]= useState('')
+  const [filterCate,setFilterCate]= useState('')
+  const [filterStat,setFilterStat] = useState('')
 
   const config = {
     headers: {
@@ -87,7 +90,7 @@ const Home = () => {
 
   const getEvent = async () => {
     await axios
-      .get(`https://rubahmerah.site/events?page=${page}`, config)
+      .get(`https://rubahmerah.site/events?page=${page}&status=${filterStat}&city=${filterCity}&category_id=${filterCate}`, config)
       .then((response) => {
         const result = response.data.data
         const newPage = page + 1
@@ -103,6 +106,9 @@ const Home = () => {
         setLoading(false)
       })
   };
+
+
+ 
 
   const addEvent = async () => {
     const formerData = new FormData();
@@ -147,9 +153,9 @@ const Home = () => {
   };
 
   useEffect(() => {
-    getEvent();
     getClub()
-  }, []);
+    getEvent();
+  }, [filterCate,filterCity,filterStat]);
 
   return (
     <Layout>
@@ -293,48 +299,45 @@ const Home = () => {
               </Modal>
               <Box mt={"30px"}>
                 <Flex>
-                    <Dropdown placeHolderProps={"CoAb-COAB"}>
-                    <option value="option1">Jakarta</option>
-                    <option value="option2">Bogor</option>
-                    <option value="option3">Depok</option>
-                    <option value="option3">Tanggerang</option>
-                    <option value="option3">Bekasi</option>
-                    <option value="option3">Bandung</option>
-                    <option value="option3">Yogyakarta</option>
-                    </Dropdown>
-
-                  <Select
-                    placeholder="Category"
-                    variant="filled"
-                    shadow="2xl"
-                    w={220}
-                    backgroundColor={"white"}
-                    mr={"20px"}
-                  >
-                    <option value="option1">Jakarta</option>
-                    <option value="option2">Bogor</option>
-                    <option value="option3">Depok</option>
-                    <option value="option3">Tanggerang</option>
-                    <option value="option3">Bekasi</option>
-                    <option value="option3">Bandung</option>
-                    <option value="option3">Yogyakarta</option>
-                  </Select>
-                  <Select
-                    placeholder="Status"
-                    variant="filled"
-                    shadow="2xl"
-                    w={220}
-                    backgroundColor={"white"}
-                    mr={"20px"}
-                  >
-                    <option value="option1">Jakarta</option>
-                    <option value="option2">Bogor</option>
-                    <option value="option3">Depok</option>
-                    <option value="option3">Tanggerang</option>
-                    <option value="option3">Bekasi</option>
-                    <option value="option3">Bandung</option>
-                    <option value="option3">Yogyakarta</option>
-                  </Select>
+                <Dropdown
+                placeHolderProps={'City'}
+                targetValue={(e)=>setFilterCity(e.target.value)}
+                filterCates={filterCity}>
+                  <option value='Jakarta'>Jakarta</option>
+                  <option value='Bogor'>Bogor</option>
+                  <option value='Depok'>Depok</option>
+                  <option value='Tanggerang'>Tanggerang</option>
+                  <option value='Bekasi'>Bekasi</option>
+                  <option value='Bandung'>Bandung</option>
+                  <option value='Semarang'>Semarang</option>
+                  <option value='Malang'>Malang</option>
+                  <option value='Surabaya'>Surabaya</option>
+                  <option value='Jogjakarta'>Jogjakarta</option>
+                </Dropdown>
+                <Dropdown
+                placeHolderProps={'Category'}
+                targetValue={(e)=>setFilterCate(e.target.value)}
+                filterCates={filterCate}>
+                        <option value="1">SepakBola</option>
+                        <option value="2">Basket</option>
+                        <option value="3">Futsal</option>
+                        <option value="4">Bola Voli</option>
+                        <option value="5">Badminton</option>
+                        <option value="6">Bersepeda</option>
+                        <option value="7">Tenis Lapangan</option>
+                        <option value="8">Tenis Meja</option>
+                        <option value="9">Renang</option>
+                        <option value="10">Beladiri</option>
+                </Dropdown>
+                <Dropdown
+                placeHolderProps={'Status'}
+                targetValue={(e)=>setFilterStat(e.target.value)}
+                filterCates={filterStat}>
+                        <option value="Available">Available</option>
+                        <option value="Not Available">Not Available</option>
+                </Dropdown>
+                  
+                 
                 </Flex>
 
                 {

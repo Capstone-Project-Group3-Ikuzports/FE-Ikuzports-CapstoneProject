@@ -7,6 +7,7 @@ import Layout from '../../components/Layout';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
+import Dropdown from '../../components/Baru/Dropdown';
 
 
 const Store = () => {
@@ -18,18 +19,21 @@ const Store = () => {
   }
 const [product,setProduct] = useState([]);
 const [filterCate,setFilterCate] = useState('');
+const [filterCity,setFilterCity] = useState('')
 const navi = useNavigate();
 
 const getProduct = () =>{
   axios
-  .get(`https://rubahmerah.site/products?itemcategory_id=${filterCate}&name=&city=&pages`,config)
+  .get(`https://rubahmerah.site/products?itemcategory_id=${filterCate}&name=&city=${filterCity}&pages`,config)
   .then(res=>{
     setProduct(res.data.data) 
   })
+  .catch((err) => {
+    console.log(err)})
 }
 
   useEffect(()=>
-  getProduct(),[filterCate]
+  getProduct(),[filterCate,filterCity]
   )
 
   return (
@@ -39,7 +43,10 @@ const getProduct = () =>{
         <Flex>
         <Text fontSize={'5xl'} textColor={'brand.300'}>Store</Text>
         <Flex mb='30px' ml='auto' mt={4}>
-           <Select w={'200px'} value={filterCate} onChange={(e)=>{ setFilterCate(e.target.value) }} bg='white' mr='30px' variant='filled' boxShadow={'xl'} placeholder='Category'>
+                <Dropdown
+                placeHolderProps={'Category'}
+                targetValue={(e)=>setFilterCate(e.target.value)}
+                filterCates={filterCate}>
                   <option value= '1'>Sepatu</option>
                   <option value= '2'>Jersey</option>
                   <option value= '3'>Bola</option>
@@ -47,19 +54,22 @@ const getProduct = () =>{
                   <option value= '5'>Celana</option>
                   <option value= '6'>Equipment</option>
                   <option value= '7'>Aksesoris</option>
-           </Select>
-           <Select w={'200px'} bg='white' mr='30px' variant='filled' boxShadow={'xl'} placeholder='City'>
-                  <option value=''>Jakarta</option>
-                  <option value=''>Bogor</option>
-                  <option value=''>Depok</option>
-                  <option value=''>Tangerang</option>
-                  <option value=''>Bekasi</option>
-                  <option value=''>Bandung</option>
-                  <option value=''>Semarang</option>
-                  <option value=''>Malang</option>
-                  <option value=''>Surabaya</option>
-                  <option value=''>Jogjakarta</option>
-           </Select>
+                </Dropdown>
+                <Dropdown
+                  placeHolderProps={'City'}
+                  targetValue={(e)=>setFilterCity(e.target.value)}
+                  filterCates={filterCity}>
+                  <option value='Jakarta'>Jakarta</option>
+                  <option value='Bogor'>Bogor</option>
+                  <option value='Depok'>Depok</option>
+                  <option value='Tanggerang'>Tanggerang</option>
+                  <option value='Bekasi'>Bekasi</option>
+                  <option value='Bandung'>Bandung</option>
+                  <option value='Semarang'>Semarang</option>
+                  <option value='Malang'>Malang</option>
+                  <option value='Surabaya'>Surabaya</option>
+                  <option value='Jogjakarta'>Jogjakarta</option>
+                  </Dropdown>
            <InputGroup w={'250px'} boxShadow={'xl'} varian='filled'>
               <InputLeftElement
                 pointerEvents='none'
@@ -82,6 +92,7 @@ const getProduct = () =>{
               image={item.product_image != null ? item.product_image[0].url : "https://www.hostpapa.com/knowledgebase/wp-content/uploads/2018/04/1-13.png"}
               nama={item.name}
               harga={item.price}
+              city={item.city}
               bilaClick={()=>{navi('/detailstore', {
                 state : {
                   id : item.id

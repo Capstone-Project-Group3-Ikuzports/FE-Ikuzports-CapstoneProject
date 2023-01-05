@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, Flex, CardBody, CardFooter, Text, Image, Stack, Divider, Heading, Spacer } from '@chakra-ui/react'
 import {BsFillTrashFill} from 'react-icons/bs'
 
-const CardProduct = ({image,nama,harga,bilaClick}) => {
+const CardProduct = ({image,nama,harga,bilaClick,city}) => {
   return (
     <div>
         <Card maxW='sm' bg='white' _hover={{cursor: 'pointer'}} onClick={bilaClick}>
@@ -16,6 +16,7 @@ const CardProduct = ({image,nama,harga,bilaClick}) => {
             <Stack mt='3' spacing='3'>
             <Flex mb={10}>
                 <Heading size='md' >{nama}</Heading>
+                <Text>{city}</Text>
                 <Spacer></Spacer>
             </Flex>
             <Text color='blue.600' as='b' fontSize='2xl'>
