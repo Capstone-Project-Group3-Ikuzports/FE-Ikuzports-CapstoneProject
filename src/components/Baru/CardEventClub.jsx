@@ -1,7 +1,7 @@
 import React from 'react'
 import { Stack, Card, Image } from '@chakra-ui/react'
 
-const CardEventClub = ({children, linkGambar, onClick}) => {
+const CardEventClub = ({children, linkGambar, onClick, key, maxh, maxw}) => {
   return (
     <div onClick={onClick}>
       <Card
@@ -15,11 +15,10 @@ const CardEventClub = ({children, linkGambar, onClick}) => {
         h={"200px"}
         >
         <Image
-          objectFit='cover'
-          maxW={{ base: '100%', sm: '200px' }}
-          maxH={{ base: '100%', sm: '300px' }}
+          objectFit='contain'
+          maxW={{ base: '100%', sm: "300px" }}
           src={linkGambar}
-          alt='Caffe Latte'
+          alt='Picture'
         />
         <Stack w={"100%"}>
           {children}

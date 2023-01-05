@@ -15,7 +15,6 @@ import {
   CardBody,
   Input,
   Heading,
-  Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
@@ -32,6 +31,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import UploadFiles from "../components/Baru/UploadFiles";
+import Modals from "../components/Baru/Modal";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
@@ -197,16 +197,15 @@ const Home = () => {
                 </CardBody>
               </Card>
 
-              <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>Add New Event</ModalHeader>
+              <Modals isOpen={isOpen} onClose={onClose}>
+              <ModalHeader>Add New Event</ModalHeader>
                   <ModalCloseButton />
                   <ModalBody>
                     <FormControl isInvalid={isError}>
                       <FormLabel my="3">Event Title</FormLabel>
                       <Input
-                        color="gray"
+                        color="black"
+                        bg="white"
                         placeholder="Your event name"
                         _placeholder={{ opacity: 0.4, color: "inherit" }}
                         onChange={(e) => setName(e.target.value)}
@@ -214,6 +213,7 @@ const Home = () => {
                       <FormLabel my="3">Event Address</FormLabel>
                       <Input
                         color="gray"
+                        bg="white"
                         placeholder="Your event address"
                         _placeholder={{ opacity: 0.4, color: "inherit" }}
                         onChange={(e) => setAddress(e.target.value)}
@@ -221,6 +221,7 @@ const Home = () => {
                       <FormLabel my="3">Event City</FormLabel>
                       <Input
                         color="gray"
+                        bg="white"
                         placeholder="Where your event take place"
                         _placeholder={{ opacity: 0.4, color: "inherit" }}
                         onChange={(e) => setCity(e.target.value)}
@@ -228,6 +229,7 @@ const Home = () => {
                       <FormLabel my="3">Event Description</FormLabel>
                       <Input
                         color="gray"
+                        bg="white"
                         placeholder="Give your event a description"
                         _placeholder={{ opacity: 0.4, color: "inherit" }}
                         onChange={(e) => setDescription(e.target.value)}
@@ -246,6 +248,7 @@ const Home = () => {
                       />
                       <FormLabel my="3">Event Category</FormLabel>
                       <Select
+                        bg="white"
                         placeholder="Your event category"
                         onChange={(e) => setCategoryId(e.target.value)}
                       >
@@ -264,6 +267,7 @@ const Home = () => {
                       <FormLabel my="3">Starting Date</FormLabel>
                       <Input
                         color="gray"
+                        bg="white"
                         type={'date'}
                         placeholder="When your event start"
                         _placeholder={{ opacity: 0.4, color: "inherit" }}
@@ -272,6 +276,7 @@ const Home = () => {
                       <FormLabel my="3">Ending Date Date</FormLabel>
                       <Input
                         color="gray"
+                        bg="white"
                         type={'date'}
                         placeholder="When your event End"
                         _placeholder={{ opacity: 0.4, color: "inherit" }}
@@ -280,6 +285,7 @@ const Home = () => {
                       <FormLabel my="3">Maximum People</FormLabel>
                       <Input
                         color="gray"
+                        bg="white"
                         placeholder="Maximum People your event can hold"
                         _placeholder={{ opacity: 0.4, color: "inherit" }}
                         onChange={(e) => setMaximumPeople(e.target.value)}
@@ -289,8 +295,7 @@ const Home = () => {
                   <ModalFooter>
                     <ButtonCreate onClick={addEvent} />
                   </ModalFooter>
-                </ModalContent>
-              </Modal>
+              </Modals>
               <Box mt={"30px"}>
                 <Flex>
                     <Dropdown placeHolderProps={"CoAb-COAB"}>
@@ -341,7 +346,7 @@ const Home = () => {
                   loading 
                   ? skeleton.map((data) => <Spinner/>)
                   : getEvents.map((item) => (
-                      <CardEventClub linkGambar={item.image_event} onClick={() => {
+                      <CardEventClub key={item.id} maxh="150px" maxw="150px" linkGambar={item.image_event} onClick={() => {
                         navigate('/detailevent', {
                           state: {
                             id: item.id
@@ -351,9 +356,9 @@ const Home = () => {
                         <CardBody w={'100%'} px={'70px'} pb={"0"}>
                         <Heading size="md" mb={5}>{item.name}</Heading>
                         <Flex>
-                          <Text>{item.start_date}</Text>
+                          <Text>{item.start_date.slice(0,10)}</Text>
                           <Spacer></Spacer>
-                          <Text>{item.end_date}</Text>
+                          <Text>{item.end_date.slice(0,10)}</Text>
                         </Flex>
                         <Text py="1">Slot : {item.total_participant} / {item.maximum_people}</Text>
                         <Text pb="1">Address : {item.address}</Text>

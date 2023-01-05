@@ -1,8 +1,9 @@
 import React from "react";
 import Swal from "sweetalert2";
-import { Box, Flex, Text, Image, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from "@chakra-ui/react";
+import { Box, Flex, Text, Image, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from "@chakra-ui/react";
 import {Buttons} from "../../components/Baru/ButtonBack";
 import {ButtonsCancel} from "../../components/Baru/ButtonBack";
+import Modals from "../../components/Baru/Modal";
 import { ButtonBack } from "../../components/Baru/ButtonBack";
 import { useDisclosure } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
@@ -113,12 +114,10 @@ const DetailClub = () => {
       
       <Box ml='auto' justif='end' w={'131px'}>
         <Buttons  openTrigger={onOpen} textContent="Join"/>
-        <Modal isOpen={isOpen} onClose={onClose} h={'100px'}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader mx='auto'>Requirement</ModalHeader>
+        <Modals isOpen={isOpen} onClose={onClose} h={'100px'}>
+        <ModalHeader mx='auto'>Requirement</ModalHeader>
             <ModalCloseButton />
-            <ModalBody h={'100px'} overflowY='scroll'>
+            <ModalBody h={'100px'} bg="white" w={"90%"} rounded="lg" mx='auto' overflowY='scroll'>
               <Text h={'300px'}>{getClubDetail.requirement}</Text>
             </ModalBody>
 
@@ -126,8 +125,7 @@ const DetailClub = () => {
               <ButtonsCancel textContent="Cancel" mr="10" openTrigger={onClose}/>
               <Buttons textContent="Accept" openTrigger={onSubmitHandler}/>
             </ModalFooter>
-          </ModalContent>
-        </Modal>
+        </Modals>
       </Box>
     </Box>
     </Layout>

@@ -70,10 +70,10 @@ const ClubList = () => {
         </Flex>
         </Flex>
         <Divider w="17%" orientation='horizontal' />
-        <SimpleGrid columns={{sm:2, md:4}} gap={8}>
+        <SimpleGrid columns={{sm:2, md:3}} gap={8}>
         {getMyClub && loading === false ?
           getMyClub.map(data => (
-            <CardEventClub linkGambar={data.logo} onClick={() => navigate('/detailclub', {
+            <CardEventClub linkGambar={data.logo} maxh="100px" maxw="100px" onClick={() => navigate('/detailclub', {
               state : {
                 id: data.id
               }

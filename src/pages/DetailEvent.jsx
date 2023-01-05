@@ -26,10 +26,12 @@ import { useLocation } from "react-router";
 import Layout from "../components/Layout";
 import { ButtonBack } from "../components/Baru/ButtonBack";
 
+
 const DetailEvent = () => {
   const currentUser = useSelector((state) => state.users.currentUser);
   const token = currentUser.token;
-
+  const idUser = currentUser.id
+  console.log(idUser)
   const location = useLocation();
   const detail = location?.state?.id;
 
@@ -126,10 +128,13 @@ const DetailEvent = () => {
           </Text>
         </Flex>
         <Stack w={"200px"} ml="auto">
-          <Buttons
+          {getDetails.user_id !== idUser ?<Buttons
             openTrigger={onSubmitHandler}
             changeTrigger={(e) => setEventId(e.target.value)}
-            textContent="Join Event"/>
+            textContent="Join Event"/>: <Buttons
+            openTrigger={onSubmitHandler}
+            changeTrigger={(e) => setEventId(e.target.value)}
+            textContent="Join Event" disabled={"disabled"}/>}
         </Stack>
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />

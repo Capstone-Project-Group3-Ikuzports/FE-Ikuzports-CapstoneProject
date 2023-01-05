@@ -20,7 +20,7 @@ export const ButtonCancel = ({ onClick }) => {
 };
 
 // === BUTTON FOR ALL === //
-export const Buttons = ({textContent, openTrigger, changeTrigger, ml, mr}) => {
+export const Buttons = ({textContent, openTrigger, changeTrigger, ml, mr, disabled}) => {
   return (
     <div>
         <Button
@@ -29,6 +29,7 @@ export const Buttons = ({textContent, openTrigger, changeTrigger, ml, mr}) => {
             onChange={changeTrigger}
             justifyContent="end"
             px="10"
+            disabled={disabled}
             backgroundColor={"brand.300"}
             _hover={{ bg: "brand.200" }}
             color={"white"}

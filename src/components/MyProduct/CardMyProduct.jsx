@@ -37,7 +37,7 @@ const del=()=>{
             <Flex>
                 <Heading size='md'>{name}</Heading>
                 <Spacer></Spacer>
-                <BsFillTrashFill onClick={onOpen} size={25}color={'red'}/>
+                <BsFillTrashFill onClick={Dellpr} size={25}color={'red'}/>
             </Flex>
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
