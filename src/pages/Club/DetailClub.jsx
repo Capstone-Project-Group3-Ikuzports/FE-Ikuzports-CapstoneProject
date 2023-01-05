@@ -60,7 +60,7 @@ const DetailClub = () => {
         showConfirmButton: false,
         timer: 1000,
       });
-      navigate("/detailevent");
+      getDetailClub()
     })
     .catch((err) => {
       console.log(err)

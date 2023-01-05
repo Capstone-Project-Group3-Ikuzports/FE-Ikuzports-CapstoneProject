@@ -29,6 +29,8 @@ import { ButtonBack } from "../components/Button";
 const DetailEvent = () => {
   const currentUser = useSelector((state) => state.users.currentUser);
   const token = currentUser.token;
+  const idUser = currentUser.id
+  const [disabled, setDisabled] = useState(false)
 
   const location = useLocation();
   const detail = location?.state?.id;
@@ -52,6 +54,9 @@ const DetailEvent = () => {
 
   useEffect(() => {
     getDetailEvent();
+    if( 2 === idUser){
+      setDisabled(true)
+    }
   }, []);
 
   const [event_id, setEventId] = useState('')
@@ -134,6 +139,7 @@ const DetailEvent = () => {
             color={"white"}
             px={20}
             py={5}
+            disabled={disabled}
           >
             Join
           </Button>

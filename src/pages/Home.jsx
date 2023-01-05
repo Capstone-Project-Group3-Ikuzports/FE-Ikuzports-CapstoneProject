@@ -133,7 +133,7 @@ const Home = () => {
           icon: "success",
           text: `Create Event successfully `,
           showConfirmButton: false,
-          timer: 500,
+          timer: 3000,
         });
         navigate("/");
       })
@@ -143,7 +143,7 @@ const Home = () => {
           icon: "error",
           text: `failed`,
           showConfirmButton: true,
-          timer: 500,
+          timer: 3000,
         });
       });
   };
@@ -275,7 +275,7 @@ const Home = () => {
                       <FormLabel my="3">Starting Date</FormLabel>
                       <Input
                         color="gray"
-                        pattern="[0-9]{4}-[1-12]{2}-[0-9]{2}"
+                        type={'date'}
                         placeholder="When your event start"
                         _placeholder={{ opacity: 0.4, color: "inherit" }}
                         onChange={(e) => setStartDate(e.target.value)}
@@ -283,7 +283,7 @@ const Home = () => {
                       <FormLabel my="3">Ending Date Date</FormLabel>
                       <Input
                         color="gray"
-                        pattern="[0-9]{4}-[1-9]{2}-[0-9]{2}"
+                        type={'date'}
                         placeholder="When your event End"
                         _placeholder={{ opacity: 0.4, color: "inherit" }}
                         onChange={(e) => setEndDate(e.target.value)}
