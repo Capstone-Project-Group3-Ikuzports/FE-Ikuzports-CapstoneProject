@@ -154,6 +154,7 @@ const Home = () => {
 					timer: 3000,
 				});
 			});
+		getEvent();
 	};
 
 	useEffect(() => {
@@ -303,7 +304,11 @@ const Home = () => {
 									</FormControl>
 								</ModalBody>
 								<ModalFooter>
-									<ButtonCreate onClick={addEvent} />
+									<ButtonCreate
+										onClick={() => {
+											addEvent(), onClose();
+										}}
+									/>
 								</ModalFooter>
 							</Modals>
 							<Box mt={"30px"}>
@@ -352,19 +357,22 @@ const Home = () => {
 
 								<Flex flexDir={"column"} gap={"3"} pt={4}>
 									{loading
-										? skeleton.map((data) => <Spinner />)
+										? skeleton.map((data) => <Spinner key={data} />)
 										: getEvents.map((item) => (
 												<CardEventClub
 													key={item.id}
+													keys={item.id}
 													maxh="150px"
 													maxw="150px"
 													linkGambar={item.image_event}
 													onClick={() => {
-														navigate("/detailevent", {
-															state: {
-																id: item.id,
-															},
-														});
+														token
+															? navigate("/detailevent", {
+																	state: {
+																		id: item.id,
+																	},
+															  })
+															: navigate("/login");
 													}}
 												>
 													<CardBody w={"100%"} px={"70px"} pb={"0"}>
@@ -387,13 +395,7 @@ const Home = () => {
 												</CardEventClub>
 										  ))}
 								</Flex>
-								<Box
-									mt={10}
-									mx="auto"
-									justifyContent={"center"}
-									justifyItems="center"
-									w={"100%"}
-								>
+								<Box mt={10}>
 									<Buttons
 										openTrigger={getEvent}
 										textContent={"Load More Event"}
@@ -413,6 +415,7 @@ const Home = () => {
 											<CardEventClub
 												linkGambar={item.logo}
 												key={item.id}
+												keys={item.id}
 												onClick={() =>
 													navigate("/detailclub", {
 														state: {

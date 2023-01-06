@@ -10,13 +10,23 @@ import {
   ModalContent,
   ModalFooter,
   ModalOverlay,
+  Spacer,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
+import { useSelector } from "react-redux";
 
-const ModalMember = ({ joinedmember, totalmember, memberRaw, key }) => {
+const ModalMember = ({
+  joinedmember,
+  totalmember,
+  memberRaw,
+  removeMember,
+  acceptMember,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const user_id = useSelector((state) => state.users.currentUser.id);
 
   const [condition1, setCondition1] = useState("Member");
   const [condition2, setCondition2] = useState("Owner");
@@ -36,14 +46,15 @@ const ModalMember = ({ joinedmember, totalmember, memberRaw, key }) => {
         {`Member : ${joinedmember} / ${totalmember} `}
       </Text>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size={"xl"}>
         <ModalOverlay />
-        <ModalContent key={memberRaw.id}>
+        <ModalContent>
           <Flex boxShadow={"2xl"} dropShadow={"md"}>
             <Button
               rounded={"none"}
               border={"1px"}
               w={"50%"}
+              size={"lg"}
               fontWeight={"light"}
               borderColor={"blackAlpha.300"}
               onClick={() => {
@@ -52,6 +63,7 @@ const ModalMember = ({ joinedmember, totalmember, memberRaw, key }) => {
             >{`Member ${joinedmember}/${totalmember}`}</Button>
             <Button
               w={"50%"}
+              size={"lg"}
               fontWeight={"light"}
               border={"1px"}
               rounded={"none"}
@@ -80,8 +92,13 @@ const ModalMember = ({ joinedmember, totalmember, memberRaw, key }) => {
                             flexWrap="wrap"
                           >
                             <Avatar
+                              src={data.user_image}
                               name={data.name}
-                              bgColor={"telegram.600"}
+                              bgColor={
+                                user_id === data.user_id
+                                  ? "telegram.600"
+                                  : "teal.100"
+                              }
                               color={"whatsapp.100"}
                             />
 
@@ -89,12 +106,59 @@ const ModalMember = ({ joinedmember, totalmember, memberRaw, key }) => {
                               <Heading size="sm">{data.name}</Heading>
                               <Text>{data.phone_number}</Text>
                             </Box>
+                            <Spacer />
+                            {(user_id !== data.user_id) &
+                            (data.status !== "Requested") ? (
+                              <AiOutlineCloseCircle
+                                color="#ff9191"
+                                size={30}
+                                cursor={"pointer"}
+                                onClick={() => {
+                                  removeMember({
+                                    id: data.id,
+                                    name: data.name,
+                                    onOpen: onOpen,
+                                  }),
+                                    onClose();
+                                }}
+                              />
+                            ) : (
+                              <></>
+                            )}
+                            {(user_id !== data.user_id) &
+                            (data.status === "Requested") ? (
+                              <Flex gap={2}>
+                                <AiOutlineCheckCircle
+                                  size={30}
+                                  cursor={"pointer"}
+                                  color="#4dd35c"
+                                  onClick={() => {
+                                    acceptMember({
+                                      id: data.id,
+                                      user: data.user_id,
+                                      club: data.club_id,
+                                      name: data.name,
+                                      onOpen: onOpen,
+                                    }),
+                                      onClose();
+                                  }}
+                                />
+                                <AiOutlineCloseCircle
+                                  color="#ff9191"
+                                  size={30}
+                                  cursor={"pointer"}
+                                  // onClick={() => removeMember(data.id)}
+                                />
+                              </Flex>
+                            ) : (
+                              <></>
+                            )}
                           </Flex>
                         </Flex>
                       </Card>
                     );
                   } else {
-                    ("");
+                    <></>;
                   }
                 })
               : ""}
