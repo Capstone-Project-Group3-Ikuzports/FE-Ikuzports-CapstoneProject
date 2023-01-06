@@ -19,7 +19,8 @@ import { useCallback } from "react";
 import { BsGearFill } from "react-icons/bs";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { useSelector } from "react-redux";
-
+import { ButtonBack } from "../../components/Baru/ButtonBack";
+import { ButtonAddActivity } from "../../components/Baru/ButtonBack";
 import { useLocation, useNavigate } from "react-router-dom";
 import CardActivity from "../../components/Baru/CardActivity";
 import CardGallery from "../../components/Baru/CardGallery";
@@ -28,6 +29,7 @@ import ModalMember from "../../components/ClubJoin/ModalMember";
 import HandleGaleries from "../../components/ClubJoin/ModalPostGaleries";
 import ModalRules from "../../components/ClubJoin/ModalRules";
 import Layout from "../../components/Baru/Layout";
+import Swal from "sweetalert2";
 
 const ClubJoin = () => {
   const user = useSelector((state) => state.users.currentUser);
@@ -48,7 +50,7 @@ const ClubJoin = () => {
   const urladdChat = `https://rubahmerah.site/chats`;
   const urladdGaleries = `https://rubahmerah.site/galeries`;
   const urlRemoveMember = `https://rubahmerah.site/members/`;
-  const urlAcceptMember = `https://rubahmerah.site/members/${id_club}`;
+  const urlAcceptMember = `https://rubahmerah.site/members/`;
 
   const navigate = useNavigate();
 
@@ -198,10 +200,10 @@ const ClubJoin = () => {
     acceptUser.append("status", "Member");
     console.log([...acceptUser]);
 
-    // await axios
-    //   .put(urlAcceptMember, acceptUser, configPutNPost)
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err));
+    await axios
+      .put(`${urlAcceptMember}${data.id}`, acceptUser, configPutNPost)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   const acceptMember = useCallback((data) => {

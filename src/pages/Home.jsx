@@ -352,10 +352,11 @@ const Home = () => {
 
                 <Flex flexDir={"column"} gap={"3"} pt={4}>
                   {loading
-                    ? skeleton.map((data) => <Spinner />)
+                    ? skeleton.map((data) => <Spinner key={data} />)
                     : getEvents.map((item) => (
                         <CardEventClub
                           key={item.id}
+                          keys={item.id}
                           maxh="150px"
                           maxw="150px"
                           linkGambar={item.image_event}
@@ -407,6 +408,7 @@ const Home = () => {
                       <CardEventClub
                         linkGambar={item.logo}
                         key={item.id}
+                        keys={item.id}
                         onClick={() =>
                           navigate("/detailclub", {
                             state: {

@@ -16,11 +16,6 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
-import {
-  RiCheckboxBlankCircleLine,
-  RiCheckboxCircleLine,
-} from "react-icons/ri";
-import { TiDeleteOutline } from "react-icons/ti";
 import { useSelector } from "react-redux";
 
 const ModalMember = ({
@@ -31,7 +26,6 @@ const ModalMember = ({
   acceptMember,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  let memberReverse = [...memberRaw].reverse();
   const user_id = useSelector((state) => state.users.currentUser.id);
 
   const [condition1, setCondition1] = useState("Member");
@@ -54,7 +48,7 @@ const ModalMember = ({
 
       <Modal isOpen={isOpen} onClose={onClose} size={"xl"}>
         <ModalOverlay />
-        <ModalContent key={memberRaw.id}>
+        <ModalContent>
           <Flex boxShadow={"2xl"} dropShadow={"md"}>
             <Button
               rounded={"none"}
@@ -82,8 +76,8 @@ const ModalMember = ({
             </Button>
           </Flex>
           <ModalBody pb={2}>
-            {memberReverse
-              ? memberReverse.map((data) => {
+            {memberRaw
+              ? memberRaw.map((data) => {
                   if (
                     data.status === condition1 ||
                     data.status === condition2
@@ -140,6 +134,7 @@ const ModalMember = ({
                                   color="#4dd35c"
                                   onClick={() => {
                                     acceptMember({
+                                      id: data.id,
                                       user: data.user_id,
                                       club: data.club_id,
                                       name: data.name,
