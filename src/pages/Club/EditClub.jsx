@@ -17,8 +17,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ButtonBack, ButtonClear, ButtonSave } from "../../components/Baru/ButtonBack";
-import Layout from "../../components/Layout";
-import UploadFiles from "../../components/UploadFiles";
+import Layout from "../../components/Baru/Layout";
+import UploadFiles from "../../components/Baru/UploadFiles";
 import Swal from "sweetalert2";
 import { useLocation } from "react-router-dom";
 

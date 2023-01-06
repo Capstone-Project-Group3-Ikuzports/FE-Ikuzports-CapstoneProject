@@ -1,8 +1,7 @@
 import React from "react";
-import CardEvent from "../components/Home/CardEvent";
+
 import {
   Box,
-  Stack,
   Spacer,
   Text,
   Flex,
@@ -15,8 +14,6 @@ import {
   CardBody,
   Input,
   Heading,
-  ModalOverlay,
-  ModalContent,
   ModalHeader,
   ModalFooter,
   ModalBody,
@@ -34,7 +31,7 @@ import UploadFiles from "../components/Baru/UploadFiles";
 import Modals from "../components/Baru/Modal";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Layout from "../components/Layout";
+import Layout from "../components/Baru/Layout";
 import { ButtonSave, Buttons } from "../components/Baru/ButtonBack";
 import Dropdown from "../components/Baru/Dropdown";
 
@@ -79,7 +76,6 @@ const Home = () => {
     .then((response) => {
       setLoadingClub(true)
       setGetClubNew(response.data.data)
-      console.log(response.data.data)
       setLoadingClub(false)
     })
     .catch((err) => {

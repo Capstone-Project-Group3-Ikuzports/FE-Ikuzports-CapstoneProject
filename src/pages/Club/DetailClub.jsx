@@ -9,10 +9,10 @@ import { useDisclosure } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import RuleCard from "../../components/RuleCard";
+import RuleCard from "../../components/Baru/RuleCard";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import Layout from "../../components/Layout";
+import Layout from "../../components/Baru/Layout";
 import axios from "axios";
 
 

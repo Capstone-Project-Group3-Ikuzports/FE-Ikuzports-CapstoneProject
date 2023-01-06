@@ -9,12 +9,12 @@ import {ButtonsCancel} from '../../components/Baru/ButtonBack';
 import { ButtonBack } from '../../components/Baru/ButtonBack';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import Layout from '../../components/Layout';
+import Layout from '../../components/Baru/Layout';
 import CardProduct from '../../components/Baru/CardProduct';
 import { useCallback } from 'react';
 import UploadFiles from '../../components/Baru/UploadFiles';
 import Swal from 'sweetalert2';
-import { calcLength } from 'framer-motion';
+
 
 const MyProduct = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -197,7 +197,8 @@ const DellProduct = useCallback((item) => {
         </Flex>
         <SimpleGrid columns={{sm:2, md:4}} gap={8}>
           {myProduct.map((item)=>
-        <CardProduct key={item.id} image={item.product_image != undefined ? item.product_image[0].url : "https://www.hostpapa.com/knowledgebase/wp-content/uploads/2018/04/1-13.png"}>
+        <CardProduct 
+        key={item.id} image={item.product_image != undefined ? item.product_image[0].url : "https://www.hostpapa.com/knowledgebase/wp-content/uploads/2018/04/1-13.png"}>
             <Stack mt='3' spacing='3'>
             <Flex>
                 <Heading size='md'>{item.name}</Heading>

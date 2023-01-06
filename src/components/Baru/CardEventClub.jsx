@@ -1,7 +1,7 @@
 import React from 'react'
 import { Stack, Card, Image } from '@chakra-ui/react'
 
-const CardEventClub = ({children, linkGambar, onClick, key, maxh, maxw}) => {
+const CardEventClub = ({children, linkGambar, onClick, key}) => {
   return (
     <div onClick={onClick}>
       <Card

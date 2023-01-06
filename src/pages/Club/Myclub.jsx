@@ -1,5 +1,4 @@
 import React from "react";
-import CardMyClub from "../../components/MyClub/CardMyClub";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -12,7 +11,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import {Buttons} from "../../components/Baru/ButtonBack";
-import Layout from "../../components/Layout";
+import Layout from "../../components/Baru/Layout";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -89,7 +88,6 @@ const Myclub = () => {
                       </Text>
                       <Text pb="2">Category {data.category}</Text>
                       <Text pb="2">Location : {data.city}</Text>
-                      <Text pb="2">STATUS : {data.status}</Text>
                     </CardBody>
                   </CardEventClub>
                 );

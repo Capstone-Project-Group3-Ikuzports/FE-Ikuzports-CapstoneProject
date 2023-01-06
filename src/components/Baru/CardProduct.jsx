@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 
 
-const CardProduct = ({name,desc,price, image,id, children}) => {
+const CardProduct = ({name,desc,price,image,id, children}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const currentUser = useSelector((state) => state.users.currentUser)
     const token = currentUser.token

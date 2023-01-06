@@ -12,7 +12,7 @@ import {
   InputRightElement,
   FormHelperText,
 } from "@chakra-ui/react";
-import HeroLogin from "../../components/HeroLogin";
+import HeroLogin from "../../components/Baru/HeroLogin";
 import { updateUser } from "../../redux/reducer/reducer";
 
 import axios from "axios";

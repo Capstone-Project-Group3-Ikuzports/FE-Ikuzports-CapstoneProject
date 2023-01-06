@@ -16,7 +16,7 @@ import {
   ButtonBack,
   ButtonBuy
 } from "../../components/Baru/ButtonBack";
-import Layout from "../../components/Layout";
+import Layout from "../../components/Baru/Layout";
 
 
 const DetailStore = ({id}) => {

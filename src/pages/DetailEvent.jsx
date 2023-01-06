@@ -23,7 +23,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useLocation } from "react-router";
-import Layout from "../components/Layout";
+import Layout from "../components/Baru/Layout";
 import { ButtonBack } from "../components/Baru/ButtonBack";
 
 

@@ -7,8 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { ButtonBack } from '../../components/Baru/ButtonBack';
 import axios from 'axios';
 import {Spinner, Box, Text, Flex, Divider, SimpleGrid, Select, Input, InputGroup, InputLeftElement, CardBody, Heading } from "@chakra-ui/react";
-import CardClub from '../../components/CardClub';
-import Layout from '../../components/Layout';
+import Layout from '../../components/Baru/Layout';
 import CardEventClub from '../../components/Baru/CardEventClub';
 import Dropdown from '../../components/Baru/Dropdown';
 

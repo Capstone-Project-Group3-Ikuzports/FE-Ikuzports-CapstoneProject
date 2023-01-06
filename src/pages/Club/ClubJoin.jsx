@@ -28,10 +28,10 @@ import {
   ButtonAddPhoto,
   ButtonBack,
 } from "../../components/Baru/ButtonBack";
-import CardActivity from "../../components/ClubJoin/CardActivity";
-import CardGallery from "../../components/ClubJoin/CardGallery";
-import ChatDiscuss from "../../components/ClubJoin/ChatDiscuss";
-import Layout from "../../components/Layout";
+import CardActivity from "../../components/Baru/CardActivity";
+import CardGallery from "../../components/Baru/CardGallery"
+import ChatDiscuss from "../../components/Baru/ChatDiscuss"
+import Layout from "../../components/Baru/Layout";
 import { useLocation } from "react-router-dom";
 
 // 10 ganti dengan params

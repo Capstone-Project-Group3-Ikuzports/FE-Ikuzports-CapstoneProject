@@ -1,9 +1,9 @@
 import React,{useState,useEffect} from 'react'
 import {AiOutlineSearch} from 'react-icons/ai'
-import {CardFooter,Heading,CardHeader,Box, Text, Flex, Divider, Button, SimpleGrid, Card, ButtonGroup, Select, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
-import CardProduct from '../../components/Store/CardProduct'
+import {CardFooter,Heading,CardHeader,Box, Text, Flex, Stack, Spacer, Divider, Button, SimpleGrid, Card, ButtonGroup, Select, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import CardProduct from '../../components/Baru/CardProduct';
 import { ButtonBack } from '../../components/Baru/ButtonBack';
-import Layout from '../../components/Layout';
+import Layout from '../../components/Baru/Layout';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
@@ -87,17 +87,19 @@ const getProduct = () =>{
         <SimpleGrid columns={{sm:2, md:4}} gap={8}>
         
         {product != null ? (product.map((item)=>(
-              <CardProduct 
-              key={item.id}
-              image={item.product_image != null ? item.product_image[0].url : "https://www.hostpapa.com/knowledgebase/wp-content/uploads/2018/04/1-13.png"}
-              nama={item.name}
-              harga={item.price}
-              city={item.city}
-              bilaClick={()=>{navi('/detailstore', {
-                state : {
-                  id : item.id
-                }
-              })}}/>
+          <CardProduct  key={item.id}
+          image={item.product_image != null ? item.product_image[0].url : "https://www.hostpapa.com/knowledgebase/wp-content/uploads/2018/04/1-13.png"}>
+              <Stack mt='3' spacing='3'>
+                 <Flex mb={10}>
+                     <Heading size='md' >{item.name}</Heading>
+                     <Text>{item.city}</Text>
+                     <Spacer></Spacer>
+                 </Flex>
+                 <Text color='blue.600' as='b' fontSize='2xl'>
+                    {item.price}
+                 </Text>
+                 </Stack>
+          </CardProduct>
               ))) :  <Card align='center' w={'8xl'} >
               <CardHeader>
                 <Heading size='3xl' color={'brand.300'}>There is no item on this category yet </Heading>
