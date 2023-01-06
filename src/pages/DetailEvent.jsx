@@ -31,6 +31,7 @@ const DetailEvent = () => {
   const currentUser = useSelector((state) => state.users.currentUser);
   const token = currentUser.token;
   const idUser = currentUser.id
+  const [disabled, setDisabled] = useState(false)
   console.log(idUser)
   const location = useLocation();
   const detail = location?.state?.id;
@@ -54,6 +55,9 @@ const DetailEvent = () => {
 
   useEffect(() => {
     getDetailEvent();
+    if( 2 === idUser){
+      setDisabled(true)
+    }
   }, []);
 
   const [event_id, setEventId] = useState('')
