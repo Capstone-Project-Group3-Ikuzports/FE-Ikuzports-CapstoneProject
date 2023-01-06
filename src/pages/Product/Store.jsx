@@ -106,7 +106,6 @@ const getProduct = () =>{
                  <Button bg='brand.300' color={'brand.100'} onClick={()=>{navi('/myproduct')}}>Lets GO sell something </Button>
               </CardFooter>
             </Card>
-           
             }
         </SimpleGrid>
       </Box>
