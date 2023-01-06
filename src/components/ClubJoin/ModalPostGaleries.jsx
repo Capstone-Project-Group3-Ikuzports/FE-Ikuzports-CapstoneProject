@@ -13,8 +13,8 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { ButtonAddPhoto } from "../Button";
-import UploadFiles from "../UploadFiles";
+import { ButtonAddPhoto } from "../Baru/ButtonBack";
+import UploadFiles from "../Baru/UploadFiles";
 
 const PostGaleries = ({ post, title }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
