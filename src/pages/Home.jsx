@@ -43,6 +43,10 @@ const Home = () => {
   const isError = input === " ";
   const currentUser = useSelector((state) => state.users.currentUser);
   const token = currentUser.token;
+  const currentToken = useSelector((state) => state.access.currentAccess);
+  const tokenAkses = currentToken.access_token;
+  console.log("redux", tokenAkses);
+
   const navigate = useNavigate();
 
   const [getEvents, setGetEvents] = useState([]);
@@ -56,6 +60,7 @@ const Home = () => {
   const [files, setFiles] = useState();
   const [prev, setPrev] = useState();
   const [maximum_people, setMaximumPeople] = useState("");
+
   const [skeleton] = useState([1])
   const [page, setPage] = useState(1)
   const [getClubNew, setGetClubNew] = useState([])
@@ -64,12 +69,14 @@ const Home = () => {
   const [filterCate,setFilterCate]= useState('')
   const [filterStat,setFilterStat] = useState('')
 
+
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
       "content-type": "multipart/form-data",
     },
   };
+
 
   const getClub = async() => {
     await axios.get(`https://rubahmerah.site/clubs`, config)
@@ -84,23 +91,24 @@ const Home = () => {
   }
   const getClubSlice = getClubNew.slice(0,3)
 
+
   const getEvent = async () => {
     await axios
       .get(`https://rubahmerah.site/events?page=${page}&status=${filterStat}&city=${filterCity}&category_id=${filterCate}`, config)
       .then((response) => {
-        const result = response.data.data
-        const newPage = page + 1
-        const temp = [...getEvents]
-        temp.push(...result)
+        const result = response.data.data;
+        const newPage = page + 1;
+        const temp = [...getEvents];
+        temp.push(...result);
         setGetEvents(temp);
-        setPage(newPage)
+        setPage(newPage);
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
       })
       .finally(() => {
-        setLoading(false)
-      })
+        setLoading(false);
+      });
   };
 
 
@@ -117,7 +125,7 @@ const Home = () => {
     formerData.append("maximum_people", maximum_people);
     formerData.append("description", description);
     formerData.append("image_event", files);
-    console.log([...formerData])
+    console.log([...formerData]);
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -152,6 +160,7 @@ const Home = () => {
     getClub()
     getEvent();
   }, [filterCate,filterCity,filterStat]);
+
 
   return (
     <Layout>
@@ -341,6 +350,7 @@ const Home = () => {
                  
                 </Flex>
 
+
                 {
                   loading 
                   ? skeleton.map((data) => <Spinner/>)
@@ -395,9 +405,9 @@ const Home = () => {
                       </CardBody>
                     </CardEventClub>
                   ))
-                  : <Spinner/>
-                }
-                
+                ) : (
+                  <Spinner />
+                )}
               </Box>
             </Box>
           </Flex>

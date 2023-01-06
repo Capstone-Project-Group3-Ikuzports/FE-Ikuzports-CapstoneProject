@@ -19,6 +19,7 @@ import axios from "axios";
 import {ButtonBack} from "../../components/Baru/ButtonBack";
 import CardEventClub from "../../components/Baru/CardEventClub";
 
+
 const Myclub = () => {
   const navigate = useNavigate();
   const [getMyClub, setGetMyClub] = useState([]);
@@ -58,9 +59,9 @@ const Myclub = () => {
         <Buttons openTrigger={() => navigate("/addnewclub")} textContent="Add A Club"/>
         </Box>
         </Flex> 
+
         <Divider w="17%" orientation="horizontal" />
-        <Box justify="end" ml={"92%"} justifyContent={"end"}>
-        </Box>
+        <Box justify="end" ml={"92%"} justifyContent={"end"}></Box>
         <SimpleGrid columns={{ sm: 1, md: 2 }} gap={8}>
           {getMyClub && loading === false ? (
             getMyClub.map((data) => {
