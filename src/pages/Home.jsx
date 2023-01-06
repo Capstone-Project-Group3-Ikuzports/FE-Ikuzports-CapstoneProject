@@ -387,7 +387,13 @@ const Home = () => {
 												</CardEventClub>
 										  ))}
 								</Flex>
-								<Box mt={10}>
+								<Box
+									mt={10}
+									mx="auto"
+									justifyContent={"center"}
+									justifyItems="center"
+									w={"100%"}
+								>
 									<Buttons
 										openTrigger={getEvent}
 										textContent={"Load More Event"}
