@@ -15,8 +15,8 @@ import Sample3 from "../../assets/sampleJersey3.jpeg";
 import {
   ButtonBack,
   ButtonBuy
-} from "../../components/Button";
-import Layout from "../../components/Layout";
+} from "../../components/Baru/ButtonBack";
+import Layout from "../../components/Baru/Layout";
 
 
 const DetailStore = ({id}) => {

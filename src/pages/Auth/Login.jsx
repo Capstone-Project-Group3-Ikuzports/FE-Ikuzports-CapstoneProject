@@ -11,7 +11,7 @@ import {
   InputRightElement,
   Text,
 } from "@chakra-ui/react";
-import HeroLogin from "../../components/HeroLogin";
+import HeroLogin from "../../components/Baru/HeroLogin";
 import { updateUser } from "../../redux/reducer/reducer";
 import { updateAccess } from "../../redux/reducer/access_token";
 

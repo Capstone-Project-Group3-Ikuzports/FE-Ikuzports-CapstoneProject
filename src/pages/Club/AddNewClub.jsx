@@ -13,9 +13,9 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { ButtonBack, ButtonClear, ButtonCreate } from "../../components/Button";
-import UploadFiles from "../../components/UploadFiles";
-import Layout from "../../components/Layout";
+import { ButtonBack, ButtonClear, ButtonCreate } from "../../components/Baru/ButtonBack";
+import UploadFiles from "../../components/Baru/UploadFiles";
+import Layout from "../../components/Baru/Layout";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router";

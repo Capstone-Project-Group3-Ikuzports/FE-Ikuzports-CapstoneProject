@@ -19,7 +19,7 @@ import { FiUsers } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { clearUser } from "../redux/reducer/reducer.js";
+import { clearUser } from "../../redux/reducer/reducer";
 
 const Navbar = ({ name, image }) => {
   const [data, setData] = useState();
