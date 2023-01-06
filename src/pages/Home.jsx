@@ -43,8 +43,8 @@ const Home = () => {
   const isError = input === " ";
   const currentUser = useSelector((state) => state.users.currentUser);
   const token = currentUser.token;
-  const currentToken = useSelector((state) => state.access.currentAccess);
-  const tokenAkses = currentToken.access_token;
+  const currentToken = useSelector((state) => state);
+  const tokenAkses = currentToken;
   console.log("redux", tokenAkses);
 
   const navigate = useNavigate();

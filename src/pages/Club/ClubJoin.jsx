@@ -15,10 +15,12 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useCallback } from "react";
 import { BsGearFill } from "react-icons/bs";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { ButtonAddActivity, ButtonBack } from "../../components/Button";
 import CardActivity from "../../components/ClubJoin/CardActivity";
 import CardGallery from "../../components/ClubJoin/CardGallery";
@@ -46,6 +48,8 @@ const ClubJoin = () => {
   const urlGetGaleriesIdClub = `https://rubahmerah.site/clubs/${id_club}/galeries`;
   const urladdChat = `https://rubahmerah.site/chats`;
   const urladdGaleries = `https://rubahmerah.site/galeries`;
+  const urlRemoveMember = `https://rubahmerah.site/members/`;
+  const urlAcceptMember = `https://rubahmerah.site/members/${id_club}`;
 
   const navigate = useNavigate();
 
@@ -152,6 +156,82 @@ const ClubJoin = () => {
     getGaleries();
   };
 
+  //=== REMOVE MEMBER ===//
+  const remove = async (data) => {
+    await axios
+      .delete(`${urlRemoveMember}${data.id}`, configGetNDelete)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
+  const removeMember = useCallback((data) => {
+    Swal.fire({
+      text: `Are you sure want to remove ${data.name}?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#454545",
+      confirmButtonText: "Yes ",
+      cancelButtonColor: "#DC143C",
+      cancelButtonText: "Not now",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          text: `${data.member}, has removed`,
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        remove(data);
+        getMember();
+        setTimeout(() => {
+          data.onOpen();
+        }, 2200);
+      }
+    });
+  }, []);
+
+  //=== ACCEPT MEMBER ===//
+  const accept = async (data) => {
+    const acceptUser = new FormData();
+    acceptUser.append("user_id", data.user);
+    acceptUser.append("club_id", data.club);
+    acceptUser.append("status", "Member");
+    console.log([...acceptUser]);
+
+    // await axios
+    //   .put(urlAcceptMember, acceptUser, configPutNPost)
+    //   .then((res) => console.log(res))
+    //   .catch((err) => console.log(err));
+  };
+
+  const acceptMember = useCallback((data) => {
+    Swal.fire({
+      text: `will you accept ${data.name}?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#454545",
+      confirmButtonText: "Yes Delete",
+      cancelButtonColor: "#DC143C",
+      cancelButtonText: "Not now",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          text: `${data.name}, has joined 👋🏻`,
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        accept(data);
+        getMember();
+        setTimeout(() => {
+          data.onOpen();
+        }, 2200);
+      }
+    });
+  }, []);
+
   useEffect(() => {
     getMember();
     getGaleries();
@@ -175,7 +255,7 @@ const ClubJoin = () => {
                   rounded={"full"}
                   w={"44"}
                   h={"44"}
-                  fit={"cover"}
+                  objectFit={"contain"}
                 />
                 <Box pl={2}>
                   <Text
@@ -188,6 +268,8 @@ const ClubJoin = () => {
                     totalmember={data.member_total}
                     joinedmember={data.joined_member}
                     memberRaw={memberRaw}
+                    removeMember={removeMember}
+                    acceptMember={acceptMember}
                   />
 
                   <Text
@@ -230,11 +312,11 @@ const ClubJoin = () => {
                     />
                   ))
                 ) : (
-                  <Box w={"50vw"} bgColor={"white"} h={"20vw"}>
-                    <Flex justifyContent={"center"}>
-                      <Text fontSize={"4xl"}>No Activities</Text>
-                    </Flex>
-                  </Box>
+                  <Flex w={"50vw"} bgColor={"white"} h={"20vw"}>
+                    <Text fontSize={"4xl"} margin={"auto"}>
+                      No Activities
+                    </Text>
+                  </Flex>
                 )}
               </Flex>
             </Box>

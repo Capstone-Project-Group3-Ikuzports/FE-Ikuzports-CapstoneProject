@@ -1,8 +1,8 @@
-import { Avatar, Box, Center, Text } from "@chakra-ui/react";
+import { Avatar, Box, Center, Text, Image } from "@chakra-ui/react";
 import React from "react";
 import { MdUpload } from "react-icons/md";
 
-const UploadFiles = ({ onChange, prev, prevSize }) => {
+const UploadFiles = ({ onChange, prev, prevSize, objectFit }) => {
   return (
     <Box display={"flex"} bgColor={"#FFFFFF"}>
       <form
