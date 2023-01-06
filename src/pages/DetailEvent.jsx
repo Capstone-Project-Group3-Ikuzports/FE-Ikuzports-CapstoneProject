@@ -1,7 +1,6 @@
 import React from "react";
 import { Text, Flex, Box, Stack } from "@chakra-ui/layout";
 import {
-  Button,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -11,6 +10,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import Swal from "sweetalert2";
+import {Buttons} from "../components/Baru/ButtonBack";
 import { Image } from "@chakra-ui/image";
 import axios from "axios";
 import { CgProfile } from "react-icons/cg";
@@ -23,13 +23,15 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useLocation } from "react-router";
-import Layout from "../components/Layout";
-import { ButtonBack } from "../components/Button";
+import Layout from "../components/Baru/Layout";
+import { ButtonBack } from "../components/Baru/ButtonBack";
+
 
 const DetailEvent = () => {
   const currentUser = useSelector((state) => state.users.currentUser);
   const token = currentUser.token;
-
+  const idUser = currentUser.id
+  console.log(idUser)
   const location = useLocation();
   const detail = location?.state?.id;
 
@@ -126,17 +128,13 @@ const DetailEvent = () => {
           </Text>
         </Flex>
         <Stack w={"200px"} ml="auto">
-          <Button
-            bg={"brand.300"} 
-            _hover={{bg: "brand.200"}}
-            onClick={onSubmitHandler}
-            onChange={(e) => setEventId(e.target.value)}
-            color={"white"}
-            px={20}
-            py={5}
-          >
-            Join
-          </Button>
+          {getDetails.user_id !== idUser ?<Buttons
+            openTrigger={onSubmitHandler}
+            changeTrigger={(e) => setEventId(e.target.value)}
+            textContent="Join Event"/>: <Buttons
+            openTrigger={onSubmitHandler}
+            changeTrigger={(e) => setEventId(e.target.value)}
+            textContent="Join Event" disabled={"disabled"}/>}
         </Stack>
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
@@ -148,9 +146,9 @@ const DetailEvent = () => {
             <ModalBody mx="auto">Join Succes</ModalBody>
 
             <ModalFooter mx="auto">
-              <Button bg={"brand.300"} _hover={{bg: "brand.200"}} color='white' px={10} onClick={onClose}>
+              <Buttons bg={"brand.300"} _hover={{bg: "brand.200"}} color='white' px={10} onClick={onClose}>
                 Ok
-              </Button>
+              </Buttons>
             </ModalFooter>
           </ModalContent>
         </Modal>

@@ -19,8 +19,11 @@ import { useCallback } from "react";
 import { BsGearFill } from "react-icons/bs";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { useSelector } from "react-redux";
+
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
 import { useLocation, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import { ButtonAddActivity, ButtonBack } from "../../components/Button";
 import CardActivity from "../../components/ClubJoin/CardActivity";
 import CardGallery from "../../components/ClubJoin/CardGallery";
@@ -28,7 +31,7 @@ import ChatDiscuss from "../../components/ClubJoin/ChatDiscuss";
 import ModalMember from "../../components/ClubJoin/ModalMember";
 import HandleGaleries from "../../components/ClubJoin/ModalPostGaleries";
 import ModalRules from "../../components/ClubJoin/ModalRules";
-import Layout from "../../components/Layout";
+import Layout from "../../components/Baru/Layout";
 
 const ClubJoin = () => {
   const user = useSelector((state) => state.users.currentUser);
