@@ -230,13 +230,21 @@ const Home = () => {
 											onChange={(e) => setAddress(e.target.value)}
 										/>
 										<FormLabel my="3">Event City</FormLabel>
-										<Input
-											color="gray"
-											bg="white"
-											placeholder="Where your event take place"
-											_placeholder={{ opacity: 0.4, color: "inherit" }}
-											onChange={(e) => setCity(e.target.value)}
-										/>
+										<Dropdown
+											placeHolderProps={"Event City"}
+											targetValue={(e) => setCity(e.target.value)}
+										>
+											<option value="Jakarta">Jakarta</option>
+											<option value="Bogor">Bogor</option>
+											<option value="Depok">Depok</option>
+											<option value="Tanggerang">Tanggerang</option>
+											<option value="Bekasi">Bekasi</option>
+											<option value="Bandung">Bandung</option>
+											<option value="Semarang">Semarang</option>
+											<option value="Malang">Malang</option>
+											<option value="Surabaya">Surabaya</option>
+											<option value="Jogjakarta">Jogjakarta</option>
+										</Dropdown>
 										<FormLabel my="3">Event Description</FormLabel>
 										<Input
 											color="gray"
@@ -258,22 +266,21 @@ const Home = () => {
 											}}
 										/>
 										<FormLabel my="3">Event Category</FormLabel>
-										<Select
-											bg="white"
-											placeholder="Your event category"
-											onChange={(e) => setCategoryId(e.target.value)}
+										<Dropdown
+											placeHolderProps={"Event City"}
+											targetValue={(e) => setCategoryId(e.target.value)}
 										>
-											<option value="1">SepakBola</option>
+											<option value="1">Speak Bola</option>
 											<option value="2">Basket</option>
 											<option value="3">Futsal</option>
-											<option value="4">Bola Voli</option>
+											<option value="4">Voli</option>
 											<option value="5">Badminton</option>
-											<option value="6">Bersepeda</option>
+											<option value="6">Sepeda</option>
 											<option value="7">Tenis Lapangan</option>
 											<option value="8">Tenis Meja</option>
 											<option value="9">Renang</option>
-											<option value="10">Beladiri</option>
-										</Select>
+											<option value="10">Bela Diri</option>
+										</Dropdown>
 
 										<FormLabel my="3">Starting Date</FormLabel>
 										<Input
@@ -306,7 +313,7 @@ const Home = () => {
 								<ModalFooter>
 									<ButtonCreate
 										onClick={() => {
-											addEvent(), onClose();
+											addEvent(), onClose(), getEvent();
 										}}
 									/>
 								</ModalFooter>
@@ -390,7 +397,9 @@ const Home = () => {
 														</Text>
 														<Text pb="1">Address : {item.address}</Text>
 														<Text pb="1">City : {item.city}</Text>
-														<Text pb="1">Category : {item.category_name}</Text>
+														<Text pb="10px">
+															Category : {item.category_name}
+														</Text>
 													</CardBody>
 												</CardEventClub>
 										  ))}
