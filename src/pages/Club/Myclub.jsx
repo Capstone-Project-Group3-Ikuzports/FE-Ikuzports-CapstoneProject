@@ -66,7 +66,7 @@ const Myclub = () => {
         <Box justify="end" ml={"92%"} justifyContent={"end"}></Box>
         <SimpleGrid columns={{ sm: 1, md: 2 }} gap={8}>
           {getMyClub && loading === false ? (
-            getMyClub.map((data) => {
+            getMyClub?.map((data) => {
               console.log(data);
               if (data.member_total === 0) {
                 (" ");
