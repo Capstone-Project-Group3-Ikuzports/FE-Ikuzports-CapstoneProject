@@ -45,15 +45,26 @@ const DetailStore = () => {
   const location = useLocation()
   const idStore = location?.state?.id
   const date = new Date();
-  const tanggal = date.getDate();
-  const bulan = date.getMonth();
-  const tahun = date.getFullYear();
-  const detik = date.getSeconds();
-  const menit = date.getMinutes();
-  const jam = date.getHours();
-  const postWaktu = `${tahun}-${bulan}-${tanggal} ${jam}-${menit}-${detik}`
+  let tanggal = '' + date.getDate();
+  tanggal.length < 2 ? tanggal = 0 + tanggal : tanggal;
+  let bulan = '' + date.getMonth() + 1
+  bulan.length < 2 ? bulan = 0 + bulan : bulan
+  let tahun = '' + date.getFullYear();
+  let detik = '' + date.getSeconds();
+  detik.length < 2 ? detik = 0 + detik : detik
+  let menit = '' + date.getMinutes();
+  menit.length < 2 ? menit = 0 + menit : menit
+  let jam = '' + date.getHours();
+  jam.length < 2 ? jam = 0 + jam : jam
+  const postWaktu = `${tahun}-${bulan}-${tanggal} ${jam}:${menit}:${detik}`
   const parsingan = Number(productId.price)
   const parsinganId = Number(idStore)
+
+  
+
+
+
+
 
   const getProductId = ()=>{
     axios
@@ -68,9 +79,16 @@ const DetailStore = () => {
   const postDetail = () =>{
     axios
     .post('https://rubahmerah.site/transactions/',{total_price:parsingan,product_id:parsinganId,product_quantity:1,transaction_time:`${postWaktu}`},config )
-    console.log("coba coba ",postWaktu)
+  
     .then((res) => {
-    
+      console.log(res.data.data)
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${res.data.data.status_message}`,
+        text: `${res.data.data.va_numbers.bank}`,
+        showConfirmButton: true,
+      });
     })
     .catch((err) => {
       Swal.fire({
@@ -133,20 +151,20 @@ useEffect(
                 <ModalHeader textAlign={'center'}>Pilih Metode Pembayaran</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                  <Flex>
-                  <Image src={bca} w={"5vw"} h={"8vh"} mb="10px"/>
-                  <Text>BCA</Text>
+                  <Flex alignItems={"center"}>
+                  <Image src={bca} w={"5vw"} h={"7vh"} mb="10px" mr='25px'/>
+                  <Text fontSize={'2xl'}>BCA</Text>
                   </Flex>
-                  <Flex>             
-                  <Image src={bni} w={"5vw"} h={"7.5vh"} mb="10px" mr='25px'/>
+                  <Flex alignItems={"center"}>             
+                  <Image src={bni} w={"5vw"} h={"7vh"} mb="10px" mr='25px'/>
                   <Text fontSize={'2xl'} textColor='gray'>Upcoming</Text>
                   </Flex>
-                  <Flex>
-                  <Image src={bri} w={"5vw"} h={"7.5vh"} mb="10px" mr='25px'/>
+                  <Flex alignItems={"center"}>
+                  <Image src={bri} w={"5vw"} h={"7vh"} mb="10px" mr='25px'/>
                   <Text fontSize={'2xl'} textColor='gray'>Upcoming</Text>
-                  </Flex>
-                  <Flex>
-                  <Image src={mandiri} w={"5vw"} h={"7.5vh"} mb="10px" mr={'25px'}/>
+                  </Flex >
+                  <Flex alignItems={"center"}>
+                  <Image src={mandiri} w={"5vw"} h={"7vh"} mb="10px" mr={'25px'}/>
                   <Text fontSize={'2xl'} textColor='gray'>Upcoming</Text>
                   </Flex>
                   </ModalBody>
