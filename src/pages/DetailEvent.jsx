@@ -75,7 +75,6 @@ const DetailEvent = () => {
 					showConfirmButton: false,
 					timer: 1000,
 				});
-				navigate("/detailevent");
 			})
 			.catch((err) => {
 				console.log(err);

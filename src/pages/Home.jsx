@@ -1,12 +1,9 @@
 import React from "react";
-import CardEvent from "../components/Baru/CardEventClub";
 import {
 	Box,
 	Spacer,
 	Text,
 	Flex,
-	Image,
-	Select,
 	FormControl,
 	FormLabel,
 	Spinner,
@@ -14,13 +11,11 @@ import {
 	CardBody,
 	Input,
 	Heading,
-	Modal,
-	ModalOverlay,
-	ModalContent,
 	ModalHeader,
 	ModalFooter,
 	ModalBody,
 	ModalCloseButton,
+	Show,
 } from "@chakra-ui/react";
 import { FiUser } from "react-icons/fi";
 import CardEventClub from "../components/Baru/CardEventClub";
@@ -167,7 +162,7 @@ const Home = () => {
 			<div>
 				<Box p="8" px={"10%"} w={"100vw"} h={"100%"}>
 					<Flex>
-						<Box w="50%">
+						<Box w="60%">
 							<Text as="b" fontSize={"2xl"}>
 								Home
 							</Text>
@@ -313,7 +308,7 @@ const Home = () => {
 								<ModalFooter>
 									<ButtonCreate
 										onClick={() => {
-											addEvent(), onClose(), getEvent();
+											addEvent(), onClose();
 										}}
 									/>
 								</ModalFooter>
@@ -382,7 +377,13 @@ const Home = () => {
 															: navigate("/login");
 													}}
 												>
-													<CardBody w={"100%"} px={"70px"} pb={"0"}>
+													<CardBody
+														w={"100%"}
+														h={"100%"}
+														py="30px"
+														px={"70px"}
+														pb={"0"}
+													>
 														<Heading size="md" mb={5}>
 															{item.name}
 														</Heading>
@@ -391,13 +392,13 @@ const Home = () => {
 															<Spacer></Spacer>
 															<Text>{item.end_date.slice(0, 10)}</Text>
 														</Flex>
-														<Text py="1">
+														<Text my="10px">
 															Slot : {item.total_participant} /{" "}
 															{item.maximum_people}
 														</Text>
-														<Text pb="1">Address : {item.address}</Text>
-														<Text pb="1">City : {item.city}</Text>
-														<Text pb="10px">
+														<Text my="10px">Address : {item.address}</Text>
+														<Text my="10px">City : {item.city}</Text>
+														<Text my="10px">
 															Category : {item.category_name}
 														</Text>
 													</CardBody>
@@ -412,43 +413,51 @@ const Home = () => {
 								</Box>
 							</Box>
 						</Box>
-						<Box w="40%">
-							<Box mt={"6%"} ml={"16%"} w={"100%"} position="sticky" top={"0"}>
-								<Buttons
-									openTrigger={() => navigate("/clublist")}
-									textContent="Find More Club"
-								/>
-								<Flex flexDir={"column"} gap={4} pt={5}>
-									{getClubSlice && loadingClub === false ? (
-										getClubSlice.map((item) => (
-											<CardEventClub
-												linkGambar={item.logo}
-												key={item.id}
-												keys={item.id}
-												onClick={() =>
-													navigate("/detailclub", {
-														state: {
-															id: item.id,
-														},
-													})
-												}
-											>
-												<CardBody w={"100%"} pb={"0"}>
-													<Heading size="md">{item.name}</Heading>
-													<Text py="1">
-														Member: {item.joined_member} / {item.member_total}
-													</Text>
-													<Text pb="1">{item.category_name}</Text>
-													<Text pb="1">{item.city}</Text>
-												</CardBody>
-											</CardEventClub>
-										))
-									) : (
-										<Spinner />
-									)}
-								</Flex>
+						<Show above="1300px">
+							<Box w="40%">
+								<Box
+									mt={"6%"}
+									ml={"16%"}
+									w={"100%"}
+									position="sticky"
+									top={"0"}
+								>
+									<Buttons
+										openTrigger={() => navigate("/clublist")}
+										textContent="Find More Club"
+									/>
+									<Flex flexDir={"column"} gap={4} pt={5}>
+										{getClubSlice && loadingClub === false ? (
+											getClubSlice.map((item) => (
+												<CardEventClub
+													linkGambar={item.logo}
+													key={item.id}
+													keys={item.id}
+													onClick={() =>
+														navigate("/detailclub", {
+															state: {
+																id: item.id,
+															},
+														})
+													}
+												>
+													<CardBody w={"100%"} pb={"0"}>
+														<Heading size="md">{item.name}</Heading>
+														<Text py="1">
+															Member: {item.joined_member} / {item.member_total}
+														</Text>
+														<Text pb="1">{item.category_name}</Text>
+														<Text pb="1">{item.city}</Text>
+													</CardBody>
+												</CardEventClub>
+											))
+										) : (
+											<Spinner />
+										)}
+									</Flex>
+								</Box>
 							</Box>
-						</Box>
+						</Show>
 					</Flex>
 				</Box>
 			</div>

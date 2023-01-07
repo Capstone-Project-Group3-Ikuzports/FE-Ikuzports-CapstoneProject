@@ -58,6 +58,7 @@ const CardProduct = ({ name, desc, price, image, id, children, onClick }) => {
 							alt="Green double couch with wooden legs"
 							borderRadius="lg"
 							mx="auto"
+							h="300px"
 						/>
 						{children}
 					</CardBody>
