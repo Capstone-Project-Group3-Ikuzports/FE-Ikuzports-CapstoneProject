@@ -26,7 +26,7 @@ const ClubJoin = lazy(() => import("./pages/Club/ClubJoin"));
 const ClubList = lazy(() => import("./pages/Club/ClubList"));
 const DetailClub = lazy(() => import("./pages/Club/DetailClub"));
 const EditClub = lazy(() => import("./pages/Club/EditClub"));
-const Myclub = lazy(() => import("./pages/Club/MyClub"));
+const Myclub = lazy(() => import("./pages/Club/Myclub"));
 const DetailEvent = lazy(() => import("./pages/DetailEvent"));
 const Home = lazy(() => import("./pages/Home"));
 const DetailStore = lazy(() => import("./pages/Product/DetailStore"));
