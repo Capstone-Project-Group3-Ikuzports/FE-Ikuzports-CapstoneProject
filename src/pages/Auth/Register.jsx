@@ -18,8 +18,8 @@ import React, { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import HeroLogin from "../../components/HeroLogin";
-import UploadFiles from "../../components/UploadFiles";
+import HeroLogin from "../../components/Baru/HeroLogin"
+import UploadFiles from "../../components/Baru/UploadFiles";
 import "../../styles/uploadFile.css";
 
 const Register = () => {

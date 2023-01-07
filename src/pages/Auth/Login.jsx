@@ -7,24 +7,21 @@ import {
   FormLabel,
   Image,
   Input,
-  Text,
   InputGroup,
   InputRightElement,
-  FormHelperText,
+  Text,
 } from "@chakra-ui/react";
-import HeroLogin from "../../components/HeroLogin";
+import HeroLogin from "../../components/Baru/HeroLogin";
 import { updateUser } from "../../redux/reducer/reducer";
+import { updateAccess } from "../../redux/reducer/access_token";
 
 import axios from "axios";
 import React, { useState } from "react";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { GoogleLogin } from "@react-oauth/google";
-import jwt_decode from "jwt-decode";
 
-import { useSelector } from "react-redux";
 import { useGoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
@@ -33,66 +30,67 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // const [credential, setCredential] = useState();
+  const urlLoginGoogle = "https://rubahmerah.site/auth/google";
   // const [dataGoogle, setDataGoogle] = useState();
-  // console.log(GoogleJwt);
-  // console.log(dataGoogle);
-  // let decoded = jwt_decode(tokenResponse.credential);
-  // setDataGoogle(decoded);
 
-  // === TEST OAUTH1 === //
-  const [dataGoogle, setDataGoogle] = useState();
-  const loginOAuth1 = useGoogleLogin({
+  const useGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       // console.log("CARA 1", tokenResponse);
-      setDataGoogle(tokenResponse);
-      // console.log(dataGoogle);
+      // setDataGoogle(tokenResponse);
+      const configPutNPost = {
+        headers: {
+          Authorization: `Bearer ${tokenResponse.access_token}`,
+          "content-type": "multipart/form-data",
+        },
+      };
+      const form = new FormData();
+      form.append("access_token", tokenResponse?.access_token);
+      form.append("authuser", tokenResponse?.authuser);
+      form.append("expires_in", tokenResponse?.expires_in);
+      form.append("prompt", tokenResponse?.prompt);
+      form.append("scope", tokenResponse?.scope);
+      form.append("token_type", tokenResponse?.token_type);
+      console.log("login", [...form]);
+
+      await axios
+        .post(urlLoginGoogle, form, configPutNPost)
+        .then((res) => {
+          console.log(res.data.data);
+          dispatch(updateUser(res.data.data));
+          dispatch(updateAccess(tokenResponse));
+          navigate("/");
+        })
+        .catch((err) => console.log(err));
       console.log("data", dataGoogle);
-      await loginGoogle();
     },
   });
-
-  const urlLoginGoogle = "https://rubahmerah.site/auth/google";
-
   const loginGoogle = async () => {
+    const configPutNPost = {
+      headers: {
+        Authorization: `Bearer ${dataGoogle?.access_token}`,
+        "content-type": "multipart/form-data",
+      },
+    };
     const form = new FormData();
-    form.append("acces_token", dataGoogle.access_token);
-    form.append("authuser", dataGoogle.authuser);
-    form.append("expires_in", dataGoogle.expires_in);
-    form.append("prompt", dataGoogle.prompt);
-    form.append("scope", dataGoogle.scope);
-    form.append("token_type", dataGoogle.token_type);
+    form.append("access_token", dataGoogle?.access_token);
+    form.append("authuser", dataGoogle?.authuser);
+    form.append("expires_in", dataGoogle?.expires_in);
+    form.append("prompt", dataGoogle?.prompt);
+    form.append("scope", dataGoogle?.scope);
+    form.append("token_type", dataGoogle?.token_type);
     console.log("login", [...form]);
+
     await axios
-      .post(urlLoginGoogle, form)
-      .then((res) => console.log(res))
+      .post(urlLoginGoogle, form, configPutNPost)
+      .then((res) => {
+        console.log(res.data.data);
+        dispatch(updateUser(res.data.data));
+        dispatch(updateAccess(dataGoogle));
+        navigate("/");
+      })
       .catch((err) => console.log(err));
   };
-
-  // === TEST OAUTH2 === //
-  const loginOAuth2 = useGoogleLogin({
-    onSuccess: async (response) => {
-      try {
-        const data = await axios.get(
-          `https://www.googleapis.com/oauth2/v3/userinfo`,
-          {
-            headers: {
-              Authorization: `Bearer ${response.access_token}`,
-            },
-          }
-        );
-        console.log("CARA 2", data);
-      } catch (err) {
-        console.log(err);
-      }
-    },
-  });
-
-  // === TEST OAUTH3 === //
-  const loginOAuth3 = useGoogleLogin({
-    onSuccess: (codeResponse) => console.log("CARA 3", codeResponse),
-    flow: "auth-code",
-  });
+  // === TEST OAUTH1 === //
 
   //=== SET PASSWORD ===//
   const [show, setShow] = React.useState(false);
@@ -192,8 +190,9 @@ const Login = () => {
                 w={"full"}
                 mt={4}
                 onClick={() => {
+                  useGoogle();
                   // loginGoogle();
-                  loginOAuth1();
+                  // loginOAuth1();
                   // loginOAuth2();
                   // loginOAuth3();
                 }}
@@ -201,24 +200,6 @@ const Login = () => {
                 <Image src="../src/assets/google.png" w={"8"} mx={1} />
                 Sign in with Google
               </Button>
-
-              {/* LOGIN DEFAULT BY GOOGLE */}
-              <Center pt={2}>
-                <GoogleLogin
-                  size="large"
-                  // shape="rectangular"
-                  onSuccess={(credentialResponse) => {
-                    console.log("CARA 4", credentialResponse);
-                    // setCredential(credentialResponse);
-                    let decoded = jwt_decode(credentialResponse.credential);
-                    console.log("DECODE CREDENTIAL CARA 4", decoded);
-                    // setDataGoogle(decoded);
-                  }}
-                  onError={() => {
-                    console.log("Login Failed");
-                  }}
-                />
-              </Center>
 
               <Text color={"#4545458d"} pt={2} fontWeight={"semi-bold"}>
                 Dont you have an Account?

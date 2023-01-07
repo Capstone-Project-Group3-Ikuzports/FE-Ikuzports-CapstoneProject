@@ -1,15 +1,18 @@
 import React from "react";
 import Swal from "sweetalert2";
-import { Box, Flex, Text, Image, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from "@chakra-ui/react";
-import { ButtonBack } from "../../components/Button";
+import { Box, Flex, Text, Image, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, } from "@chakra-ui/react";
+import {Buttons} from "../../components/Baru/ButtonBack";
+import {ButtonsCancel} from "../../components/Baru/ButtonBack";
+import Modals from "../../components/Baru/Modal";
+import { ButtonBack } from "../../components/Baru/ButtonBack";
 import { useDisclosure } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import RuleCard from "../../components/RuleCard";
+import RuleCard from "../../components/Baru/RuleCard";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import Layout from "../../components/Layout";
+import Layout from "../../components/Baru/Layout";
 import axios from "axios";
 
 
@@ -60,7 +63,7 @@ const DetailClub = () => {
         showConfirmButton: false,
         timer: 1000,
       });
-      navigate("/detailevent");
+      getDetailClub()
     })
     .catch((err) => {
       console.log(err)
@@ -101,7 +104,7 @@ const DetailClub = () => {
               </Box>
               </Flex>
               <Text fontSize={'3xl'} mt={'20'}>Club Description :</Text>
-              <Text fontSize={'xl'} mt={'2'} w={'60%'}>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</Text>
+              <Text fontSize={'xl'} mt={'2'} w={'60%'}>{getClubDetail.description}</Text>
             </Box>
             <RuleCard
             key = {getClubDetail.id}
@@ -110,24 +113,19 @@ const DetailClub = () => {
           </Flex>
       
       <Box ml='auto' justif='end' w={'131px'}>
-        <Button bg='brand.300' _hover={{bg: "brand.200"}} onClick={onOpen} color={'white'} px={'50px'} mt={10}>Join</Button>
-        <Modal isOpen={isOpen} onClose={onClose} h={'100px'}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader mx='auto'>Requirement</ModalHeader>
+        <Buttons  openTrigger={onOpen} textContent="Join"/>
+        <Modals isOpen={isOpen} onClose={onClose} h={'100px'}>
+        <ModalHeader mx='auto'>Requirement</ModalHeader>
             <ModalCloseButton />
-            <ModalBody h={'100px'} overflowY='scroll'>
+            <ModalBody h={'100px'} bg="white" w={"90%"} rounded="lg" mx='auto' overflowY='scroll'>
               <Text h={'300px'}>{getClubDetail.requirement}</Text>
             </ModalBody>
 
             <ModalFooter>
-              <Button bg='red' color='white' mr={3} onClick={onClose}>
-                Cancel
-              </Button>
-              <Button bg='black' onClick={onSubmitHandler} color='white'>Accept</Button>
+              <ButtonsCancel textContent="Cancel" mr="10" openTrigger={onClose}/>
+              <Buttons textContent="Accept" openTrigger={onSubmitHandler}/>
             </ModalFooter>
-          </ModalContent>
-        </Modal>
+        </Modals>
       </Box>
     </Box>
     </Layout>
