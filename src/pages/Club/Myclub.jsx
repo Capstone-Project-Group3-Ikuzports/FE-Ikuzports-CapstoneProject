@@ -118,7 +118,6 @@ const Myclub = () => {
             })
           ) : (
             <Spinner
-              key={data.id}
               thickness="4px"
               speed="0.65s"
               emptyColor="gray.200"
