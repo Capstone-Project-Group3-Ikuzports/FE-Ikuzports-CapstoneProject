@@ -17,8 +17,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ButtonBack, ButtonClear, ButtonSave } from "../../components/Baru/ButtonBack";
-import Layout from "../../components/Layout";
-import UploadFiles from "../../components/UploadFiles";
+import Layout from "../../components/Baru/Layout";
+import UploadFiles from "../../components/Baru/UploadFiles";
 import Swal from "sweetalert2";
 import { useLocation } from "react-router-dom";
 
@@ -88,7 +88,7 @@ const EditClub = () => {
           showConfirmButton: false,
           timer: 2000,
         });
-        navigate("/clubJoin");
+        navigate(-1);
       })
       .catch((err) => {
         Swal.fire({
@@ -121,7 +121,7 @@ const EditClub = () => {
                   rounded={"full"}
                   w={"56"}
                   h={"56"}
-                  objectFit={"cover"}
+                  objectFit={"contain"}
                 />
                 <Text as={"h2"} fontSize={"lg"} fontWeight={"bold"} pt={2}>
                   {data.name}
@@ -144,7 +144,7 @@ const EditClub = () => {
                 <FormLabel color={"brand.300"}>Logo Picture</FormLabel>
                 <UploadFiles
                   prev={prev}
-                  prevSize={"xl"}
+                  prevSize={"2xl"}
                   onChange={({ target: { files } }) => {
                     files[0] && setFiles(files[0].name);
                     if (files) {

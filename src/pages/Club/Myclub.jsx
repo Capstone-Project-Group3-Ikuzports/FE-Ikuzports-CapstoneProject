@@ -1,5 +1,4 @@
 import React from "react";
-import CardMyClub from "../../components/MyClub/CardMyClub";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -11,13 +10,13 @@ import {
   CardBody,
   Heading,
 } from "@chakra-ui/react";
-import {Buttons} from "../../components/Baru/ButtonBack";
-import Layout from "../../components/Layout";
+import { Buttons } from "../../components/Baru/ButtonBack";
+import Layout from "../../components/Baru/Layout";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import {ButtonBack} from "../../components/Baru/ButtonBack";
+import { ButtonBack } from "../../components/Baru/ButtonBack";
 import CardEventClub from "../../components/Baru/CardEventClub";
 
 const Myclub = () => {
@@ -54,33 +53,56 @@ const Myclub = () => {
       <Box p="8" px={"10%"} w={"100vw"} h={"100vh"} overflowX="hidden">
         <ButtonBack />
         <Flex>
-        <Text fontSize={"5xl"}>My Club</Text>
-        <Box verticalAlign={'center'} mt={4} ml='auto'>
-        <Buttons openTrigger={() => navigate("/addnewclub")} textContent="Add A Club"/>
-        </Box>
-        </Flex> 
+          <Text fontSize={"5xl"}>My Club</Text>
+          <Box verticalAlign={"center"} mt={4} ml="auto">
+            <Buttons
+              openTrigger={() => navigate("/addnewclub")}
+              textContent="Add A Club"
+            />
+          </Box>
+        </Flex>
+
         <Divider w="17%" orientation="horizontal" />
-        <Box justify="end" ml={"92%"} justifyContent={"end"}>
-        </Box>
+        <Box justify="end" ml={"92%"} justifyContent={"end"}></Box>
         <SimpleGrid columns={{ sm: 1, md: 2 }} gap={8}>
           {getMyClub && loading === false ? (
             getMyClub.map((data) => {
+              console.log(data);
               if (data.member_total === 0) {
                 (" ");
               } else {
                 return (
-                  <CardEventClub linkGambar={data.logo} onClick={() => navigate('/clubjoin', {
-                    state : {
-                      id: data.id
+                  <CardEventClub
+                    keys={data.id}
+                    key={data.id}
+                    linkGambar={data.logo}
+                    onClick={() =>
+                      navigate("/clubjoin", {
+                        state: {
+                          id: data.club_id,
+                        },
+                      })
                     }
-                  })}>
-                    <CardBody pb="0" h={200}>
+                  >
+                    <CardBody pb="0" h={200} key={data.id}>
                       <Flex>
                         <Heading size="xl" w={"100%"}>
                           {data.name}
                         </Heading>
                         <Box pl="30%">
-                          <Text bg={"brand.200"} color='white' w={100} mx='auto' pt={"20px"} textAlign={'center'} rounded='lg' p={3} as='b'>{data.status}</Text>
+                          <Text
+                            bg={"brand.200"}
+                            color="white"
+                            w={100}
+                            mx="auto"
+                            pt={"20px"}
+                            textAlign={"center"}
+                            rounded="lg"
+                            p={3}
+                            as="b"
+                          >
+                            {data.status}
+                          </Text>
                         </Box>
                       </Flex>
 
@@ -89,7 +111,6 @@ const Myclub = () => {
                       </Text>
                       <Text pb="2">Category {data.category}</Text>
                       <Text pb="2">Location : {data.city}</Text>
-                      <Text pb="2">STATUS : {data.status}</Text>
                     </CardBody>
                   </CardEventClub>
                 );
@@ -97,6 +118,7 @@ const Myclub = () => {
             })
           ) : (
             <Spinner
+              key={data.id}
               thickness="4px"
               speed="0.65s"
               emptyColor="gray.200"

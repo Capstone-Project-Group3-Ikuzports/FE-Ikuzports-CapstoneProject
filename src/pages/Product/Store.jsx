@@ -1,41 +1,61 @@
-import React,{useState,useEffect} from 'react'
-import {AiOutlineSearch} from 'react-icons/ai'
-import {CardFooter,Heading,CardHeader,Box, Text, Flex, Divider, Button, SimpleGrid, Card, ButtonGroup, Select, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
-import CardProduct from '../../components/Store/CardProduct'
-import { ButtonBack } from '../../components/Baru/ButtonBack';
-import Layout from '../../components/Layout';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { AiOutlineSearch } from "react-icons/ai";
+import {
+	CardFooter,
+	Heading,
+	CardHeader,
+	Box,
+	Text,
+	Flex,
+	Stack,
+	Spacer,
+	Divider,
+	Button,
+	SimpleGrid,
+	Card,
+	ButtonGroup,
+	Select,
+	Input,
+	InputGroup,
+	InputLeftElement,
+} from "@chakra-ui/react";
+import CardProduct from "../../components/Baru/CardProduct";
+import { ButtonBack } from "../../components/Baru/ButtonBack";
+import Layout from "../../components/Baru/Layout";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
-import Dropdown from '../../components/Baru/Dropdown';
-
+import { useSelector } from "react-redux";
+import Dropdown from "../../components/Baru/Dropdown";
 
 const Store = () => {
-  const currentUser = useSelector((state) => state.users.currentUser)
-  const token = currentUser.token
+	const currentUser = useSelector((state) => state.users.currentUser);
+	const token = currentUser.token;
 
-  const config = {
-    headers: {Authorization : `Bearer ${token}`},
-  }
-const [product,setProduct] = useState([]);
-const [filterCate,setFilterCate] = useState('');
-const [filterCity,setFilterCity] = useState('')
-const navi = useNavigate();
+	const config = {
+		headers: { Authorization: `Bearer ${token}` },
+	};
+	const [product, setProduct] = useState([]);
+	const [filterCate, setFilterCate] = useState("");
+	const [filterCity, setFilterCity] = useState("");
+	const navi = useNavigate();
 
-const getProduct = () =>{
-  axios
-  .get(`https://rubahmerah.site/products?itemcategory_id=${filterCate}&name=&city=${filterCity}&pages`,config)
-  .then(res=>{
-    setProduct(res.data.data) 
-  })
-  .catch((err) => {
-    console.log(err)})
-}
+	const getProduct = () => {
+		axios
+			.get(
+				`https://rubahmerah.site/products?itemcategory_id=${filterCate}&name=&city=${filterCity}&pages`,
+				config
+			)
+			.then((res) => {
+				setProduct(res.data.data);
+				console.log(res.data.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
-  useEffect(()=>
-  getProduct(),[filterCate,filterCity]
-  )
-
+	useEffect(() => getProduct(), [filterCate, filterCity]);
+  
   return (
 <Layout>
       <Box p='8' px={'10%'} w={'100vw'} h={'100%'} overflowX='hidden'>
@@ -113,5 +133,9 @@ const getProduct = () =>{
   )
 }
 
-export default Store
 
+
+
+
+
+export default Store;

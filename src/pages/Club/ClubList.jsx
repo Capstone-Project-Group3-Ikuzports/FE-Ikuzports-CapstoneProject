@@ -7,8 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { ButtonBack } from '../../components/Baru/ButtonBack';
 import axios from 'axios';
 import {Spinner, Box, Text, Flex, Divider, SimpleGrid, Select, Input, InputGroup, InputLeftElement, CardBody, Heading } from "@chakra-ui/react";
-import CardClub from '../../components/CardClub';
-import Layout from '../../components/Layout';
+import Layout from '../../components/Baru/Layout';
 import CardEventClub from '../../components/Baru/CardEventClub';
 import Dropdown from '../../components/Baru/Dropdown';
 
@@ -92,10 +91,10 @@ const ClubList = () => {
         </Flex>
         </Flex>
         <Divider w="17%" orientation='horizontal' />
-        <SimpleGrid columns={{sm:2, md:4}} gap={8}>
+        <SimpleGrid columns={{sm:2, md:3}} gap={8}>
         {getMyClub && loading === false ?
           getMyClub.map(data => (
-            <CardEventClub linkGambar={data.logo} onClick={() => navigate('/detailclub', {
+            <CardEventClub linkGambar={data.logo} maxh="100px" maxw="100px" onClick={() => navigate('/detailclub', {
               state : {
                 id: data.id
               }

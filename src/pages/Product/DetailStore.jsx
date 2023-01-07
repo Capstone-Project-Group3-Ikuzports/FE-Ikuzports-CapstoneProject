@@ -29,8 +29,9 @@ import {
   ButtonBack,
   ButtonBuy
 } from "../../components/Baru/ButtonBack";
-import Layout from "../../components/Layout";
 import Swal from "sweetalert2";
+import Layout from "../../components/Baru/Layout";
+
 
 
 const DetailStore = () => {
