@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { MdDelete } from "react-icons/md";
 import ModalEditGaleries from "../Unreusable/ModalEditGaleries";
-const CardGallery = ({ image, caption, deletePhoto, data }) => {
+const CardGallery = ({ image, caption, deletePhoto, idImage, editPhoto }) => {
   const { isOpen, onToggle } = useDisclosure();
   return (
     <Card
@@ -20,7 +20,13 @@ const CardGallery = ({ image, caption, deletePhoto, data }) => {
       onPointerLeave={() => onToggle()}
       cursor={"pointer"}
     >
-      <ModalEditGaleries open={open} images={image} currentCaption={caption} />
+      <ModalEditGaleries
+        open={open}
+        images={image}
+        currentCaption={caption}
+        editPhoto={editPhoto}
+        idImage={idImage}
+      />
 
       <Center>
         <Image
@@ -35,7 +41,7 @@ const CardGallery = ({ image, caption, deletePhoto, data }) => {
       </Center>
       <Fade in={isOpen} direction="bottom">
         <Box position={"absolute"} top={0} right={0} color={"#ff1443"}>
-          <MdDelete size={30} onClick={() => deletePhoto({ id: data })} />
+          <MdDelete size={30} onClick={() => deletePhoto({ id: idImage })} />
         </Box>
 
         <Text

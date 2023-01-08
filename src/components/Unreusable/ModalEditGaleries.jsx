@@ -17,10 +17,11 @@ import {
   useDisclosure,
   Flex,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 
-const ModalEditGaleries = ({ images, currentCaption }) => {
+const ModalEditGaleries = ({ idImage, images, currentCaption, editPhoto }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [caption, setCaption] = useState("");
 
   return (
     <>
@@ -54,7 +55,7 @@ const ModalEditGaleries = ({ images, currentCaption }) => {
                 <Input
                   defaultValue={currentCaption}
                   placeholder="Ikuzport is the best"
-                  onChange={(e) => setCaption(e.target.value)}
+                  onChange={(e) => setCaption(e.currentTarget.value)}
                 />
               </FormControl>
             </Center>
@@ -64,7 +65,12 @@ const ModalEditGaleries = ({ images, currentCaption }) => {
               colorScheme="blue"
               mr={3}
               onClick={() => {
-                post({ file: file, caption: caption }), onClose();
+                editPhoto({
+                  currentCaption: currentCaption,
+                  caption: caption,
+                  id: idImage,
+                }),
+                  onClose();
               }}
             >
               Save

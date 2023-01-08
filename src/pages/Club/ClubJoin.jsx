@@ -1,4 +1,3 @@
-import { ChevronLeftIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -54,7 +53,7 @@ const ClubJoin = () => {
   const urlGetGaleriesIdClub = `https://rubahmerah.site/clubs/${id_club}/galeries`;
   const urladdChat = `https://rubahmerah.site/chats`;
   const urlAddGalleries = `https://rubahmerah.site/galeries`;
-  const urlDeleteGalleries = `https://rubahmerah.site/galeries/`;
+  const urlDellAndUpGalleries = `https://rubahmerah.site/galeries/`;
   const urlHandleMember = `https://rubahmerah.site/members/`;
   const urlPostActivity = `https://rubahmerah.site/activities`;
   const configPutNPost = {
@@ -108,7 +107,7 @@ const ClubJoin = () => {
   };
   // PAGINATION ACTIVITY //
   const [currentPage, SetCurrentPage] = useState(1);
-  const maxPage = Math.ceil(activities.length / 2);
+  const maxPage = activities ? Math.ceil(activities.length / 2) : activities;
   const postPerPage = 2;
   const lastPost = currentPage * postPerPage;
   const firstPost = lastPost - postPerPage;
@@ -176,9 +175,8 @@ const ClubJoin = () => {
 
     await axios
       .post(urladdChat, chat, configPutNPost)
-      .then(res)
+      .then((res) => getClubChat())
       .catch((err) => console.log(err));
-    getClubChat();
   };
 
   //=== POST PHOTO GALERIES ===//
@@ -200,7 +198,7 @@ const ClubJoin = () => {
   const deletePhoto = async (data) => {
     // console.log("test", data.id);
     axios
-      .delete(`${urlDeleteGalleries}${data.id}`, configGetNDelete)
+      .delete(`${urlDellAndUpGalleries}${data.id}`, configGetNDelete)
       .then((res) => getGaleries())
       .catch((err) => console.log(err));
   };
@@ -228,6 +226,31 @@ const ClubJoin = () => {
       }
     });
   }, []);
+
+  // EDIT PHOTO === //
+  const editPhoto = async (data) => {
+    const editFoto = new FormData();
+    editFoto.append("club_id", id_club);
+    editFoto.append(
+      "caption",
+      !data.caption ? data.currentCaption : data.caption
+    );
+
+    axios
+      .put(`${urlDellAndUpGalleries}${data.id}`, editFoto, configPutNPost)
+      .then((res) => {
+        console.log(res);
+        getGaleries();
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          text: "Caption success edited",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
 
   //=== REMOVE MEMBER ===//
   const remove = (data) => {
@@ -510,8 +533,9 @@ const ClubJoin = () => {
                       image={data.url}
                       key={data.id}
                       caption={data.caption}
-                      data={data.id}
+                      idImage={data.id}
                       deletePhoto={dellPhoto}
+                      editPhoto={editPhoto}
                     />
                   ))}
                 </SimpleGrid>
