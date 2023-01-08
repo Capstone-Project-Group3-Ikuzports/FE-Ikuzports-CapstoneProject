@@ -70,9 +70,9 @@ const MyProduct = () => {
     console.log(item);
     axios
       .delete(`https://rubahmerah.site/products/${item}`, config)
-      .then((res) => console.log(res))
+      .then(()=>{getMyProduct()})
       .catch((err) => console.log(err));
-    getMyProduct();
+  
   };
 
   useEffect(() => {
@@ -117,6 +117,7 @@ const MyProduct = () => {
           showConfirmButton: true,
         });
       });
+      getMyProduct();
   };
 
   const DellProduct = useCallback((item) => {
@@ -234,7 +235,7 @@ const MyProduct = () => {
                 </Select>
               </ModalBody>
               <ModalFooter>
-                <Buttons textContent="Yes" mr={"30"} openTrigger={modalPost} />
+                <Buttons textContent="Yes" mr={"30"} openTrigger={()=>{modalpost(), onClose()}} />
                 <ButtonsCancel textContent="Cancel" openTrigger={onClose} />
               </ModalFooter>
             </Modals>
