@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { clearUser } from "../../redux/reducer/reducer";
 import { Buttons } from "./ButtonBack";
+import iconNavbar from "../../assets/logo-text-yellow.png"
 
 const Navbar = ({ name, image }) => {
   const [data, setData] = useState();
@@ -78,7 +79,7 @@ const Navbar = ({ name, image }) => {
       <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
         <Box>
           <Image
-            src={"./src/assets/logo-text-yellow.png"}
+            src={iconNavbar}
             alt={"logo"}
             h={"20"}
             onClick={() => navigate("/")}

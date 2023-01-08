@@ -1,12 +1,13 @@
 import React from 'react'
 import {Box, Image, Spinner, Center} from '@chakra-ui/react'
+import loading from "../../assets/logo-text-blue.png"
 
 const Loading = () => {
   return (
     <div className='hehe'>
         <Box w='100vw' mx='auto'>
           <Image
-          src='./src/assets/logo-text-blue.png'
+          src={loading}
           mx='auto'
           />
         </Box>

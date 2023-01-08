@@ -1,11 +1,12 @@
 import { Box, Image } from "@chakra-ui/react";
 import React from "react";
 import Navbar from "./Navbar";
+import logoBck from '../../assets/logo-background.png'
 
 const Layout = ({ children, image, name }) => {
 	return (
 		<Box
-			backgroundImage="url('./src/assets/logo-background.png')"
+			backgroundImage={logoBck}
 			backgroundPosition="center"
 			backgroundRepeat="no-repeat"
 			backgroundColor={"brand.100"}
