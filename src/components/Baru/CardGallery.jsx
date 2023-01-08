@@ -1,17 +1,56 @@
-import { Image } from "@chakra-ui/react";
-import React from "react";
-
-const CardGallery = ({ image }) => {
+import {
+  Box,
+  Card,
+  Center,
+  Fade,
+  Image,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { MdDelete } from "react-icons/md";
+import ModalEditGaleries from "../Unreusable/ModalEditGaleries";
+const CardGallery = ({ image, caption, deletePhoto, data }) => {
+  const { isOpen, onToggle } = useDisclosure();
   return (
-    <Image
-      src={image}
-      maxw={"36"}
-      minw={"xl"}
-      maxH={"xs"}
-      minH={"xs"}
-      objectFit="contain"
+    <Card
+      maxW={"sm"}
       bgColor={"whiteAlpha.800"}
-    />
+      overflow={"hidden"}
+      onPointerEnter={() => onToggle()}
+      onPointerLeave={() => onToggle()}
+      cursor={"pointer"}
+    >
+      <ModalEditGaleries open={open} images={image} currentCaption={caption} />
+
+      <Center>
+        <Image
+          src={image}
+          maxw={"lg"}
+          minw={"lg"}
+          maxH={"xs"}
+          minH={"xs"}
+          objectFit="contain"
+          bgColor={"whiteAlpha.800"}
+        />
+      </Center>
+      <Fade in={isOpen} direction="bottom">
+        <Box position={"absolute"} top={0} right={0} color={"#ff1443"}>
+          <MdDelete size={30} onClick={() => deletePhoto({ id: data })} />
+        </Box>
+
+        <Text
+          display={"inline-block"}
+          transition={"ease-in"}
+          fontSize={"lg"}
+          bgColor={"ActiveBorder"}
+          color={"whiteAlpha.800"}
+          w={"full"}
+          // minH={"15%"}
+        >
+          {caption}
+        </Text>
+      </Fade>
+    </Card>
   );
 };
 

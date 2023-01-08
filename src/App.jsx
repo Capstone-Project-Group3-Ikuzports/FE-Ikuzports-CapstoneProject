@@ -53,6 +53,7 @@ const App = () => {
           <Route path="/detailclub" element={<DetailClub />} />
           <Route path="/addnewclub" element={<AddNewClub />} />
           <Route path="/clubjoin" element={<ClubJoin />} />
+          <Route path="/*" element={<Home />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

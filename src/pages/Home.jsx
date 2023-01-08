@@ -42,7 +42,7 @@ const Home = () => {
   const currentUser = useSelector((state) => state.users.currentUser);
   const token = currentUser.token;
   const currentToken = useSelector((state) => state.access.currentAccess);
-  const tokenAkses = currentToken.access_token;
+  const tokenAccess = currentToken.access_token;
 
   const navigate = useNavigate();
 
@@ -120,6 +120,7 @@ const Home = () => {
     formerData.append("maximum_people", maximum_people);
     formerData.append("description", description);
     formerData.append("image_event", files);
+    formerData.append("token", tokenAccess);
     console.log([...formerData]);
     const config = {
       headers: {

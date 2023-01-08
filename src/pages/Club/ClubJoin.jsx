@@ -1,3 +1,4 @@
+import { ChevronLeftIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -15,7 +16,11 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
-import { BsGearFill } from "react-icons/bs";
+import {
+  BsArrowLeftCircle,
+  BsArrowRightCircle,
+  BsGearFill,
+} from "react-icons/bs";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -36,9 +41,9 @@ const ClubJoin = () => {
   const [activities, setActivities] = useState([]);
   const [chat, setChat] = useState([]);
   const [message, setMessage] = useState("");
-  const [galeries, setGaleries] = useState([]);
   const location = useLocation();
   const id_club = location?.state.id;
+  const status = location?.state.status;
   const navigate = useNavigate();
 
   // === URL === //
@@ -48,7 +53,8 @@ const ClubJoin = () => {
   const urlChatIdClub = `https://rubahmerah.site/clubs/${id_club}/chats`;
   const urlGetGaleriesIdClub = `https://rubahmerah.site/clubs/${id_club}/galeries`;
   const urladdChat = `https://rubahmerah.site/chats`;
-  const urladdGaleries = `https://rubahmerah.site/galeries`;
+  const urlAddGalleries = `https://rubahmerah.site/galeries`;
+  const urlDeleteGalleries = `https://rubahmerah.site/galeries/`;
   const urlHandleMember = `https://rubahmerah.site/members/`;
   const urlPostActivity = `https://rubahmerah.site/activities`;
   const configPutNPost = {
@@ -102,12 +108,19 @@ const ClubJoin = () => {
   };
   // PAGINATION ACTIVITY //
   const [currentPage, SetCurrentPage] = useState(1);
-  const [postPerPage, setPostPerPage] = useState(2);
+  const maxPage = Math.ceil(activities.length / 2);
+  const postPerPage = 2;
   const lastPost = currentPage * postPerPage;
   const firstPost = lastPost - postPerPage;
   const currentActivities = activities
     ? [...activities].reverse().slice(firstPost, lastPost)
     : activities;
+  const nextPage = () => {
+    if (currentPage < maxPage) SetCurrentPage(currentPage + 1);
+  };
+  const prevPage = () => {
+    if (currentPage >= maxPage - 1) SetCurrentPage(currentPage - 1);
+  };
 
   //=== POST ACTIVITY ===//
   const postActivity = async (data) => {
@@ -119,7 +132,6 @@ const ClubJoin = () => {
     activities.append("day", !data.day ? "Sunday" : data.day);
     activities.append("location", data.location);
     activities.append("activity_detail", data.detail);
-    console.log([...activities]);
 
     await axios
       .post(urlPostActivity, activities, configPutNPost)
@@ -140,6 +152,8 @@ const ClubJoin = () => {
       });
   };
 
+  const [galeries, setGaleries] = useState([]);
+  const reverseGaleries = galeries ? [...galeries].reverse() : galeries; // REVERSE GALERIES
   //=== GET GALERIES ===//
   const getGaleries = async () => {
     await axios
@@ -158,7 +172,6 @@ const ClubJoin = () => {
     chat.append("user_id", user.id);
     chat.append("club_id", data.id);
     chat.append("message", message);
-    console.log([...chat]);
     setMessage("");
 
     await axios
@@ -175,22 +188,53 @@ const ClubJoin = () => {
     photo.append("club_id", data.id);
     photo.append("caption", datapost.caption);
     photo.append("url", datapost.file);
-    console.log([...photo]);
 
     await axios
-      .post(urladdGaleries, photo, configPutNPost)
+      .post(urlAddGalleries, photo, configPutNPost)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
     getGaleries();
   };
 
-  //=== REMOVE MEMBER ===//
-  const remove = async (data) => {
-    await axios
-      .delete(`${urlHandleMember}${data.id}`, configGetNDelete)
-      .then(res)
+  // DELETE PHOTO === //
+  const deletePhoto = async (data) => {
+    // console.log("test", data.id);
+    axios
+      .delete(`${urlDeleteGalleries}${data.id}`, configGetNDelete)
+      .then((res) => getGaleries())
       .catch((err) => console.log(err));
-    getMember();
+  };
+
+  const dellPhoto = useCallback((data) => {
+    Swal.fire({
+      text: `Are you sure want to delete?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#454545",
+      confirmButtonText: "Yes ",
+      cancelButtonColor: "#DC143C",
+      cancelButtonText: "Not now",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          text: `Success deleted `,
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        deletePhoto(data);
+        setTimeout(() => {}, 2200);
+      }
+    });
+  }, []);
+
+  //=== REMOVE MEMBER ===//
+  const remove = (data) => {
+    axios
+      .delete(`${urlHandleMember}${data.id}`, configGetNDelete)
+      .then((res) => getMember())
+      .catch((err) => console.log(err));
   };
 
   const removeMember = useCallback((data) => {
@@ -225,13 +269,11 @@ const ClubJoin = () => {
     acceptUser.append("user_id", data.user);
     acceptUser.append("club_id", data.club);
     acceptUser.append("status", "Member");
-    console.log([...acceptUser]);
 
     await axios
       .put(`${urlHandleMember}${data.id}`, acceptUser, configPutNPost)
-      .then(res)
+      .then((res) => getMember())
       .catch((err) => console.log(err));
-    getMember();
   };
 
   const acceptMember = useCallback((data) => {
@@ -328,13 +370,17 @@ const ClubJoin = () => {
             {/* ACTIVITIES */}
             <Box>
               <Box py={2}>
-                <ModalPostActivity
-                  titleActivity={"Create Activity"}
-                  post={postActivity}
-                />
+                {status === "Owner" ? (
+                  <ModalPostActivity
+                    titleActivity={"Create Activity"}
+                    post={postActivity}
+                  />
+                ) : (
+                  <></>
+                )}
               </Box>
               <Flex flexDirection={"column"} gap={2}>
-                {currentActivities ? (
+                {activities ? (
                   currentActivities.map((data) => (
                     <CardActivity
                       key={data.id}
@@ -355,7 +401,21 @@ const ClubJoin = () => {
                 )}
               </Flex>
             </Box>
+            <Flex justifyContent={"center"} gap={4} pt={5}>
+              <BsArrowLeftCircle
+                size={35}
+                color={"#2E5984"}
+                onClick={() => prevPage()}
+              />
+              <BsArrowRightCircle
+                size={35}
+                color={"#2E5984"}
+                onClick={() => nextPage()}
+              />
+            </Flex>
           </Box>
+
+          {/* RULES & SETTING */}
           <Box display={"flex"} flexDirection={"column"} w={"25vw"}>
             <Flex justify={"end"} gap={2} p={2} color={"brand.200"} pb={24}>
               <Box _hover={{ color: "primary.400" }}>
@@ -433,7 +493,11 @@ const ClubJoin = () => {
           <Box py={4}>
             <Card variant={"filled"}>
               <CardBody minH={"40vh"}>
-                <HandleGaleries title={"Add photo"} post={postGaleries} />
+                {status === "Owner" ? (
+                  <HandleGaleries title={"Add photo"} post={postGaleries} />
+                ) : (
+                  <></>
+                )}
                 <SimpleGrid
                   pt={4}
                   spacing={8}
@@ -441,8 +505,14 @@ const ClubJoin = () => {
                   h={"30%"}
                   columns={{ sm: 2, md: 4 }}
                 >
-                  {galeries?.map((data) => (
-                    <CardGallery image={data.url} key={data.id} />
+                  {reverseGaleries?.map((data) => (
+                    <CardGallery
+                      image={data.url}
+                      key={data.id}
+                      caption={data.caption}
+                      data={data.id}
+                      deletePhoto={dellPhoto}
+                    />
                   ))}
                 </SimpleGrid>
               </CardBody>

@@ -6,27 +6,34 @@ const UploadFiles = ({ onChange, prev, prevSize }) => {
   return (
     <Box display={"flex"} bgColor={"#FFFFFF"}>
       <Box w={"full"}>
-        <form
-          action=""
-          className="uploadFile"
-          onClick={() => document.querySelector(".input-file").click()}
+        <Center
+          alignItems={"center"}
+          flexDir={"column"}
+          border={"2px"}
+          color={"#E2E8F0"}
+          h={"full"}
+          borderRight={"none"}
         >
-          <input
-            type="file"
-            className="input-file"
-            hidden
-            accept="image/*"
-            onChange={onChange}
-          />
-          <Center alignItems={"center"} flexDir={"column"}>
+          <form
+            action=""
+            className="uploadFile"
+            onClick={() => document.querySelector(".input-file").click()}
+          >
+            <input
+              type="file"
+              className="input-file"
+              hidden
+              accept="image/*"
+              onChange={onChange}
+            />
             <Text fontSize={"sm"} m={"auto"} color={"gray.400"}>
               Upload image here
             </Text>
-            <Box my={"auto"}>
+            <Box m={"auto"} pl={4}>
               <MdUpload size={80} color={"#eaeaea"} />
             </Box>
-          </Center>
-        </form>
+          </form>
+        </Center>
       </Box>
       <Box w={52} border={"2px"} color={"#E2E8F0"}>
         <Center alignItems={"center"} flexDirection={"column"} gap={1} p={2}>
