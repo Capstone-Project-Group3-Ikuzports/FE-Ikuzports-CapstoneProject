@@ -14,6 +14,7 @@ import {
 import HeroLogin from "../../components/Baru/HeroLogin";
 import { updateUser } from "../../redux/reducer/reducer";
 import { updateAccess } from "../../redux/reducer/access_token";
+import logo from "../src/assets/google.png"
 
 import axios from "axios";
 import React, { useState } from "react";
@@ -197,7 +198,7 @@ const Login = () => {
                   // loginOAuth3();
                 }}
               >
-                <Image src="../src/assets/google.png" w={"8"} mx={1} />
+                <Image src={logo} w={"8"} mx={1} />
                 Sign in with Google
               </Button>
 
