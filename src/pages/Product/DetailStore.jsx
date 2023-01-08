@@ -11,6 +11,11 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
+  Button,
+  FormControl,
+  FormLabel,
+  FormHelperText,
+  Fade
 } from "@chakra-ui/react";
 import axios from "axios";
 import bca from "../../assets/bca.png";
@@ -22,6 +27,7 @@ import Sample2 from "../../assets/sampleJersey2.jpg";
 import Sample3 from "../../assets/sampleJersey3.jpeg";
 import {Buttons} from '../../components/Baru/ButtonBack';
 import {ButtonsCancel} from '../../components/Baru/ButtonBack';
+import Dropdown from "../../components/Baru/Dropdown";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -60,9 +66,14 @@ const DetailStore = () => {
   const postWaktu = `${tahun}-${bulan}-${tanggal} ${jam}:${menit}:${detik}`
   const parsingan = Number(productId.price)
   const parsinganId = Number(idStore)
+  const [displayMidTrans,setDisplayMidTrans] = useState('none')
+  const [displayMidTransBni,setDisplayMidTransBni] = useState('none')
+  const [displayMidTransBri,setDisplayMidTransBri] = useState('none')
 
-  
 
+
+  const [detail,setDetail] = useState('')
+  const [bank,setBank] = useState('')
 
 
 
@@ -77,19 +88,42 @@ const DetailStore = () => {
     
   }
 
+
+  const getTransaction = () =>{
+   
+    axios
+    .get(`https://rubahmerah.site/transactions/`,config)
+    .then((res)=>{
+
+      if(res.data.data[0].status_payment == 'settlement'){
+        onClose()
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Your Item has been pay",
+              text: "Sit tight its on the way",
+              showConfirmButton: true,
+            })}
+    console.log(res.data.data[0])
+    })
+
+  }
+
+
+
+  useEffect(
+    ()=>getTransaction(),[],
+
+    )
+
+
   const postDetail = () =>{
     axios
-    .post('https://rubahmerah.site/transactions/',{total_price:parsingan,product_id:parsinganId,product_quantity:1,transaction_time:`${postWaktu}`},config )
+    .post('https://rubahmerah.site/transactions/',{total_price:parsingan,product_id:parsinganId,product_quantity:1,transaction_time:`${postWaktu}`,payment_method:`${bank}`},config )
   
     .then((res) => {
-      console.log(res.data.data)
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: `${res.data.data.status_message}`,
-        text: `${res.data.data.va_numbers.bank}`,
-        showConfirmButton: true,
-      });
+      setDetail(res.data.data)
+     
     })
     .catch((err) => {
       Swal.fire({
@@ -105,8 +139,9 @@ const DetailStore = () => {
 useEffect(
   ()=>getProductId(),[]
   )
+
+
     
-  
   return (
     <Layout>
       <Box p="8" px={"10%"} w={"100vw"} overflowX="hidden" minH={"90vh"}>
@@ -117,7 +152,7 @@ useEffect(
         <Flex>
           <Box w={"40vw"}>
             <Center>
-              <Image src={productId.product_image?.[0]?.url} objectFit={"cover"} w={"30vw"} h={"40vh"} />
+              <Image src={productId.thumbnail} objectFit={"cover"} w={"30vw"} h={"40vh"} />
             </Center>
             <Flex pt={2} justifyContent={"space-evenly"}>
             <Image src={Sample1} w={"10vw"} h={"15vh"} />
@@ -142,31 +177,76 @@ useEffect(
               {`Seller : ${productId.user_name}`}
             </Text>
            
-           <Buttons openTrigger={()=>{postDetail()}}/>
-            <Buttons openTrigger={onOpen} />
+          
+            <Buttons textContent={'Buy'} openTrigger={onOpen} />
           </Box>
           <Box  ml='auto' mb={10} >
-           <Modal isOpen={isOpen} onClose={onClose} >
+           <Modal isOpen={isOpen} onClose={onClose}  closeOnOverlayClick={false}>
               <ModalOverlay/>
               <ModalContent backgroundColor={'brand.100'}>
                 <ModalHeader textAlign={'center'}>Pilih Metode Pembayaran</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
+            
                   <Flex alignItems={"center"}>
+                  <Button size={'lg'} variant='link' onClick={()=>{setBank('bca'),setDisplayMidTrans('block'),postDetail(),getTransaction()}}>
                   <Image src={bca} w={"5vw"} h={"7vh"} mb="10px" mr='25px'/>
-                  <Text fontSize={'2xl'}>BCA</Text>
+                  <Text fontSize={'2xl'} textColor='black' as='b'>BCA</Text>
+                  </Button>
                   </Flex>
-                  <Flex alignItems={"center"}>             
+                  <Flex>
+                  
+                  <Box background={'white'} w='full' shadow={'2xl'} rounded='xl' mb={'10px'} display={displayMidTrans}>
+                  <FormControl p={'10'}>
+                   <FormLabel textAlign={'center'} fontSize={'3xl'} textTransform='uppercase' pb={'10px'}>{detail?.va_numbers?.bank}</FormLabel>
+                   <FormLabel fontSize={'xl'} pb={'10px'}>Order id:{detail?.order_id}</FormLabel>
+                   <FormLabel fontSize={'xl'} pb={'10px'}>Price :{detail?.gross_amount}</FormLabel>
+                   <FormLabel fontSize={'xl'}>Please Transfer to Virtual Account: <Text fontSize={'3xl'} textAlign='center'>{detail?.va_numbers?.va_number}</Text> </FormLabel>
+                  </FormControl>
+                  </Box>
+                  </Flex>
+
+                  <Flex alignItems={"center"}>
+                  <Button size={'lg'} variant='link' onClick={()=>{setBank('bni'),setDisplayMidTransBni('block'),postDetail()}}>
                   <Image src={bni} w={"5vw"} h={"7vh"} mb="10px" mr='25px'/>
-                  <Text fontSize={'2xl'} textColor='gray'>Upcoming</Text>
+                  <Text fontSize={'2xl'} textColor='black' as='b'>BNI</Text>
+                  </Button>
                   </Flex>
+                  <Flex>
+                  
+                  <Box background={'white'} w='full' shadow={'2xl'} rounded='xl' mb={'10px'} display={displayMidTransBni}>
+                  <FormControl p={'10'}>
+                   <FormLabel textAlign={'center'} fontSize={'3xl'} textTransform='uppercase' pb={'10px'}>{detail?.va_numbers?.bank}</FormLabel>
+                   <FormLabel fontSize={'xl'} pb={'10px'}>Order id:{detail?.order_id}</FormLabel>
+                   <FormLabel fontSize={'xl'} pb={'10px'}>Price :{detail?.gross_amount}</FormLabel>
+                   <FormLabel fontSize={'xl'}>Please Transfer to Virtual Account: <Text fontSize={'3xl'} textAlign='center'>{detail?.va_numbers?.va_number}</Text> </FormLabel>
+                  </FormControl>
+                  </Box>
+                  </Flex>
+
                   <Flex alignItems={"center"}>
+                  <Button size={'lg'} variant='link' onClick={()=>{setBank('bri'),setDisplayMidTransBri('block'),postDetail()}}>
                   <Image src={bri} w={"5vw"} h={"7vh"} mb="10px" mr='25px'/>
-                  <Text fontSize={'2xl'} textColor='gray'>Upcoming</Text>
-                  </Flex >
+                  <Text fontSize={'2xl'} textColor='black' as='b'>BRI</Text>
+                  </Button>
+                  </Flex>
+                  <Flex>
+                  
+                  <Box background={'white'} w='full' shadow={'2xl'} rounded='xl' mb={'10px'} display={displayMidTransBri}>
+                  <FormControl p={'10'}>
+                   <FormLabel textAlign={'center'} fontSize={'3xl'} textTransform='uppercase' pb={'10px'}>{detail?.va_numbers?.bank}</FormLabel>
+                   <FormLabel fontSize={'xl'} pb={'10px'}>Order id:{detail?.order_id}</FormLabel>
+                   <FormLabel fontSize={'xl'} pb={'10px'}>Price :{detail?.gross_amount}</FormLabel>
+                   <FormLabel fontSize={'xl'}>Please Transfer to Virtual Account: <Text fontSize={'3xl'} textAlign='center'>{detail?.va_numbers?.va_number}</Text> </FormLabel>
+                  </FormControl>
+                  </Box>
+                  </Flex>
+                 
                   <Flex alignItems={"center"}>
+                  <Button size={'lg'} variant='link'> 
                   <Image src={mandiri} w={"5vw"} h={"7vh"} mb="10px" mr={'25px'}/>
                   <Text fontSize={'2xl'} textColor='gray'>Upcoming</Text>
+                  </Button>
                   </Flex>
                   </ModalBody>
               </ModalContent>

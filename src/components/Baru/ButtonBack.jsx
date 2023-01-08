@@ -1,7 +1,8 @@
-import { Button, Text } from "@chakra-ui/react";
-import React from "react";
+import { Button, Text, Box } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router";
+import { ArrowUpIcon } from "@chakra-ui/icons";
 
 // === CANCEL === //
 export const ButtonCancel = ({ onClick }) => {
@@ -20,49 +21,63 @@ export const ButtonCancel = ({ onClick }) => {
 };
 
 // === BUTTON FOR ALL === //
-export const Buttons = ({textContent, openTrigger, changeTrigger, ml, mr, disabled}) => {
+export const Buttons = ({
+  textContent,
+  openTrigger,
+  changeTrigger,
+  ml,
+  mr,
+  disabled,
+}) => {
   return (
     <div>
-        <Button
-            justify="end"
-            onClick={openTrigger}
-            onChange={changeTrigger}
-            justifyContent="end"
-            px="10"
-            disabled={disabled}
-            backgroundColor={"brand.300"}
-            _hover={{ bg: "brand.200" }}
-            color={"white"}
-            mr={mr}
-            ml={ml}
-            >
-            {textContent}
-        </Button>
+      <Button
+        justify="end"
+        onClick={openTrigger}
+        onChange={changeTrigger}
+        justifyContent="end"
+        px="10"
+        disabled={disabled}
+        backgroundColor={"brand.300"}
+        _hover={{ bg: "primary.300" }}
+        color={"white"}
+        mr={mr}
+        ml={ml}
+      >
+        {textContent}
+      </Button>
     </div>
-  )
-}
+  );
+};
 
 // === BUTTON CANCEL FOR MODAL AND PAGE === //
-export const ButtonsCancel = ({textContent, openTrigger, textColor, changeTrigger, ml, mr}) => {
+export const ButtonsCancel = ({
+  textContent,
+  openTrigger,
+  textColor,
+  changeTrigger,
+  ml,
+  mr,
+}) => {
   return (
     <div>
-        <Button
-            justify="end"
-            onClick={openTrigger}
-            onChange={changeTrigger}
-            justifyContent="end"
-            px="10"
-            backgroundColor={"brand.500"}
-            _hover={{ bg: "brand.900" }}
-            color={"white"}
-            ml={ml}
-            mr={mr}
-            >
-            {textContent}
-        </Button>
+      <Button
+        justify="end"
+        onClick={openTrigger}
+        onChange={changeTrigger}
+        justifyContent="end"
+        px="10"
+        backgroundColor={"brand.500"}
+        _hover={{ bg: "brand.900" }}
+        color={"white"}
+        ml={ml}
+        mr={mr}
+      >
+        {textContent}
+      </Button>
     </div>
-  )
-}
+  );
+};
 // === SAVE === //
 export const ButtonSave = ({ onClick, isLoading }) => {
   return (
@@ -97,6 +112,40 @@ export const ButtonBack = () => {
         Back
       </Text>
     </Button>
+  );
+};
+
+// === TO TOP BUTTON === //
+export const ToTopButton = () => {
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  return (
+    <>
+      {scrollPosition > 500 && (
+        <Link href="/#top">
+          <Box
+            position="fixed"
+            bottom="20px"
+            right={["16px", "84px"]}
+            zIndex={1}
+          >
+            <Image src="images/icons/top.svg" w="60px" h="60px" />
+          </Box>
+        </Link>
+      )}
+    </>
   );
 };
 

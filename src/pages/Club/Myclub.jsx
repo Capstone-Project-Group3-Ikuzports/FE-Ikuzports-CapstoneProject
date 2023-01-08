@@ -80,6 +80,7 @@ const Myclub = () => {
                       navigate("/clubjoin", {
                         state: {
                           id: data.club_id,
+                          status: data.status,
                         },
                       })
                     }

@@ -32,12 +32,8 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const urlLoginGoogle = "https://rubahmerah.site/auth/google";
-  // const [dataGoogle, setDataGoogle] = useState();
-
   const useGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      // console.log("CARA 1", tokenResponse);
-      // setDataGoogle(tokenResponse);
       const configPutNPost = {
         headers: {
           Authorization: `Bearer ${tokenResponse.access_token}`,
@@ -51,47 +47,17 @@ const Login = () => {
       form.append("prompt", tokenResponse?.prompt);
       form.append("scope", tokenResponse?.scope);
       form.append("token_type", tokenResponse?.token_type);
-      console.log("login", [...form]);
 
       await axios
         .post(urlLoginGoogle, form, configPutNPost)
         .then((res) => {
-          console.log(res.data.data);
           dispatch(updateUser(res.data.data));
           dispatch(updateAccess(tokenResponse));
           navigate("/");
         })
         .catch((err) => console.log(err));
-      console.log("data", dataGoogle);
     },
   });
-  const loginGoogle = async () => {
-    const configPutNPost = {
-      headers: {
-        Authorization: `Bearer ${dataGoogle?.access_token}`,
-        "content-type": "multipart/form-data",
-      },
-    };
-    const form = new FormData();
-    form.append("access_token", dataGoogle?.access_token);
-    form.append("authuser", dataGoogle?.authuser);
-    form.append("expires_in", dataGoogle?.expires_in);
-    form.append("prompt", dataGoogle?.prompt);
-    form.append("scope", dataGoogle?.scope);
-    form.append("token_type", dataGoogle?.token_type);
-    console.log("login", [...form]);
-
-    await axios
-      .post(urlLoginGoogle, form, configPutNPost)
-      .then((res) => {
-        console.log(res.data.data);
-        dispatch(updateUser(res.data.data));
-        dispatch(updateAccess(dataGoogle));
-        navigate("/");
-      })
-      .catch((err) => console.log(err));
-  };
-  // === TEST OAUTH1 === //
 
   //=== SET PASSWORD ===//
   const [show, setShow] = React.useState(false);
@@ -109,7 +75,6 @@ const Login = () => {
       })
       .then((res) => {
         const { data } = res.data;
-        console.log(data); // dell after prod
         if (data) {
           Swal.fire({
             position: "center",
@@ -123,7 +88,6 @@ const Login = () => {
         }
       })
       .catch((err) => {
-        console.log(err.response.data.message); // dell after prod
         Swal.fire({
           position: "center",
           icon: "error",
@@ -192,10 +156,6 @@ const Login = () => {
                 mt={4}
                 onClick={() => {
                   useGoogle();
-                  // loginGoogle();
-                  // loginOAuth1();
-                  // loginOAuth2();
-                  // loginOAuth3();
                 }}
               >
                 <Image src={logo} w={"8"} mx={1} />

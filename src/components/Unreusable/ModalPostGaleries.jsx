@@ -26,7 +26,7 @@ const PostGaleries = ({ post, title }) => {
   return (
     <>
       <ButtonAddPhoto onClick={onOpen} />
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{title}</ModalHeader>
@@ -47,10 +47,7 @@ const PostGaleries = ({ post, title }) => {
               />
             </FormControl>
 
-            <FormControl
-              mt={4}
-              // onChange={handleProcess({ file: file, caption: caption })}
-            >
+            <FormControl mt={4}>
               <FormLabel>Caption</FormLabel>
               <Textarea
                 placeholder="Ikuzport is the best"

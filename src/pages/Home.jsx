@@ -9,6 +9,9 @@ import {
 	Spinner,
 	Card,
 	CardBody,
+  CardHeader,
+  CardFooter,
+  Button,
 	Input,
 	Heading,
 	ModalHeader,
@@ -20,7 +23,11 @@ import {
 import { FiUser } from "react-icons/fi";
 import CardEventClub from "../components/Baru/CardEventClub";
 import { useState } from "react";
-import { ButtonCreate, Buttons } from "../components/Baru/ButtonBack";
+import {
+	ButtonCreate,
+	Buttons,
+	ToTopButton,
+} from "../components/Baru/ButtonBack";
 import { useEffect } from "react";
 import Modals from "../components/Baru/Modal";
 import Dropdown from "../components/Baru/Dropdown";
@@ -42,7 +49,7 @@ const Home = () => {
 	const currentUser = useSelector((state) => state.users.currentUser);
 	const token = currentUser.token;
 	const currentToken = useSelector((state) => state.access.currentAccess);
-	const tokenAkses = currentToken.access_token;
+	const tokenAccess = currentToken.access_token;
 
 	const navigate = useNavigate();
 
@@ -90,15 +97,14 @@ const Home = () => {
 	const getEvent = async () => {
 		await axios
 			.get(
-				`https://rubahmerah.site/events?page=${page}&status=${filterStat}&city=${filterCity}&category_id=${filterCate}`,
+				`https://rubahmerah.site/events?page=1&status=${filterStat}&city=${filterCity}&category_id=${filterCate}`,
 				config
 			)
 			.then((response) => {
 				const result = response.data.data;
 				const newPage = page + 1;
-				const temp = [...getEvents];
-				temp.push(...result);
-				setGetEvents(temp);
+
+				setGetEvents(result);
 				setPage(newPage);
 			})
 			.catch((err) => {
@@ -120,6 +126,7 @@ const Home = () => {
 		formerData.append("maximum_people", maximum_people);
 		formerData.append("description", description);
 		formerData.append("image_event", files);
+		formerData.append("token", tokenAccess);
 		console.log([...formerData]);
 		const config = {
 			headers: {
@@ -160,9 +167,9 @@ const Home = () => {
 	return (
 		<Layout>
 			<div>
-				<Box p="8" px={"10%"} w={"100vw"} h={"100%"}>
+				<Box p="8" px={"10%"} w={"100vw"} h={"100vh"}>
 					<Flex>
-						<Box w="60%">
+						<Box w={{ base: "60%", lg: "100%", xl: "60%" }}>
 							<Text as="b" fontSize={"2xl"}>
 								Home
 							</Text>
@@ -358,7 +365,7 @@ const Home = () => {
 								</Flex>
 
 								<Flex flexDir={"column"} gap={"3"} pt={4}>
-									{loading
+									{getEvents != null ?(loading
 										? skeleton.map((data) => <Spinner key={data} />)
 										: getEvents.map((item) => (
 												<CardEventClub
@@ -396,6 +403,7 @@ const Home = () => {
 															Slot : {item.total_participant} /{" "}
 															{item.maximum_people}
 														</Text>
+                            <Text my="10px">Status Event : {item.status}</Text>
 														<Text my="10px">Address : {item.address}</Text>
 														<Text my="10px">City : {item.city}</Text>
 														<Text my="10px">
@@ -403,14 +411,19 @@ const Home = () => {
 														</Text>
 													</CardBody>
 												</CardEventClub>
-										  ))}
+										  ))):( <Card align='center' w={'full'} >
+                      <CardHeader>
+                        <Heading size='3xl' color={'brand.300'}>There is no events on this category yet </Heading>
+                      </CardHeader>
+                      <CardFooter>
+                      <Buttons textContent="Make some Event" openTrigger={onOpen} />
+                      </CardFooter>
+                    </Card>)}
 								</Flex>
 								<Box mt={10}>
-									<Buttons
-										openTrigger={getEvent}
-										textContent={"Load More Event"}
-									/>
+
 								</Box>
+								<ToTopButton />
 							</Box>
 						</Box>
 						<Show above="1300px">
