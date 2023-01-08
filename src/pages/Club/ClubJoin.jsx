@@ -105,9 +105,9 @@ const ClubJoin = () => {
   const [postPerPage, setPostPerPage] = useState(2);
   const lastPost = currentPage * postPerPage;
   const firstPost = lastPost - postPerPage;
-  const currentActivities = [...activities]
-    .reverse()
-    .slice(firstPost, lastPost);
+  const currentActivities = activities
+    ? [...activities].reverse().slice(firstPost, lastPost)
+    : activities;
 
   //=== POST ACTIVITY ===//
   const postActivity = async (data) => {
