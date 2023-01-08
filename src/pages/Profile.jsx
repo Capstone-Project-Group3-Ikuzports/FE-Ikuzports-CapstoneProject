@@ -20,8 +20,12 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { ButtonBack, ButtonCancel, ButtonSave } from "../components/Baru/ButtonBack";
-import Layout from "../components/Baru/Layout"
+import {
+  ButtonBack,
+  ButtonCancel,
+  ButtonSave,
+} from "../components/Baru/ButtonBack";
+import Layout from "../components/Baru/Layout";
 import UploadFiles from "../components/Baru/UploadFiles";
 import { clearUser } from "../redux/reducer/reducer";
 
@@ -192,7 +196,7 @@ const Profile = () => {
                 />
                 <UploadFiles
                   prev={prev}
-                  prevSize={"xl"}
+                  prevSize={"lg"}
                   onChange={({ target: { files } }) => {
                     files[0] && setFiles(files[0].name);
                     if (files) {
