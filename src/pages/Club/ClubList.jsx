@@ -22,9 +22,10 @@ const ClubList = () => {
   }
   const [filterCate,setFilterCate] = useState('')
   const [filterCity,setFilterCity] = useState('')
+  const [search,setSearch] = useState('')
 
   const getMyClubData = async () => {
-    await axios.get(`https://rubahmerah.site/clubs?category_id=${filterCate}&city=${filterCity}`, config)
+    await axios.get(`https://rubahmerah.site/clubs?category_id=${filterCate}&city=${filterCity}&name=${search}`, config)
     .then((response) => {
       setLoading(true)
       setGetMyClub(response.data.data)
@@ -38,7 +39,7 @@ const ClubList = () => {
 
   useEffect(() => {
     getMyClubData()
-  }, [filterCate,filterCity])
+  }, [filterCate,filterCity,search])
   
   return (
 <Layout>
@@ -84,7 +85,7 @@ const ClubList = () => {
                 pointerEvents='none'
                 children={<AiOutlineSearch color='gray.300' />}
               />
-              <Input type='tel' bg='white' placeholder='Phone number' />
+              <Input type='tel' bg='white' placeholder='Search' onChange={(e) => setSearch(e.target.value)} />
             </InputGroup>
           </Flex>
         </Box>

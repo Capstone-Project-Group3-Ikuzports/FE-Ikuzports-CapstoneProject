@@ -35,28 +35,29 @@ const Profile = lazy(() => import("./pages/Profile"));
 const MyProduct = lazy(() => import("./pages/Product/MyProduct"));
 
 const App = () => {
-	return (
-		<BrowserRouter>
-			<Suspense fallback={<Loading />}>
-				<Routes>
-					<Route path="/login" element={<Login />} />
-					<Route path="/register/" element={<Register />} />
-					<Route path="/" element={<Home />} />
-					<Route path="/detailevent" element={<DetailEvent />} />
-					<Route path="/detailstore" element={<DetailStore />} />
-					<Route path="/store" element={<Store />} />
-					<Route path="/profile" element={<Profile />} />
-					<Route path="/clublist" element={<ClubList />} />
-					<Route path="/myproduct" element={<MyProduct />} />
-					<Route path="/myclub" element={<Myclub />} />
-					<Route path="/editclub" element={<EditClub />} />
-					<Route path="/detailclub" element={<DetailClub />} />
-					<Route path="/addnewclub" element={<AddNewClub />} />
-					<Route path="/clubjoin" element={<ClubJoin />} />
-				</Routes>
-			</Suspense>
-		</BrowserRouter>
-	);
+  return (
+    <BrowserRouter>
+      <Suspense fallback={<Loading />}>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register/" element={<Register />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/detailevent" element={<DetailEvent />} />
+          <Route path="/detailstore" element={<DetailStore />} />
+          <Route path="/store" element={<Store />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/clublist" element={<ClubList />} />
+          <Route path="/myproduct" element={<MyProduct />} />
+          <Route path="/myclub" element={<Myclub />} />
+          <Route path="/editclub" element={<EditClub />} />
+          <Route path="/detailclub" element={<DetailClub />} />
+          <Route path="/addnewclub" element={<AddNewClub />} />
+          <Route path="/clubjoin" element={<ClubJoin />} />
+          <Route path="/*" element={<Home />} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+  );
 };
 
 export default App;

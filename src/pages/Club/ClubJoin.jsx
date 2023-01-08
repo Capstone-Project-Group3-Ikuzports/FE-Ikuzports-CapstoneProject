@@ -14,22 +14,25 @@ import {
   Text,
 } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useCallback } from "react";
-import { BsGearFill } from "react-icons/bs";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  BsArrowLeftCircle,
+  BsArrowRightCircle,
+  BsGearFill,
+} from "react-icons/bs";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { useSelector } from "react-redux";
-import { ButtonBack } from "../../components/Baru/ButtonBack";
-import { ButtonAddActivity } from "../../components/Baru/ButtonBack";
 import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { ButtonBack } from "../../components/Baru/ButtonBack";
 import CardActivity from "../../components/Baru/CardActivity";
 import CardGallery from "../../components/Baru/CardGallery";
 import ChatDiscuss from "../../components/Baru/ChatDiscuss";
-import ModalMember from "../../components/ClubJoin/ModalMember";
-import HandleGaleries from "../../components/ClubJoin/ModalPostGaleries";
-import ModalRules from "../../components/ClubJoin/ModalRules";
 import Layout from "../../components/Baru/Layout";
-import Swal from "sweetalert2";
+import ModalMember from "../../components/Unreusable/ModalMember";
+import ModalPostActivity from "../../components/Unreusable/ModalPostActivity";
+import HandleGaleries from "../../components/Unreusable/ModalPostGaleries";
+import ModalRules from "../../components/Unreusable/ModalRules";
 
 const ClubJoin = () => {
   const user = useSelector((state) => state.users.currentUser);
@@ -37,9 +40,11 @@ const ClubJoin = () => {
   const [activities, setActivities] = useState([]);
   const [chat, setChat] = useState([]);
   const [message, setMessage] = useState("");
-  const [galeries, setGaleries] = useState([]);
   const location = useLocation();
   const id_club = location?.state.id;
+  const status = location?.state.status;
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   // === URL === //
   const urlIdClub = `https://rubahmerah.site/clubs/${id_club}`;
@@ -48,18 +53,17 @@ const ClubJoin = () => {
   const urlChatIdClub = `https://rubahmerah.site/clubs/${id_club}/chats`;
   const urlGetGaleriesIdClub = `https://rubahmerah.site/clubs/${id_club}/galeries`;
   const urladdChat = `https://rubahmerah.site/chats`;
-  const urladdGaleries = `https://rubahmerah.site/galeries`;
-  const urlRemoveMember = `https://rubahmerah.site/members/`;
-  const urlAcceptMember = `https://rubahmerah.site/members/`;
-
-  const navigate = useNavigate();
-
+  const urlAddGalleries = `https://rubahmerah.site/galeries`;
+  const urlDellAndUpGalleries = `https://rubahmerah.site/galeries/`;
+  const urlHandleMember = `https://rubahmerah.site/members/`;
+  const urlPostActivity = `https://rubahmerah.site/activities`;
   const configPutNPost = {
     headers: {
       Authorization: `Bearer ${user.token}`,
       "content-type": "multipart/form-data",
     },
   };
+
   const configGetNDelete = {
     headers: { Authorization: `Bearer ${user.token}` },
   };
@@ -74,9 +78,8 @@ const ClubJoin = () => {
       .catch((err) => console.log(err));
   };
 
-  //=== GET MEMBER CLUB ===//
   const [memberRaw, setMemberRaw] = useState([]);
-
+  //=== GET MEMBER CLUB ===//
   const getMember = () => {
     axios
       .get(urlMemberIdClub, configGetNDelete)
@@ -85,6 +88,12 @@ const ClubJoin = () => {
       })
       .catch((err) => console.log(err));
   };
+  let memberLength = memberRaw.filter(
+    (memberRaw) => memberRaw.status !== "Requested" // TOTAL MEMBER
+  ).length;
+  let requestedLength = memberRaw.filter(
+    (memberRaw) => memberRaw.status === "Requested" // TOTAL REQUEST
+  ).length;
 
   //=== GET ACTIVITY CLUB ===//
   const getClubActivity = async () => {
@@ -92,11 +101,43 @@ const ClubJoin = () => {
       .get(urlActivityIdClub, configGetNDelete)
       .then((res) => {
         setActivities(res.data.data);
-        // console.log(res);
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+  // PAGINATION ACTIVITY //
+  const [currentPage, SetCurrentPage] = useState(1);
+  const maxPage = activities ? Math.ceil(activities.length / 2) : activities;
+  const postPerPage = 2;
+  const lastPost = currentPage * postPerPage;
+  const firstPost = lastPost - postPerPage;
+  const currentActivities = activities
+    ? [...activities].reverse().slice(firstPost, lastPost)
+    : activities;
+  const nextPage = () => {
+    if (currentPage < maxPage) SetCurrentPage(currentPage + 1);
+  };
+  const prevPage = () => {
+    if (currentPage >= maxPage - 1) SetCurrentPage(currentPage - 1);
+  };
+
+  //=== POST ACTIVITY ===//
+  const postActivity = async (data) => {
+    const activities = new FormData();
+    activities.append("club_id", id_club);
+    activities.append("name", data.title);
+    activities.append("start_time", data.startTime);
+    activities.append("end_time", data.endTime);
+    activities.append("day", !data.day ? "Sunday" : data.day);
+    activities.append("location", data.location);
+    activities.append("activity_detail", data.detail);
+
+    await axios
+      .post(urlPostActivity, activities, configPutNPost)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+    getClubActivity();
   };
 
   //=== GET CHAT CLUB ===//
@@ -105,20 +146,20 @@ const ClubJoin = () => {
       .get(urlChatIdClub, configGetNDelete)
       .then((res) => {
         setChat(res.data.data);
-        // console.log(res);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  const [galeries, setGaleries] = useState([]);
+  const reverseGaleries = galeries ? [...galeries].reverse() : galeries; // REVERSE GALERIES
   //=== GET GALERIES ===//
   const getGaleries = async () => {
     await axios
       .get(urlGetGaleriesIdClub, configGetNDelete)
       .then((res) => {
         setGaleries(res.data.data);
-        // console.log(res);
       })
       .catch((err) => {
         console.log(err);
@@ -131,14 +172,12 @@ const ClubJoin = () => {
     chat.append("user_id", user.id);
     chat.append("club_id", data.id);
     chat.append("message", message);
-    console.log([...chat]);
     setMessage("");
 
     await axios
       .post(urladdChat, chat, configPutNPost)
-      .then((res) => console.log(res))
+      .then((res) => getClubChat())
       .catch((err) => console.log(err));
-    getClubChat();
   };
 
   //=== POST PHOTO GALERIES ===//
@@ -148,20 +187,89 @@ const ClubJoin = () => {
     photo.append("club_id", data.id);
     photo.append("caption", datapost.caption);
     photo.append("url", datapost.file);
-    console.log([...photo]);
-
+    setIsLoading(true);
     await axios
-      .post(urladdGaleries, photo, configPutNPost)
-      .then((res) => console.log(res))
+      .post(urlAddGalleries, photo, configPutNPost)
+      .then((res) => {
+        getGaleries();
+        setIsLoading(false);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          text: "succes add new photo ",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
+  };
+
+  // DELETE PHOTO === //
+  const deletePhoto = async (data) => {
+    // console.log("test", data.id);
+    axios
+      .delete(`${urlDellAndUpGalleries}${data.id}`, configGetNDelete)
+      .then((res) => getGaleries())
       .catch((err) => console.log(err));
-    getGaleries();
+  };
+
+  const dellPhoto = useCallback((data) => {
+    Swal.fire({
+      text: `Are you sure want to delete?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#454545",
+      confirmButtonText: "Yes ",
+      cancelButtonColor: "#DC143C",
+      cancelButtonText: "Not now",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          text: `Success deleted `,
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        deletePhoto(data);
+        setTimeout(() => {}, 2200);
+      }
+    });
+  }, []);
+
+  // EDIT PHOTO === //
+  const editPhoto = async (data) => {
+    const editFoto = new FormData();
+    editFoto.append("club_id", id_club);
+    editFoto.append(
+      "caption",
+      !data.caption ? data.currentCaption : data.caption
+    );
+
+    axios
+      .put(`${urlDellAndUpGalleries}${data.id}`, editFoto, configPutNPost)
+      .then((res) => {
+        console.log(res);
+        getGaleries();
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          text: "Caption success updated",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      })
+      .catch((err) => console.log(err));
   };
 
   //=== REMOVE MEMBER ===//
-  const remove = async (data) => {
-    await axios
-      .delete(`${urlRemoveMember}${data.id}`, configGetNDelete)
-      .then((res) => console.log(res))
+  const remove = (data) => {
+    axios
+      .delete(`${urlHandleMember}${data.id}`, configGetNDelete)
+      .then((res) => getMember())
       .catch((err) => console.log(err));
   };
 
@@ -179,12 +287,11 @@ const ClubJoin = () => {
         Swal.fire({
           position: "center",
           icon: "success",
-          text: `${data.member}, has removed`,
+          text: `${data.name}, has removed`,
           showConfirmButton: false,
           timer: 2000,
         });
         remove(data);
-        getMember();
         setTimeout(() => {
           data.onOpen();
         }, 2200);
@@ -198,11 +305,10 @@ const ClubJoin = () => {
     acceptUser.append("user_id", data.user);
     acceptUser.append("club_id", data.club);
     acceptUser.append("status", "Member");
-    console.log([...acceptUser]);
 
     await axios
-      .put(`${urlAcceptMember}${data.id}`, acceptUser, configPutNPost)
-      .then((res) => console.log(res))
+      .put(`${urlHandleMember}${data.id}`, acceptUser, configPutNPost)
+      .then((res) => getMember())
       .catch((err) => console.log(err));
   };
 
@@ -212,7 +318,7 @@ const ClubJoin = () => {
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#454545",
-      confirmButtonText: "Yes Delete",
+      confirmButtonText: "Sure",
       cancelButtonColor: "#DC143C",
       cancelButtonText: "Not now",
     }).then((result) => {
@@ -225,7 +331,6 @@ const ClubJoin = () => {
           timer: 2000,
         });
         accept(data);
-        getMember();
         setTimeout(() => {
           data.onOpen();
         }, 2200);
@@ -243,17 +348,32 @@ const ClubJoin = () => {
 
   return (
     <Layout>
+      {isLoading ? (
+        <Box
+          position={"fixed"}
+          w={"full"}
+          h={"full"}
+          zIndex={10}
+          top={0}
+          bottom={0}
+          bgColor="blackAlpha.200"
+          cursor={"no-drop"}
+        />
+      ) : (
+        <></>
+      )}
       <Box p="8" px={"10%"} w={"100vw"} overflowX="hidden">
         <Flex onClick={() => navigate("/")} _hover={{ cursor: "pointer" }}>
           <ButtonBack />
         </Flex>
+
+        {/* PROFILE CLUB */}
         <Flex>
           <Box w={"55vw"} pr={10}>
             <Box>
               <Flex align={"center"}>
                 <Image
                   src={data.logo}
-                  rounded={"full"}
                   w={"44"}
                   h={"44"}
                   objectFit={"contain"}
@@ -267,10 +387,11 @@ const ClubJoin = () => {
                   >{`${data?.name?.toUpperCase()}`}</Text>
                   <ModalMember
                     totalmember={data.member_total}
-                    joinedmember={data.joined_member}
                     memberRaw={memberRaw}
                     removeMember={removeMember}
                     acceptMember={acceptMember}
+                    memberLength={memberLength}
+                    requestedLength={requestedLength}
                   />
 
                   <Text
@@ -295,13 +416,22 @@ const ClubJoin = () => {
               </Text>
               <Text color={"primary.200"}>{`${data.description}`}</Text>
             </Box>
+
+            {/* ACTIVITIES */}
             <Box>
               <Box py={2}>
-                <ButtonAddActivity />
+                {status === "Owner" ? (
+                  <ModalPostActivity
+                    titleActivity={"Create Activity"}
+                    post={postActivity}
+                  />
+                ) : (
+                  <></>
+                )}
               </Box>
               <Flex flexDirection={"column"} gap={2}>
                 {activities ? (
-                  activities.map((data) => (
+                  currentActivities.map((data) => (
                     <CardActivity
                       key={data.id}
                       title={data.name}
@@ -321,32 +451,50 @@ const ClubJoin = () => {
                 )}
               </Flex>
             </Box>
+            <Flex justifyContent={"center"} gap={4} pt={5}>
+              <BsArrowLeftCircle
+                size={35}
+                color={"#2E5984"}
+                onClick={() => prevPage()}
+              />
+              <BsArrowRightCircle
+                size={35}
+                color={"#2E5984"}
+                onClick={() => nextPage()}
+              />
+            </Flex>
           </Box>
+
+          {/* RULES & SETTING */}
           <Box display={"flex"} flexDirection={"column"} w={"25vw"}>
             <Flex justify={"end"} gap={2} p={2} color={"brand.200"} pb={24}>
               <Box _hover={{ color: "primary.400" }}>
                 <ModalRules body={data.rule} />
               </Box>
-              <Box _hover={{ color: "primary.400" }}>
-                <BsGearFill
-                  size={40}
-                  cursor={"pointer"}
-                  onClick={() =>
-                    navigate("/editClub", {
-                      state: {
-                        club_id: data.id,
-                      },
-                    })
-                  }
-                />
-              </Box>
+              {status === "Owner" ? (
+                <Box _hover={{ color: "primary.400" }}>
+                  <BsGearFill
+                    size={40}
+                    cursor={"pointer"}
+                    onClick={() =>
+                      navigate("/editClub", {
+                        state: {
+                          club_id: data.id,
+                        },
+                      })
+                    }
+                  />
+                </Box>
+              ) : (
+                <></>
+              )}
             </Flex>
+
+            {/* DISCUSSION CHAT */}
             <Card variant={"filled"} h={"xl"} bgColor={"white"}>
               <CardHeader textAlign={"Center"} shadow={"md"}>
                 Discussion Chat Box
               </CardHeader>
-
-              {/* AKAN DIBUAT COMPONENT UNTUK MAPPING */}
               <CardBody overflow={"auto"}>
                 {chat?.map((data) => (
                   <ChatDiscuss
@@ -358,7 +506,6 @@ const ClubJoin = () => {
                   />
                 ))}
               </CardBody>
-
               <CardFooter border={"1px"} borderColor={"primary.100"} p={0}>
                 <InputGroup>
                   <Input
@@ -394,11 +541,17 @@ const ClubJoin = () => {
             </Card>
           </Box>
         </Flex>
+
+        {/* GALLERIES */}
         <Box>
           <Box py={4}>
             <Card variant={"filled"}>
               <CardBody minH={"40vh"}>
-                <HandleGaleries title={"Add photo"} post={postGaleries} />
+                {status === "Owner" ? (
+                  <HandleGaleries title={"Add photo"} post={postGaleries} />
+                ) : (
+                  <></>
+                )}
                 <SimpleGrid
                   pt={4}
                   spacing={8}
@@ -406,8 +559,15 @@ const ClubJoin = () => {
                   h={"30%"}
                   columns={{ sm: 2, md: 4 }}
                 >
-                  {galeries?.map((data) => (
-                    <CardGallery image={data.url} key={data.id} />
+                  {reverseGaleries?.map((data) => (
+                    <CardGallery
+                      image={data.url}
+                      key={data.id}
+                      caption={data.caption}
+                      idImage={data.id}
+                      deletePhoto={dellPhoto}
+                      editPhoto={editPhoto}
+                    />
                   ))}
                 </SimpleGrid>
               </CardBody>

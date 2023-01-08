@@ -11,6 +11,7 @@ import {
   MenuList,
   Stack,
   Text,
+  Center,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
@@ -20,6 +21,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { clearUser } from "../../redux/reducer/reducer";
+import { Buttons } from "./ButtonBack";
 
 const Navbar = ({ name, image }) => {
   const [data, setData] = useState();
@@ -83,6 +85,19 @@ const Navbar = ({ name, image }) => {
             _hover={{ cursor: "pointer" }}
           />
         </Box>
+        {!user.token ? (
+          <Center gap={6}>
+            <Text fontSize={"xl"} color={"whiteAlpha.800"}>
+              Dont You have an account?
+            </Text>
+            <Buttons
+              openTrigger={() => navigate("/login")}
+              textContent={"Login"}
+            />
+          </Center>
+        ) : (
+          <></>
+        )}
 
         <Flex alignItems={"center"}>
           <Stack direction={"row"} spacing={4} color={"primary.100"}>
@@ -100,6 +115,7 @@ const Navbar = ({ name, image }) => {
                 _hover={{ cursor: "pointer" }}
               />
             </Box>
+
             <Menu px={1}>
               <Text color={"primary.100"} pt={"4"} fontSize="md">
                 {user && name ? name : data?.name ? data?.name : ""}
@@ -112,6 +128,7 @@ const Navbar = ({ name, image }) => {
               >
                 <Avatar
                   size={"md"}
+                  name={data?.name}
                   src={
                     user && image
                       ? image
