@@ -471,19 +471,23 @@ const ClubJoin = () => {
               <Box _hover={{ color: "primary.400" }}>
                 <ModalRules body={data.rule} />
               </Box>
-              <Box _hover={{ color: "primary.400" }}>
-                <BsGearFill
-                  size={40}
-                  cursor={"pointer"}
-                  onClick={() =>
-                    navigate("/editClub", {
-                      state: {
-                        club_id: data.id,
-                      },
-                    })
-                  }
-                />
-              </Box>
+              {status === "Owner" ? (
+                <Box _hover={{ color: "primary.400" }}>
+                  <BsGearFill
+                    size={40}
+                    cursor={"pointer"}
+                    onClick={() =>
+                      navigate("/editClub", {
+                        state: {
+                          club_id: data.id,
+                        },
+                      })
+                    }
+                  />
+                </Box>
+              ) : (
+                <></>
+              )}
             </Flex>
 
             {/* DISCUSSION CHAT */}
