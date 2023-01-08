@@ -46,7 +46,6 @@ const Login = () => {
       form.append("prompt", tokenResponse?.prompt);
       form.append("scope", tokenResponse?.scope);
       form.append("token_type", tokenResponse?.token_type);
-      console.log("login", [...form]);
 
       await axios
         .post(urlLoginGoogle, form, configPutNPost)
@@ -156,10 +155,6 @@ const Login = () => {
                 mt={4}
                 onClick={() => {
                   useGoogle();
-                  // loginGoogle();
-                  // loginOAuth1();
-                  // loginOAuth2();
-                  // loginOAuth3();
                 }}
               >
                 <Image src="../src/assets/google.png" w={"8"} mx={1} />

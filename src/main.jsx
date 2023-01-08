@@ -43,9 +43,6 @@ const theme = extendTheme({
 
 let persistor = persistStore(store);
 
-const client_id =
-  "45633693374-njv5m2bp04t3civhmppuh6qroo5tr70v.apps.googleusercontent.com";
-
 const rootElement = document.getElementById("root");
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
@@ -53,7 +50,7 @@ ReactDOM.createRoot(rootElement).render(
       <PersistGate persistor={persistor}>
         <CookiesProvider>
           <ChakraProvider theme={theme}>
-            <GoogleOAuthProvider clientId={client_id}>
+            <GoogleOAuthProvider clientId={import.meta.env.VITE_SOME_KEY}>
               <App />
             </GoogleOAuthProvider>
           </ChakraProvider>
