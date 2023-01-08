@@ -87,7 +87,7 @@ const Store = () => {
 							<option value="Bogor">Bogor</option>
 							<option value="Depok">Depok</option>
 							<option value="Tanggerang">Tanggerang</option>
-							<option value="Bekasi">Bekasi</option>
+							<option value="Bekasi">Bekasis</option>
 							<option value="Bandung">Bandung</option>
 							<option value="Semarang">Semarang</option>
 							<option value="Malang">Malang</option>

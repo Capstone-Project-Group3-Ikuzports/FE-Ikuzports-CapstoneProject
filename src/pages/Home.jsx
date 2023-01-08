@@ -20,7 +20,11 @@ import {
 import { FiUser } from "react-icons/fi";
 import CardEventClub from "../components/Baru/CardEventClub";
 import { useState } from "react";
-import { ButtonCreate, Buttons } from "../components/Baru/ButtonBack";
+import {
+	ButtonCreate,
+	Buttons,
+	ToTopButton,
+} from "../components/Baru/ButtonBack";
 import { useEffect } from "react";
 import Modals from "../components/Baru/Modal";
 import Dropdown from "../components/Baru/Dropdown";
@@ -160,9 +164,9 @@ const Home = () => {
 	return (
 		<Layout>
 			<div>
-				<Box p="8" px={"10%"} w={"100vw"} h={"100%"}>
+				<Box p="8" px={"10%"} w={"100vw"} h={"100vh"}>
 					<Flex>
-						<Box w="60%">
+						<Box w={{ base: "60%", lg: "100%", xl: "60%" }}>
 							<Text as="b" fontSize={"2xl"}>
 								Home
 							</Text>
@@ -410,7 +414,9 @@ const Home = () => {
 										openTrigger={getEvent}
 										textContent={"Load More Event"}
 									/>
+									<ToTopButton />
 								</Box>
+								<ToTopButton />
 							</Box>
 						</Box>
 						<Show above="1300px">
