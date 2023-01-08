@@ -1,4 +1,5 @@
 import React from "react";
+import heroImg from "../../assets/logo-login.png"
 
 import { Box, Center, Flex, HStack, Image, Text } from "@chakra-ui/react";
 
@@ -6,7 +7,7 @@ const HeroLogin = () => {
   return (
     <Box w={"65vw"} minH={"100vh"} bg={"brand.800"}>
       <Center>
-        <Image src="../src/assets/logo-login.png" w={"50%"} mt={"5%"} />
+        <Image src={heroImg} w={"50%"} mt={"5%"} />
       </Center>
       <Center mt={"-15vh"}>
         <HStack fontSize={"5xl"}>
