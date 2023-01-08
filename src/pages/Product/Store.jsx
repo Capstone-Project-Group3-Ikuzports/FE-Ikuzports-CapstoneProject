@@ -37,12 +37,13 @@ const Store = () => {
 	const [product, setProduct] = useState([]);
 	const [filterCate, setFilterCate] = useState("");
 	const [filterCity, setFilterCity] = useState("");
+  const [search,setSearch] = useState("");
 	const navi = useNavigate();
 
 	const getProduct = () => {
 		axios
 			.get(
-				`https://rubahmerah.site/products?itemcategory_id=${filterCate}&name=&city=${filterCity}&pages`,
+				`https://rubahmerah.site/products?itemcategory_id=${filterCate}&name=${search}&city=${filterCity}&pages`,
 				config
 			)
 			.then((res) => {
@@ -90,7 +91,7 @@ const Store = () => {
                   <option value='Surabaya'>Surabaya</option>
                   <option value='Jogjakarta'>Jogjakarta</option>
                   </Dropdown>
-           <InputGroup w={'250px'} boxShadow={'xl'} varian='filled'>
+           <InputGroup w={'250px'} boxShadow={'xl'} varian='filled'onChange={setSearch}>
               <InputLeftElement
                 pointerEvents='none'
                 children={<AiOutlineSearch color='gray.300' />}
