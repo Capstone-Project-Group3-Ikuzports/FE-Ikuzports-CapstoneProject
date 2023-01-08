@@ -37,12 +37,20 @@ const Store = () => {
 	const [product, setProduct] = useState([]);
 	const [filterCate, setFilterCate] = useState("");
 	const [filterCity, setFilterCity] = useState("");
+  const [search,setSearch] = useState("");
 	const navi = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [maxPage,setMaxPage] = useState(5) ;
+  const pages = [];
+
+  for(let i = 1; i <= maxPage; i++){pages.push(i)}
+  const paginateBack = () => {currentPage > 1 && setCurrentPage(currentPage - 1),setMaxPage(maxPage-1)}
+  const paginateFront =() => {setCurrentPage(currentPage + 1),setMaxPage(maxPage+1)}
 
 	const getProduct = () => {
 		axios
 			.get(
-				`https://rubahmerah.site/products?itemcategory_id=${filterCate}&name=&city=${filterCity}&pages`,
+				`https://rubahmerah.site/products?itemcategory_id=${filterCate}&name=${search}&city=${filterCity}&page=${currentPage}`,
 				config
 			)
 			.then((res) => {
@@ -54,88 +62,127 @@ const Store = () => {
 			});
 	};
 
-	useEffect(() => getProduct(), [filterCate, filterCity]);
-  
-  return (
-<Layout>
-      <Box p='8' px={'10%'} w={'100vw'} h={'100%'} overflowX='hidden'>
-        <ButtonBack/>
-        <Flex>
-        <Text fontSize={'5xl'} textColor={'brand.300'}>Store</Text>
-        <Flex mb='30px' ml='auto' mt={4}>
-                <Dropdown
-                placeHolderProps={'Category'}
-                targetValue={(e)=>setFilterCate(e.target.value)}
-                filterCates={filterCate}>
-                  <option value= '1'>Sepatu</option>
-                  <option value= '2'>Jersey</option>
-                  <option value= '3'>Bola</option>
-                  <option value= '4'>Raket</option>
-                  <option value= '5'>Celana</option>
-                  <option value= '6'>Equipment</option>
-                  <option value= '7'>Aksesoris</option>
-                </Dropdown>
-                <Dropdown
-                  placeHolderProps={'City'}
-                  targetValue={(e)=>setFilterCity(e.target.value)}
-                  filterCates={filterCity}>
-                  <option value='Jakarta'>Jakarta</option>
-                  <option value='Bogor'>Bogor</option>
-                  <option value='Depok'>Depok</option>
-                  <option value='Tanggerang'>Tanggerang</option>
-                  <option value='Bekasi'>Bekasi</option>
-                  <option value='Bandung'>Bandung</option>
-                  <option value='Semarang'>Semarang</option>
-                  <option value='Malang'>Malang</option>
-                  <option value='Surabaya'>Surabaya</option>
-                  <option value='Jogjakarta'>Jogjakarta</option>
-                  </Dropdown>
-           <InputGroup w={'250px'} boxShadow={'xl'} varian='filled'>
-              <InputLeftElement
-                pointerEvents='none'
-                children={<AiOutlineSearch color='gray.300' />}
-              />
-              <Input type='tel' bg='white' placeholder='Search Product' />
-            </InputGroup>
-          </Flex>
-        </Flex>
-        <Divider w="17%" orientation='horizontal' />
-        <Flex>
-        <Box  ml={'57%'}>
-        </Box>
-        </Flex>
-        <SimpleGrid columns={{sm:2, md:4}} gap={8}>
-        
-        {product != null ? (product.map((item)=>(
-              <CardProduct 
-              key={item.id}
-              image={item.product_image != null ? item.product_image[0].url : "https://www.hostpapa.com/knowledgebase/wp-content/uploads/2018/04/1-13.png"}
-              nama={item.name}
-              harga={item.price}
-              city={item.city}
-              bilaClick={()=>{navi('/detailstore', {
-                state : {
+
+	useEffect(() => getProduct(), [filterCate,filterCity,search,currentPage]);
+
+
+	return (
+		<Layout>
+			<Box p="8" px={"10%"} w={"100vw"} h={"100%"} overflowX="hidden">
+				<ButtonBack />
+				<Flex>
+					<Text fontSize={"5xl"} textColor={"brand.300"}>
+						Store
+					</Text>
+					<Flex mb="30px" ml="auto" mt={4}>
+						<Dropdown
+							placeHolderProps={"Category"}
+							targetValue={(e) => setFilterCate(e.target.value)}
+							filterCates={filterCate}
+						>
+							<option value="1">Sepatu</option>
+							<option value="2">Jersey</option>
+							<option value="3">Bola</option>
+							<option value="4">Raket</option>
+							<option value="5">Celana</option>
+							<option value="6">Equipment</option>
+							<option value="7">Aksesoris</option>
+						</Dropdown>
+						<Dropdown
+							placeHolderProps={"City"}
+							targetValue={(e) => setFilterCity(e.target.value)}
+							filterCates={filterCity}
+						>
+							<option value="Jakarta">Jakarta</option>
+							<option value="Bogor">Bogor</option>
+							<option value="Depok">Depok</option>
+							<option value="Tanggerang">Tanggerang</option>
+							<option value="Bekasi">Bekasi</option>
+							<option value="Bandung">Bandung</option>
+							<option value="Semarang">Semarang</option>
+							<option value="Malang">Malang</option>
+							<option value="Surabaya">Surabaya</option>
+							<option value="Jogjakarta">Jogjakarta</option>
+						</Dropdown>
+				           <InputGroup w={'250px'} boxShadow={'xl'} varian='filled' onChange={(e) => setSearch(e.target.value)}>
+							<InputLeftElement
+								pointerEvents="none"
+								children={<AiOutlineSearch color="gray.300" />}
+							/>
+							<Input type="tel" bg="white" placeholder="Search Product" />
+						</InputGroup>
+					</Flex>
+				</Flex>
+				<Divider w="17%" orientation="horizontal" />
+				<Flex>
+					<Box ml={"57%"}></Box>
+				</Flex>
+				<SimpleGrid columns={{ sm: 2, md: 4 }} gap={8}>
+					{product != null ? (
+						product.map((item) => (
+							<CardProduct
+								key={item.id}
+								image={
+									item.thumbnail != ""
+										? item.thumbnail
+										: "https://www.hostpapa.com/knowledgebase/wp-content/uploads/2018/04/1-13.png"
+								}
+                onClick={()=>{navi('/detailStore',{state : {
                   id : item.id
-                }
-              })}}/>
-              ))) :  <Card align='center' w={'8xl'} >
-              <CardHeader>
-                <Heading size='3xl' color={'brand.300'}>There is no item on this category yet </Heading>
-              </CardHeader>
-              <CardFooter>
-                 <Button bg='brand.300' color={'brand.100'} onClick={()=>{navi('/myproduct')}}>Lets GO sell something </Button>
-              </CardFooter>
-            </Card>
-            }
-        </SimpleGrid>
-      </Box>
-      </Layout>
-  )
-}
-
-
-
-
-
+                }})}}
+							>
+								<Stack mt="3" spacing="3">
+									<Flex mb={10}>
+										<Heading size="md">{item.name}</Heading>
+										<Text>{item.city}</Text>
+										<Spacer></Spacer>
+									</Flex>
+									<Text color="blue.600" as="b" fontSize="2xl">
+										{item.price}
+									</Text>
+								</Stack>
+							</CardProduct>
+						))
+					) : (
+						<Card align="center" w={"8xl"}>
+							<CardHeader>
+								<Heading size="3xl" color={"brand.300"}>
+									There is no item on this category yet{" "}
+								</Heading>
+							</CardHeader>
+							<CardFooter>
+								<Button
+									bg="brand.300"
+									color={"brand.100"}
+									onClick={() => {
+										navi("/myproduct");
+									}}
+								>
+									Lets GO sell something{" "}
+								</Button>
+							</CardFooter>
+						</Card>
+					)}
+				</SimpleGrid>
+			</Box>
+       <Box>
+      <button onClick={()=>paginateBack()}>
+              Prev
+            </button>
+            {pages?.map((page, index) => {
+              return (
+                <button
+                  key={index}
+                  onClick={() => setCurrentPage(page)}
+                >
+                  {page}
+                </button>
+              );
+            })}
+            <button  onClick={()=>paginateFront()}>Next</button>
+            </Box>
+		</Layout>
+	);
+};
 
 export default Store;

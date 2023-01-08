@@ -96,6 +96,7 @@ const MyProduct = () => {
       },
     };
 
+
     await axios
       .post("https://rubahmerah.site/products/", form, configPutNPost)
       .then(() => {
@@ -119,6 +120,7 @@ const MyProduct = () => {
       });
       getMyProduct();
   };
+
 
   const DellProduct = useCallback((item) => {
     Swal.fire({
@@ -212,6 +214,7 @@ const MyProduct = () => {
                   <option value="7">Aksesoris</option>
                 </Select>
 
+
                 <Select
                   onChange={(e) => setCity(e.target.value)}
                   mt={"5"}
@@ -235,7 +238,7 @@ const MyProduct = () => {
                 </Select>
               </ModalBody>
               <ModalFooter>
-                <Buttons textContent="Yes" mr={"30"} openTrigger={()=>{modalpost(), onClose()}} />
+                <Buttons textContent="Yes" mr={"30"} openTrigger={()=>{modalPost(), onClose()}} />
                 <ButtonsCancel textContent="Cancel" openTrigger={onClose} />
               </ModalFooter>
             </Modals>
@@ -272,6 +275,7 @@ const MyProduct = () => {
       </Box>
     </Layout>
   );
+
 };
 
 export default MyProduct;
