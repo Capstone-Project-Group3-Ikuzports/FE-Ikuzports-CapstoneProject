@@ -11,6 +11,10 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
+  Button,
+  FormControl,
+  FormLabel,
+  FormHelperText
 } from "@chakra-ui/react";
 import axios from "axios";
 import bca from "../../assets/bca.png";
@@ -22,6 +26,7 @@ import Sample2 from "../../assets/sampleJersey2.jpg";
 import Sample3 from "../../assets/sampleJersey3.jpeg";
 import {Buttons} from '../../components/Baru/ButtonBack';
 import {ButtonsCancel} from '../../components/Baru/ButtonBack';
+import Dropdown from "../../components/Baru/Dropdown";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -146,27 +151,50 @@ useEffect(
             <Buttons openTrigger={onOpen} />
           </Box>
           <Box  ml='auto' mb={10} >
-           <Modal isOpen={isOpen} onClose={onClose} >
+           <Modal isOpen={isOpen} onClose={onClose}  closeOnOverlayClick={false}>
               <ModalOverlay/>
               <ModalContent backgroundColor={'brand.100'}>
                 <ModalHeader textAlign={'center'}>Pilih Metode Pembayaran</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
+            
                   <Flex alignItems={"center"}>
+                  <Button size={'lg'} variant='link'>
                   <Image src={bca} w={"5vw"} h={"7vh"} mb="10px" mr='25px'/>
-                  <Text fontSize={'2xl'}>BCA</Text>
+                  <Text fontSize={'2xl'} textColor='black' as='b'>BCA</Text>
+                  
+                  </Button>
                   </Flex>
-                  <Flex alignItems={"center"}>             
+                  <Flex>
+                  <Box background={'white'} w='full' shadow={'2xl'} rounded='xl'>
+                  <FormControl p={'10'}>
+                   <FormLabel>Email address</FormLabel>
+                   <FormLabel>Email address</FormLabel>
+                   <FormLabel>Email address</FormLabel>
+                   <FormLabel>Email address</FormLabel>
+                   <FormLabel>Email address</FormLabel>
+                   <FormLabel>Email address</FormLabel>
+                  <FormHelperText>We'll never share your email.</FormHelperText>
+                  </FormControl>
+                  </Box>
+                  </Flex>
+                  <Flex alignItems={"center"}> 
+                  <Button size={'lg'} variant='link'>            
                   <Image src={bni} w={"5vw"} h={"7vh"} mb="10px" mr='25px'/>
                   <Text fontSize={'2xl'} textColor='gray'>Upcoming</Text>
+                  </Button>
                   </Flex>
                   <Flex alignItems={"center"}>
+                  <Button size={'lg'} variant='link'> 
                   <Image src={bri} w={"5vw"} h={"7vh"} mb="10px" mr='25px'/>
                   <Text fontSize={'2xl'} textColor='gray'>Upcoming</Text>
+                  </Button>
                   </Flex >
                   <Flex alignItems={"center"}>
+                  <Button size={'lg'} variant='link'> 
                   <Image src={mandiri} w={"5vw"} h={"7vh"} mb="10px" mr={'25px'}/>
                   <Text fontSize={'2xl'} textColor='gray'>Upcoming</Text>
+                  </Button>
                   </Flex>
                   </ModalBody>
               </ModalContent>
