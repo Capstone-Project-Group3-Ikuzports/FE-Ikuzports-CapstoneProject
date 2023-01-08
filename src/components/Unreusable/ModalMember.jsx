@@ -24,6 +24,8 @@ const ModalMember = ({
   memberRaw,
   removeMember,
   acceptMember,
+  memberLength,
+  requestedLength,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const user_id = useSelector((state) => state.users.currentUser.id);
@@ -43,7 +45,7 @@ const ModalMember = ({
           onOpen();
         }}
       >
-        {`Member : ${joinedmember} / ${totalmember} `}
+        {`Member : ${memberLength} / ${totalmember} `}
       </Text>
 
       <Modal isOpen={isOpen} onClose={onClose} size={"xl"}>
@@ -60,7 +62,7 @@ const ModalMember = ({
               onClick={() => {
                 setCondition1("Member"), setCondition2("Owner");
               }}
-            >{`Member ${joinedmember}/${totalmember}`}</Button>
+            >{`Member ${memberLength}/${totalmember}`}</Button>
             <Button
               w={"50%"}
               size={"lg"}
@@ -72,7 +74,7 @@ const ModalMember = ({
                 setCondition1("Requested"), setCondition2("null");
               }}
             >
-              Pending Member
+              Pending Member ({requestedLength})
             </Button>
           </Flex>
           <ModalBody pb={2}>
@@ -94,11 +96,6 @@ const ModalMember = ({
                             <Avatar
                               src={data.user_image}
                               name={data.name}
-                              bgColor={
-                                user_id === data.user_id
-                                  ? "telegram.600"
-                                  : "teal.100"
-                              }
                               color={"whatsapp.100"}
                             />
 
@@ -147,7 +144,14 @@ const ModalMember = ({
                                   color="#ff9191"
                                   size={30}
                                   cursor={"pointer"}
-                                  // onClick={() => removeMember(data.id)}
+                                  onClick={() => {
+                                    removeMember({
+                                      id: data.id,
+                                      name: data.name,
+                                      onOpen: onOpen,
+                                    }),
+                                      onClose();
+                                  }}
                                 />
                               </Flex>
                             ) : (
