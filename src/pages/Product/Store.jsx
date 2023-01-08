@@ -37,12 +37,21 @@ const Store = () => {
 	const [product, setProduct] = useState([]);
 	const [filterCate, setFilterCate] = useState("");
 	const [filterCity, setFilterCity] = useState("");
+  const [search,setSearch] = useState("");
 	const navi = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [dataPerPage, setdataPerPage] = useState();
+  const [maxPage,setMaxPage] = useState(5) ;
+  const pages = [];
+
+  for(let i = 1; i <= maxPage; i++){pages.push(i)}
+  const paginateBack = () => {currentPage > 1 && setCurrentPage(currentPage - 1),setMaxPage(maxPage-1)}
+  const paginateFront =() => {setCurrentPage(currentPage + 1),setMaxPage(maxPage+1)}
 
 	const getProduct = () => {
 		axios
 			.get(
-				`https://rubahmerah.site/products?itemcategory_id=${filterCate}&name=&city=${filterCity}&pages`,
+				`https://rubahmerah.site/products?itemcategory_id=${filterCate}&name=${search}&city=${filterCity}&page=${currentPage}`,
 				config
 			)
 			.then((res) => {
@@ -54,7 +63,9 @@ const Store = () => {
 			});
 	};
 
-	useEffect(() => getProduct(), [filterCate, filterCity]);
+
+	useEffect(() => getProduct(), [filterCate, filterCity,search]);
+
 
 	return (
 		<Layout>
@@ -94,7 +105,7 @@ const Store = () => {
 							<option value="Surabaya">Surabaya</option>
 							<option value="Jogjakarta">Jogjakarta</option>
 						</Dropdown>
-						<InputGroup w={"250px"} boxShadow={"xl"} varian="filled">
+				           <InputGroup w={'250px'} boxShadow={'xl'} varian='filled' onChange={(e) => setSearch(e.target.value)}>
 							<InputLeftElement
 								pointerEvents="none"
 								children={<AiOutlineSearch color="gray.300" />}
@@ -152,6 +163,22 @@ const Store = () => {
 					)}
 				</SimpleGrid>
 			</Box>
+       <Box>
+      <button onClick={()=>paginateBack()}>
+              Prev
+            </button>
+            {pages?.map((page, index) => {
+              return (
+                <button
+                  key={index}
+                  onClick={() => setCurrentPage(page)}
+                >
+                  {page}
+                </button>
+              );
+            })}
+            <button  onClick={()=>paginateFront()}>Next</button>
+            </Box>
 		</Layout>
 	);
 };

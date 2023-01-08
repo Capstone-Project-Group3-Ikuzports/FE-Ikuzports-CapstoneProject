@@ -9,6 +9,9 @@ import {
 	Spinner,
 	Card,
 	CardBody,
+  CardHeader,
+  CardFooter,
+  Button,
 	Input,
 	Heading,
 	ModalHeader,
@@ -94,15 +97,14 @@ const Home = () => {
 	const getEvent = async () => {
 		await axios
 			.get(
-				`https://rubahmerah.site/events?page=${page}&status=${filterStat}&city=${filterCity}&category_id=${filterCate}`,
+				`https://rubahmerah.site/events?page=1&status=${filterStat}&city=${filterCity}&category_id=${filterCate}`,
 				config
 			)
 			.then((response) => {
 				const result = response.data.data;
 				const newPage = page + 1;
-				const temp = [...getEvents];
-				temp.push(...result);
-				setGetEvents(temp);
+
+				setGetEvents(result);
 				setPage(newPage);
 			})
 			.catch((err) => {
@@ -363,7 +365,7 @@ const Home = () => {
 								</Flex>
 
 								<Flex flexDir={"column"} gap={"3"} pt={4}>
-									{loading
+									{getEvents != null ?(loading
 										? skeleton.map((data) => <Spinner key={data} />)
 										: getEvents.map((item) => (
 												<CardEventClub
@@ -401,6 +403,7 @@ const Home = () => {
 															Slot : {item.total_participant} /{" "}
 															{item.maximum_people}
 														</Text>
+                            <Text my="10px">Status Event : {item.status}</Text>
 														<Text my="10px">Address : {item.address}</Text>
 														<Text my="10px">City : {item.city}</Text>
 														<Text my="10px">
@@ -408,14 +411,17 @@ const Home = () => {
 														</Text>
 													</CardBody>
 												</CardEventClub>
-										  ))}
+										  ))):( <Card align='center' w={'3xl'} >
+                      <CardHeader>
+                        <Heading size='3xl' color={'brand.300'}>There is no events on this category yet </Heading>
+                      </CardHeader>
+                      <CardFooter>
+                      <Buttons textContent="Make some Event" openTrigger={onOpen} />
+                      </CardFooter>
+                    </Card>)}
 								</Flex>
 								<Box mt={10}>
-									<Buttons
-										openTrigger={getEvent}
-										textContent={"Load More Event"}
-									/>
-									<ToTopButton />
+
 								</Box>
 								<ToTopButton />
 							</Box>
