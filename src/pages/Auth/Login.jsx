@@ -14,7 +14,7 @@ import {
 import HeroLogin from "../../components/Baru/HeroLogin";
 import { updateUser } from "../../redux/reducer/reducer";
 import { updateAccess } from "../../redux/reducer/access_token";
-import logo from "../src/assets/google.png"
+import logo from "../../assets/google.png"
 
 import axios from "axios";
 import React, { useState } from "react";
