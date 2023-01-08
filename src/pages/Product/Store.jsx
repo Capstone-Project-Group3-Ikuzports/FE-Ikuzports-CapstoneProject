@@ -41,13 +41,12 @@ const Store = () => {
 	const navi = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [dataPerPage, setdataPerPage] = useState();
-  const maxPage = Math.ceil(product?.length) != null ;
+  const [maxPage,setMaxPage] = useState(5) ;
   const pages = [];
 
   for(let i = 1; i <= maxPage; i++){pages.push(i)}
-  const paginateBack = () => {currentPage > 1 && setCurrentPage(currentPage - 1)}
-  const paginateFront =() => setCurrentPage(currentPage + 1)
- console.log("ini adalah",currentPage)
+  const paginateBack = () => {currentPage > 1 && setCurrentPage(currentPage - 1),setMaxPage(maxPage-1)}
+  const paginateFront =() => {setCurrentPage(currentPage + 1),setMaxPage(maxPage+1)}
 
 	const getProduct = () => {
 		axios
