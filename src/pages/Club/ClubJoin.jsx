@@ -44,6 +44,7 @@ const ClubJoin = () => {
   const id_club = location?.state.id;
   const status = location?.state.status;
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   // === URL === //
   const urlIdClub = `https://rubahmerah.site/clubs/${id_club}`;
@@ -186,12 +187,24 @@ const ClubJoin = () => {
     photo.append("club_id", data.id);
     photo.append("caption", datapost.caption);
     photo.append("url", datapost.file);
-
+    setIsLoading(true);
     await axios
       .post(urlAddGalleries, photo, configPutNPost)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-    getGaleries();
+      .then((res) => {
+        getGaleries();
+        setIsLoading(false);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          text: "succes add new photo ",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
   };
 
   // DELETE PHOTO === //
@@ -244,7 +257,7 @@ const ClubJoin = () => {
         Swal.fire({
           position: "center",
           icon: "success",
-          text: "Caption success edited",
+          text: "Caption success updated",
           showConfirmButton: false,
           timer: 2000,
         });
@@ -335,6 +348,20 @@ const ClubJoin = () => {
 
   return (
     <Layout>
+      {isLoading ? (
+        <Box
+          position={"fixed"}
+          w={"full"}
+          h={"full"}
+          zIndex={10}
+          top={0}
+          bottom={0}
+          bgColor="blackAlpha.200"
+          cursor={"no-drop"}
+        />
+      ) : (
+        <></>
+      )}
       <Box p="8" px={"10%"} w={"100vw"} overflowX="hidden">
         <Flex onClick={() => navigate("/")} _hover={{ cursor: "pointer" }}>
           <ButtonBack />
