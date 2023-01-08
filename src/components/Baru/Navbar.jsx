@@ -112,6 +112,7 @@ const Navbar = ({ name, image }) => {
               >
                 <Avatar
                   size={"md"}
+                  name={data?.name}
                   src={
                     user && image
                       ? image

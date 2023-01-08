@@ -125,6 +125,7 @@ const Home = () => {
     formerData.append("maximum_people", maximum_people);
     formerData.append("description", description);
     formerData.append("image_event", files);
+    formerData.append("token", tokenAkses);
     console.log([...formerData]);
     const config = {
       headers: {
@@ -154,6 +155,7 @@ const Home = () => {
           timer: 3000,
         });
       });
+    getEvent();
   };
 
   useEffect(() => {
@@ -303,7 +305,11 @@ const Home = () => {
                   </FormControl>
                 </ModalBody>
                 <ModalFooter>
-                  <ButtonCreate onClick={addEvent} />
+                  <ButtonCreate
+                    onClick={() => {
+                      addEvent(), onClose();
+                    }}
+                  />
                 </ModalFooter>
               </Modals>
               <Box mt={"30px"}>

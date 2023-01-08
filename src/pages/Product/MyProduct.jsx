@@ -117,6 +117,7 @@ const MyProduct = () => {
           showConfirmButton: true,
         });
       });
+    getMyProduct();
   };
 
   const DellProduct = useCallback((item) => {
@@ -138,6 +139,7 @@ const MyProduct = () => {
           timer: 3000,
         });
         del(item);
+        getMyProduct();
       }
     });
   }, []);
@@ -235,7 +237,13 @@ const MyProduct = () => {
                 </Select>
               </ModalBody>
               <ModalFooter>
-                <Buttons textContent="Yes" mr={"30"} openTrigger={modalPost} />
+                <Buttons
+                  textContent="Yes"
+                  mr={"30"}
+                  openTrigger={() => {
+                    modalPost(), onClose();
+                  }}
+                />
                 <ButtonsCancel textContent="Cancel" openTrigger={onClose} />
               </ModalFooter>
             </Modals>

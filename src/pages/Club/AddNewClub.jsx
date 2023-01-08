@@ -13,7 +13,11 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { ButtonBack, ButtonClear, ButtonCreate } from "../../components/Baru/ButtonBack";
+import {
+  ButtonBack,
+  ButtonClear,
+  ButtonCreate,
+} from "../../components/Baru/ButtonBack";
 import UploadFiles from "../../components/Baru/UploadFiles";
 import Layout from "../../components/Baru/Layout";
 import { useSelector } from "react-redux";
@@ -47,7 +51,6 @@ const AddNewClub = () => {
     form.append("member_total", !memberTotal ? 10 : memberTotal);
     form.append("requirement", require);
     form.append("logo", files);
-    console.log([...form]);
 
     console.log([...form]);
     const urlAddClub = `https://rubahmerah.site/clubs`; // URL GET, PUT, & DELETE
@@ -146,6 +149,7 @@ const AddNewClub = () => {
                     color={"brand.300"}
                     bgColor={"#FFFFFF"}
                     onChange={(e) => setCity(e.currentTarget.value)}
+                    key={"Jakarta"}
                   >
                     <option value="Jakarta">Jakarta</option>
                     <option value="Bogor">Bogor</option>

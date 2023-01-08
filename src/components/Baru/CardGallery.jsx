@@ -1,19 +1,18 @@
+import { Image } from "@chakra-ui/react";
 import React from "react";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  SimpleGrid,
-  Text,
-  Image,
-  Heading,
-  Button,
-  Flex,
-} from "@chakra-ui/react";
 
 const CardGallery = ({ image }) => {
-  return <Image src={image} w={"xl"} h={"xs"} objectFit="cover" />;
+  return (
+    <Image
+      src={image}
+      maxw={"36"}
+      minw={"xl"}
+      maxH={"xs"}
+      minH={"xs"}
+      objectFit="contain"
+      bgColor={"whiteAlpha.800"}
+    />
+  );
 };
 
 export default CardGallery;
