@@ -113,21 +113,22 @@ const Store = () => {
 							<CardProduct
 								key={item.id}
 								image={
-									item.product_image != null
-										? item.product_image[0].url
+									item.thumbnail != ""
+										? item.thumbnail
 										: "https://www.hostpapa.com/knowledgebase/wp-content/uploads/2018/04/1-13.png"
 								}
-								nama={item.name}
-								harga={item.price}
-								city={item.city}
-								bilaClick={() => {
-									navi("/detailstore", {
-										state: {
-											id: item.id,
-										},
-									});
-								}}
-							/>
+							>
+								<Stack mt="3" spacing="3">
+									<Flex mb={10}>
+										<Heading size="md">{item.name}</Heading>
+										<Text>{item.city}</Text>
+										<Spacer></Spacer>
+									</Flex>
+									<Text color="blue.600" as="b" fontSize="2xl">
+										{item.price}
+									</Text>
+								</Stack>
+							</CardProduct>
 						))
 					) : (
 						<Card align="center" w={"8xl"}>
