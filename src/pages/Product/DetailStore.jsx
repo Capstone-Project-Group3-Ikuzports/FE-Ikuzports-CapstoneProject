@@ -77,6 +77,7 @@ const DetailStore = () => {
     .get(`https://rubahmerah.site/products/${idStore}`,config)
     .then((res)=>{
       setProductId(res.data.data)
+      console.log(res.data.data)
     })
     .catch((err)=>console.log(err))
     
@@ -111,7 +112,6 @@ useEffect(
   ()=>getProductId(),[]
   )
     
-  
   return (
     <Layout>
       <Box p="8" px={"10%"} w={"100vw"} overflowX="hidden" minH={"90vh"}>
@@ -122,7 +122,7 @@ useEffect(
         <Flex>
           <Box w={"40vw"}>
             <Center>
-              <Image src={productId.product_image?.[0]?.url} objectFit={"cover"} w={"30vw"} h={"40vh"} />
+              <Image src={productId.thumbnail} objectFit={"cover"} w={"30vw"} h={"40vh"} />
             </Center>
             <Flex pt={2} justifyContent={"space-evenly"}>
             <Image src={Sample1} w={"10vw"} h={"15vh"} />

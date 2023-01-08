@@ -238,7 +238,7 @@ const MyProduct = () => {
                 </Select>
               </ModalBody>
               <ModalFooter>
-                <Buttons textContent="Yes" mr={"30"} openTrigger={()=>{modalpost(), onClose()}} />
+                <Buttons textContent="Yes" mr={"30"} openTrigger={()=>{modalPost(), onClose()}} />
                 <ButtonsCancel textContent="Cancel" openTrigger={onClose} />
               </ModalFooter>
             </Modals>

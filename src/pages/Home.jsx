@@ -411,7 +411,7 @@ const Home = () => {
 														</Text>
 													</CardBody>
 												</CardEventClub>
-										  ))):( <Card align='center' w={'3xl'} >
+										  ))):( <Card align='center' w={'full'} >
                       <CardHeader>
                         <Heading size='3xl' color={'brand.300'}>There is no events on this category yet </Heading>
                       </CardHeader>

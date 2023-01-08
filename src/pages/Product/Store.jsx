@@ -40,7 +40,6 @@ const Store = () => {
   const [search,setSearch] = useState("");
 	const navi = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const [dataPerPage, setdataPerPage] = useState();
   const [maxPage,setMaxPage] = useState(5) ;
   const pages = [];
 
@@ -64,7 +63,7 @@ const Store = () => {
 	};
 
 
-	useEffect(() => getProduct(), [filterCate, filterCity,search]);
+	useEffect(() => getProduct(), [filterCate,filterCity,search,currentPage]);
 
 
 	return (
@@ -128,6 +127,9 @@ const Store = () => {
 										? item.thumbnail
 										: "https://www.hostpapa.com/knowledgebase/wp-content/uploads/2018/04/1-13.png"
 								}
+                onClick={()=>{navi('/detailStore',{state : {
+                  id : item.id
+                }})}}
 							>
 								<Stack mt="3" spacing="3">
 									<Flex mb={10}>
