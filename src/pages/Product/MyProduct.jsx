@@ -62,7 +62,7 @@ const MyProduct = () => {
       .get(`https://rubahmerah.site/users/${idUser}/products`, config)
       .then((res) => {
         setMyProduct(res.data.data);
-        // console.log(res.data.data);
+        console.log(res.data.data);
       });
   };
 
@@ -84,7 +84,7 @@ const MyProduct = () => {
     form.append("name", product_name);
     form.append("price", price);
     form.append("description", desc);
-    form.append("product_image", files);
+    form.append("thumbnail", files);
     form.append("itemcategory_id", category_item);
     form.append("city", city);
     console.log([...form]);
@@ -117,7 +117,6 @@ const MyProduct = () => {
           showConfirmButton: true,
         });
       });
-    getMyProduct();
   };
 
   const DellProduct = useCallback((item) => {
@@ -139,7 +138,6 @@ const MyProduct = () => {
           timer: 3000,
         });
         del(item);
-        getMyProduct();
       }
     });
   }, []);
@@ -194,7 +192,6 @@ const MyProduct = () => {
                     }
                   }}
                 />
-
                 <Select
                   onChange={(e) => setCategory(e.target.value)}
                   mt={"5"}
@@ -237,13 +234,7 @@ const MyProduct = () => {
                 </Select>
               </ModalBody>
               <ModalFooter>
-                <Buttons
-                  textContent="Yes"
-                  mr={"30"}
-                  openTrigger={() => {
-                    modalPost(), onClose();
-                  }}
-                />
+                <Buttons textContent="Yes" mr={"30"} openTrigger={modalPost} />
                 <ButtonsCancel textContent="Cancel" openTrigger={onClose} />
               </ModalFooter>
             </Modals>
@@ -254,8 +245,8 @@ const MyProduct = () => {
             <CardProduct
               key={item.id}
               image={
-                item.product_image != undefined
-                  ? item.product_image[0].url
+                item.thumbnail != ""
+                  ? item.thumbnail
                   : "https://www.hostpapa.com/knowledgebase/wp-content/uploads/2018/04/1-13.png"
               }
             >

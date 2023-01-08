@@ -1,12 +1,9 @@
 import React from "react";
-import CardEvent from "../components/Baru/CardEventClub";
 import {
   Box,
   Spacer,
   Text,
   Flex,
-  Image,
-  Select,
   FormControl,
   FormLabel,
   Spinner,
@@ -14,13 +11,11 @@ import {
   CardBody,
   Input,
   Heading,
-  Modal,
-  ModalOverlay,
-  ModalContent,
   ModalHeader,
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  Show,
 } from "@chakra-ui/react";
 import { FiUser } from "react-icons/fi";
 import CardEventClub from "../components/Baru/CardEventClub";
@@ -125,7 +120,6 @@ const Home = () => {
     formerData.append("maximum_people", maximum_people);
     formerData.append("description", description);
     formerData.append("image_event", files);
-    formerData.append("token", tokenAkses);
     console.log([...formerData]);
     const config = {
       headers: {
@@ -168,7 +162,7 @@ const Home = () => {
       <div>
         <Box p="8" px={"10%"} w={"100vw"} h={"100%"}>
           <Flex>
-            <Box w="50%">
+            <Box w="60%">
               <Text as="b" fontSize={"2xl"}>
                 Home
               </Text>
@@ -231,13 +225,21 @@ const Home = () => {
                       onChange={(e) => setAddress(e.target.value)}
                     />
                     <FormLabel my="3">Event City</FormLabel>
-                    <Input
-                      color="gray"
-                      bg="white"
-                      placeholder="Where your event take place"
-                      _placeholder={{ opacity: 0.4, color: "inherit" }}
-                      onChange={(e) => setCity(e.target.value)}
-                    />
+                    <Dropdown
+                      placeHolderProps={"Event City"}
+                      targetValue={(e) => setCity(e.target.value)}
+                    >
+                      <option value="Jakarta">Jakarta</option>
+                      <option value="Bogor">Bogor</option>
+                      <option value="Depok">Depok</option>
+                      <option value="Tanggerang">Tanggerang</option>
+                      <option value="Bekasi">Bekasi</option>
+                      <option value="Bandung">Bandung</option>
+                      <option value="Semarang">Semarang</option>
+                      <option value="Malang">Malang</option>
+                      <option value="Surabaya">Surabaya</option>
+                      <option value="Jogjakarta">Jogjakarta</option>
+                    </Dropdown>
                     <FormLabel my="3">Event Description</FormLabel>
                     <Input
                       color="gray"
@@ -259,22 +261,21 @@ const Home = () => {
                       }}
                     />
                     <FormLabel my="3">Event Category</FormLabel>
-                    <Select
-                      bg="white"
-                      placeholder="Your event category"
-                      onChange={(e) => setCategoryId(e.target.value)}
+                    <Dropdown
+                      placeHolderProps={"Event City"}
+                      targetValue={(e) => setCategoryId(e.target.value)}
                     >
-                      <option value="1">SepakBola</option>
+                      <option value="1">Speak Bola</option>
                       <option value="2">Basket</option>
                       <option value="3">Futsal</option>
-                      <option value="4">Bola Voli</option>
+                      <option value="4">Voli</option>
                       <option value="5">Badminton</option>
-                      <option value="6">Bersepeda</option>
+                      <option value="6">Sepeda</option>
                       <option value="7">Tenis Lapangan</option>
                       <option value="8">Tenis Meja</option>
                       <option value="9">Renang</option>
-                      <option value="10">Beladiri</option>
-                    </Select>
+                      <option value="10">Bela Diri</option>
+                    </Dropdown>
 
                     <FormLabel my="3">Starting Date</FormLabel>
                     <Input
@@ -367,14 +368,22 @@ const Home = () => {
                           maxw="150px"
                           linkGambar={item.image_event}
                           onClick={() => {
-                            navigate("/detailevent", {
-                              state: {
-                                id: item.id,
-                              },
-                            });
+                            token
+                              ? navigate("/detailevent", {
+                                  state: {
+                                    id: item.id,
+                                  },
+                                })
+                              : navigate("/login");
                           }}
                         >
-                          <CardBody w={"100%"} px={"70px"} pb={"0"}>
+                          <CardBody
+                            w={"100%"}
+                            h={"100%"}
+                            py="30px"
+                            px={"70px"}
+                            pb={"0"}
+                          >
                             <Heading size="md" mb={5}>
                               {item.name}
                             </Heading>
@@ -383,13 +392,15 @@ const Home = () => {
                               <Spacer></Spacer>
                               <Text>{item.end_date.slice(0, 10)}</Text>
                             </Flex>
-                            <Text py="1">
+                            <Text my="10px">
                               Slot : {item.total_participant} /{" "}
                               {item.maximum_people}
                             </Text>
-                            <Text pb="1">Address : {item.address}</Text>
-                            <Text pb="1">City : {item.city}</Text>
-                            <Text pb="1">Category : {item.category_name}</Text>
+                            <Text my="10px">Address : {item.address}</Text>
+                            <Text my="10px">City : {item.city}</Text>
+                            <Text my="10px">
+                              Category : {item.category_name}
+                            </Text>
                           </CardBody>
                         </CardEventClub>
                       ))}
@@ -402,43 +413,51 @@ const Home = () => {
                 </Box>
               </Box>
             </Box>
-            <Box w="40%">
-              <Box mt={"6%"} ml={"16%"} w={"100%"} position="sticky" top={"0"}>
-                <Buttons
-                  openTrigger={() => navigate("/clublist")}
-                  textContent="Find More Club"
-                />
-                <Flex flexDir={"column"} gap={4} pt={5}>
-                  {getClubSlice && loadingClub === false ? (
-                    getClubSlice.map((item) => (
-                      <CardEventClub
-                        linkGambar={item.logo}
-                        key={item.id}
-                        keys={item.id}
-                        onClick={() =>
-                          navigate("/detailclub", {
-                            state: {
-                              id: item.id,
-                            },
-                          })
-                        }
-                      >
-                        <CardBody w={"100%"} pb={"0"}>
-                          <Heading size="md">{item.name}</Heading>
-                          <Text py="1">
-                            Member: {item.joined_member} / {item.member_total}
-                          </Text>
-                          <Text pb="1">{item.category_name}</Text>
-                          <Text pb="1">{item.city}</Text>
-                        </CardBody>
-                      </CardEventClub>
-                    ))
-                  ) : (
-                    <Spinner />
-                  )}
-                </Flex>
+            <Show above="1300px">
+              <Box w="40%">
+                <Box
+                  mt={"6%"}
+                  ml={"16%"}
+                  w={"100%"}
+                  position="sticky"
+                  top={"0"}
+                >
+                  <Buttons
+                    openTrigger={() => navigate("/clublist")}
+                    textContent="Find More Club"
+                  />
+                  <Flex flexDir={"column"} gap={4} pt={5}>
+                    {getClubSlice && loadingClub === false ? (
+                      getClubSlice.map((item) => (
+                        <CardEventClub
+                          linkGambar={item.logo}
+                          key={item.id}
+                          keys={item.id}
+                          onClick={() =>
+                            navigate("/detailclub", {
+                              state: {
+                                id: item.id,
+                              },
+                            })
+                          }
+                        >
+                          <CardBody w={"100%"} pb={"0"}>
+                            <Heading size="md">{item.name}</Heading>
+                            <Text py="1">
+                              Member: {item.joined_member} / {item.member_total}
+                            </Text>
+                            <Text pb="1">{item.category_name}</Text>
+                            <Text pb="1">{item.city}</Text>
+                          </CardBody>
+                        </CardEventClub>
+                      ))
+                    ) : (
+                      <Spinner />
+                    )}
+                  </Flex>
+                </Box>
               </Box>
-            </Box>
+            </Show>
           </Flex>
         </Box>
       </div>
