@@ -66,7 +66,7 @@ const Myclub = () => {
         <Box justify="end" ml={"92%"} justifyContent={"end"}></Box>
         <SimpleGrid columns={{ sm: 1, md: 2 }} gap={8}>
           {getMyClub && loading === false ? (
-            getMyClub.map((data) => {
+            getMyClub?.map((data) => {
               console.log(data);
               if (data.member_total === 0) {
                 (" ");
@@ -80,6 +80,7 @@ const Myclub = () => {
                       navigate("/clubjoin", {
                         state: {
                           id: data.club_id,
+                          status: data.status,
                         },
                       })
                     }
@@ -118,7 +119,6 @@ const Myclub = () => {
             })
           ) : (
             <Spinner
-              key={data.id}
               thickness="4px"
               speed="0.65s"
               emptyColor="gray.200"

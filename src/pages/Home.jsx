@@ -23,7 +23,11 @@ import {
 import { FiUser } from "react-icons/fi";
 import CardEventClub from "../components/Baru/CardEventClub";
 import { useState } from "react";
-import { ButtonCreate, Buttons } from "../components/Baru/ButtonBack";
+import {
+	ButtonCreate,
+	Buttons,
+	ToTopButton,
+} from "../components/Baru/ButtonBack";
 import { useEffect } from "react";
 import Modals from "../components/Baru/Modal";
 import Dropdown from "../components/Baru/Dropdown";
@@ -45,7 +49,7 @@ const Home = () => {
 	const currentUser = useSelector((state) => state.users.currentUser);
 	const token = currentUser.token;
 	const currentToken = useSelector((state) => state.access.currentAccess);
-	const tokenAkses = currentToken.access_token;
+	const tokenAccess = currentToken.access_token;
 
 	const navigate = useNavigate();
 
@@ -122,6 +126,7 @@ const Home = () => {
 		formerData.append("maximum_people", maximum_people);
 		formerData.append("description", description);
 		formerData.append("image_event", files);
+		formerData.append("token", tokenAccess);
 		console.log([...formerData]);
 		const config = {
 			headers: {
@@ -162,9 +167,9 @@ const Home = () => {
 	return (
 		<Layout>
 			<div>
-				<Box p="8" px={"10%"} w={"100vw"} h={"100%"}>
+				<Box p="8" px={"10%"} w={"100vw"} h={"100vh"}>
 					<Flex>
-						<Box w="60%">
+						<Box w={{ base: "60%", lg: "100%", xl: "60%" }}>
 							<Text as="b" fontSize={"2xl"}>
 								Home
 							</Text>
@@ -416,8 +421,9 @@ const Home = () => {
                     </Card>)}
 								</Flex>
 								<Box mt={10}>
-								
+
 								</Box>
+								<ToTopButton />
 							</Box>
 						</Box>
 						<Show above="1300px">
