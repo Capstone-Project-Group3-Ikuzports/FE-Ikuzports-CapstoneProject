@@ -15,8 +15,6 @@ import {
 	Button,
 	SimpleGrid,
 	Card,
-	ButtonGroup,
-	Select,
 	Input,
 	InputGroup,
 	InputLeftElement,
@@ -59,7 +57,6 @@ const Store = () => {
 			.then((res) => {
 				setProduct(res.data.data);
 				setTotalPage(res.data.total_page);
-				console.log(res.data.data);
 			})
 			.catch((err) => {
 				console.log(err);

@@ -9,9 +9,8 @@ import {
 	Spinner,
 	Card,
 	CardBody,
-  CardHeader,
-  CardFooter,
-  Button,
+	CardHeader,
+	CardFooter,
 	Input,
 	Heading,
 	ModalHeader,
@@ -127,7 +126,6 @@ const Home = () => {
 		formerData.append("description", description);
 		formerData.append("image_event", files);
 		formerData.append("token", tokenAccess);
-		console.log([...formerData]);
 		const config = {
 			headers: {
 				Authorization: `Bearer ${token}`,
@@ -365,9 +363,11 @@ const Home = () => {
 								</Flex>
 
 								<Flex flexDir={"column"} gap={"3"} pt={4}>
-									{getEvents != null ?(loading
-										? skeleton.map((data) => <Spinner key={data} />)
-										: getEvents.map((item) => (
+									{getEvents != null ? (
+										loading ? (
+											skeleton.map((data) => <Spinner key={data} />)
+										) : (
+											getEvents.map((item) => (
 												<CardEventClub
 													key={item.id}
 													keys={item.id}
@@ -403,7 +403,7 @@ const Home = () => {
 															Slot : {item.total_participant} /{" "}
 															{item.maximum_people}
 														</Text>
-                            <Text my="10px">Status Event : {item.status}</Text>
+														<Text my="10px">Status Event : {item.status}</Text>
 														<Text my="10px">Address : {item.address}</Text>
 														<Text my="10px">City : {item.city}</Text>
 														<Text my="10px">
@@ -411,18 +411,25 @@ const Home = () => {
 														</Text>
 													</CardBody>
 												</CardEventClub>
-										  ))):( <Card align='center' w={'full'} >
-                      <CardHeader>
-                        <Heading size='3xl' color={'brand.300'}>There is no events on this category yet </Heading>
-                      </CardHeader>
-                      <CardFooter>
-                      <Buttons textContent="Make some Event" openTrigger={onOpen} />
-                      </CardFooter>
-                    </Card>)}
+											))
+										)
+									) : (
+										<Card align="center" w={"full"}>
+											<CardHeader>
+												<Heading size="3xl" color={"brand.300"}>
+													There is no events on this category yet{" "}
+												</Heading>
+											</CardHeader>
+											<CardFooter>
+												<Buttons
+													textContent="Make some Event"
+													openTrigger={onOpen}
+												/>
+											</CardFooter>
+										</Card>
+									)}
 								</Flex>
-								<Box mt={10}>
-
-								</Box>
+								<Box mt={10}></Box>
 								<ToTopButton />
 							</Box>
 						</Box>

@@ -31,7 +31,6 @@ const DetailEvent = () => {
 	const token = currentUser.token;
 	const idUser = currentUser.id;
 	const [disabled, setDisabled] = useState(false);
-	console.log(idUser);
 	const location = useLocation();
 	const detail = location?.state?.id;
 
@@ -45,7 +44,6 @@ const DetailEvent = () => {
 			.get(`https://rubahmerah.site/events/${detail}`, config)
 			.then((response) => {
 				setGetDetails(response.data.data);
-				console.log(response.data.data);
 			})
 			.catch((err) => {
 				err;
@@ -63,7 +61,6 @@ const DetailEvent = () => {
 	const onSubmitHandler = async () => {
 		const form = new FormData();
 		form.append("event_id", detail);
-		console.log([...form]);
 
 		await axios
 			.post(`https://rubahmerah.site/participants`, form, config)
