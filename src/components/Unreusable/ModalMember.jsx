@@ -27,7 +27,7 @@ const ModalMember = ({
   memberLength,
   requestedLength,
 }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose, status } = useDisclosure();
   const user_id = useSelector((state) => state.users.currentUser.id);
 
   const [condition1, setCondition1] = useState("Member");
@@ -41,9 +41,13 @@ const ModalMember = ({
         color={"brand.500"}
         _hover={{ color: "primary.500" }}
         cursor={"pointer"}
-        onClick={() => {
-          onOpen();
-        }}
+        onClick={
+          status === "Owner"
+            ? () => {
+                onOpen();
+              }
+            : ""
+        }
       >
         {`Member : ${memberLength} / ${totalmember} `}
       </Text>
