@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Pagination from "rc-pagination";
+import "../../components/Pagination/pagination.css";
 import { AiOutlineSearch } from "react-icons/ai";
 import {
 	CardFooter,
@@ -37,15 +39,16 @@ const Store = () => {
 	const [product, setProduct] = useState([]);
 	const [filterCate, setFilterCate] = useState("");
 	const [filterCity, setFilterCity] = useState("");
-  const [search,setSearch] = useState("");
+	const [search, setSearch] = useState("");
 	const navi = useNavigate();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [maxPage,setMaxPage] = useState(5) ;
-  const pages = [];
+	const [currentPage, setCurrentPage] = useState(1);
+	const [totalPage, setTotalPage] = useState();
+	const page = [];
 
-  for(let i = 1; i <= maxPage; i++){pages.push(i)}
-  const paginateBack = () => {currentPage > 1 && setCurrentPage(currentPage - 1),setMaxPage(maxPage-1)}
-  const paginateFront =() => {setCurrentPage(currentPage + 1),setMaxPage(maxPage+1)}
+	const onChangePage = (page) => {
+		setCurrentPage(page);
+		setDaftarBed(null);
+	};
 
 	const getProduct = () => {
 		axios
@@ -55,6 +58,7 @@ const Store = () => {
 			)
 			.then((res) => {
 				setProduct(res.data.data);
+				setTotalPage(res.data.total_page);
 				console.log(res.data.data);
 			})
 			.catch((err) => {
@@ -62,9 +66,7 @@ const Store = () => {
 			});
 	};
 
-
-	useEffect(() => getProduct(), [filterCate,filterCity,search,currentPage]);
-
+	useEffect(() => getProduct(), [filterCate, filterCity, search, currentPage]);
 
 	return (
 		<Layout>
@@ -104,7 +106,12 @@ const Store = () => {
 							<option value="Surabaya">Surabaya</option>
 							<option value="Jogjakarta">Jogjakarta</option>
 						</Dropdown>
-				           <InputGroup w={'250px'} boxShadow={'xl'} varian='filled' onChange={(e) => setSearch(e.target.value)}>
+						<InputGroup
+							w={"250px"}
+							boxShadow={"xl"}
+							varian="filled"
+							onChange={(e) => setSearch(e.target.value)}
+						>
 							<InputLeftElement
 								pointerEvents="none"
 								children={<AiOutlineSearch color="gray.300" />}
@@ -127,9 +134,13 @@ const Store = () => {
 										? item.thumbnail
 										: "https://www.hostpapa.com/knowledgebase/wp-content/uploads/2018/04/1-13.png"
 								}
-                onClick={()=>{navi('/detailStore',{state : {
-                  id : item.id
-                }})}}
+								onClick={() => {
+									navi("/detailStore", {
+										state: {
+											id: item.id,
+										},
+									});
+								}}
 							>
 								<Stack mt="3" spacing="3">
 									<Flex mb={10}>
@@ -165,22 +176,14 @@ const Store = () => {
 					)}
 				</SimpleGrid>
 			</Box>
-       <Box>
-      <button onClick={()=>paginateBack()}>
-              Prev
-            </button>
-            {pages?.map((page, index) => {
-              return (
-                <button
-                  key={index}
-                  onClick={() => setCurrentPage(page)}
-                >
-                  {page}
-                </button>
-              );
-            })}
-            <button  onClick={()=>paginateFront()}>Next</button>
-            </Box>
+			<Box mx="auto" width={"fit-content"}>
+				<Pagination
+					total={totalPage * 10}
+					onChange={onChangePage}
+					current={currentPage}
+					defaultCurrent={1}
+				/>
+			</Box>
 		</Layout>
 	);
 };
