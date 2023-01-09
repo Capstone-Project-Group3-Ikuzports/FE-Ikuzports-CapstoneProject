@@ -33,7 +33,6 @@ const ModalMember = ({
 
   const [condition1, setCondition1] = useState("Member");
   const [condition2, setCondition2] = useState("Owner");
-  console.log(status);
 
   return (
     <>

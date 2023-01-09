@@ -182,7 +182,6 @@ const ClubJoin = () => {
 
   //=== POST PHOTO GALERIES ===//
   const postGaleries = async (datapost) => {
-    console.log(datapost);
     const photo = new FormData();
     photo.append("club_id", data.id);
     photo.append("caption", datapost.caption);
