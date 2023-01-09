@@ -1,8 +1,9 @@
-import React, { useState } from "react";
 import {
   Button,
+  Flex,
   FormControl,
   FormLabel,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -10,13 +11,11 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Select,
   Textarea,
   useDisclosure,
-  Input,
-  Flex,
-  Select,
-  SelectField,
 } from "@chakra-ui/react";
+import React, { useState } from "react";
 import { ButtonAddActivity } from "../Baru/ButtonBack";
 
 const ModalPostActivity = ({ post, titleActivity }) => {
