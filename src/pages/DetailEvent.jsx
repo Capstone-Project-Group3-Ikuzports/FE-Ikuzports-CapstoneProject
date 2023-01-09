@@ -1,13 +1,13 @@
 import React from "react";
 import { Text, Flex, Box, Stack } from "@chakra-ui/layout";
 import {
-	Modal,
-	ModalOverlay,
-	ModalContent,
-	ModalHeader,
-	ModalFooter,
-	ModalBody,
-	ModalCloseButton,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
 } from "@chakra-ui/react";
 import Swal from "sweetalert2";
 import { Buttons } from "../components/Baru/ButtonBack";
@@ -27,148 +27,153 @@ import Layout from "../components/Baru/Layout";
 import { ButtonBack } from "../components/Baru/ButtonBack";
 
 const DetailEvent = () => {
-	const currentUser = useSelector((state) => state.users.currentUser);
-	const token = currentUser.token;
-	const idUser = currentUser.id;
-	const [disabled, setDisabled] = useState(false);
-	const location = useLocation();
-	const detail = location?.state?.id;
+  const currentUser = useSelector((state) => state.users.currentUser);
+  const currentToken = useSelector(
+    (state) => state.access.currentAccess.access_token
+  );
 
-	const config = {
-		headers: { Authorization: `Bearer ${token}` },
-	};
+  const token = currentUser.token;
+  const idUser = currentUser.id;
+  const [disabled, setDisabled] = useState(false);
+  const location = useLocation();
+  const detail = location?.state?.id;
 
-	const [getDetails, setGetDetails] = useState([]);
-	const getDetailEvent = async () => {
-		await axios
-			.get(`https://rubahmerah.site/events/${detail}`, config)
-			.then((response) => {
-				setGetDetails(response.data.data);
-			})
-			.catch((err) => {
-				err;
-			});
-	};
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
 
-	useEffect(() => {
-		getDetailEvent();
-		if (getDetails.user_id === idUser) {
-			setDisabled(true);
-		}
-	}, []);
+  const [getDetails, setGetDetails] = useState([]);
+  const getDetailEvent = async () => {
+    await axios
+      .get(`https://rubahmerah.site/events/${detail}`, config)
+      .then((response) => {
+        setGetDetails(response.data.data);
+      })
+      .catch((err) => {
+        err;
+      });
+  };
 
-	const [event_id, setEventId] = useState("");
-	const onSubmitHandler = async () => {
-		const form = new FormData();
-		form.append("event_id", detail);
+  useEffect(() => {
+    getDetailEvent();
+    if (getDetails.user_id === idUser) {
+      setDisabled(true);
+    }
+  }, []);
 
-		await axios
-			.post(`https://rubahmerah.site/participants`, form, config)
-			.then((response) => {
-				Swal.fire({
-					position: "center",
-					icon: "success",
-					text: `Join Event successfully `,
-					showConfirmButton: false,
-					timer: 1000,
-				});
-			})
-			.catch((err) => {
-				console.log(err);
-				Swal.fire({
-					position: "center",
-					icon: "error",
-					text: `failed`,
-					showConfirmButton: true,
-					timer: 1000,
-				});
-			});
-		getDetailEvent();
-	};
+  const [event_id, setEventId] = useState("");
+  const onSubmitHandler = async () => {
+    const form = new FormData();
+    form.append("event_id", detail);
+    form.append("token", currentToken);
 
-	const navigate = useNavigate();
-	const { isOpen, onOpen, onClose } = useDisclosure();
-	return (
-		<Layout>
-			<Box p="8" px={"10%"} w={"100vw"} h={"100%"}>
-				<ButtonBack />
-				<Image
-					src={getDetails.image_event}
-					objectFit={"cover"}
-					h={"700px"}
-					w={"100%"}
-					backgroundRepeat="no-repeat"
-					my={"20px"}
-				/>
-				<Text fontSize={"6xl"}>{getDetails.name}</Text>
-				<Flex>
-					<CgProfile size={50} />
-					<Text ml={"30px"} fontSize={"3xl"}>
-						{getDetails.organizer_name}
-					</Text>
-				</Flex>
-				<Text mt={"30px"} fontSize={"xl"} w={"1300px"}>
-					{getDetails.description}
-				</Text>
-				<Flex mt={"30px"}>
-					<SlCalender size={50} />
-					<Text ml={"30px"} fontSize={"3xl"}>
-						{getDetails.start_date} - {getDetails.end_date}
-					</Text>
-				</Flex>
-				<Flex mt={"30px"}>
-					<SiGooglemaps size={50} />
-					<Text ml={"30px"} fontSize={"3xl"}>
-						{getDetails.city}
-					</Text>
-				</Flex>
-				<Flex mt={"30px"}>
-					<CgProfile size={50} />
-					<Text ml={"30px"} fontSize={"3xl"}>
-						{getDetails.total_participant} / {getDetails.maximum_people}
-					</Text>
-				</Flex>
-				<Stack w={"200px"} ml="auto">
-					{getDetails.user_id !== idUser ? (
-						<Buttons
-							openTrigger={onSubmitHandler}
-							changeTrigger={(e) => setEventId(e.target.value)}
-							textContent="Join Event"
-						/>
-					) : (
-						<Buttons
-							openTrigger={onSubmitHandler}
-							changeTrigger={(e) => setEventId(e.target.value)}
-							textContent="Join Event"
-							disabled={"disabled"}
-						/>
-					)}
-				</Stack>
-				<Modal isOpen={isOpen} onClose={onClose}>
-					<ModalOverlay />
-					<ModalContent>
-						<ModalHeader mx="auto">
-							<FcApproval size={150} />
-						</ModalHeader>
-						<ModalCloseButton />
-						<ModalBody mx="auto">Join Succes</ModalBody>
+    await axios
+      .post(`https://rubahmerah.site/participants`, form, config)
+      .then((response) => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          text: `Join Event successfully `,
+          showConfirmButton: false,
+          timer: 1000,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          text: `failed`,
+          showConfirmButton: true,
+          timer: 1000,
+        });
+      });
+    getDetailEvent();
+  };
 
-						<ModalFooter mx="auto">
-							<Buttons
-								bg={"brand.300"}
-								_hover={{ bg: "brand.200" }}
-								color="white"
-								px={10}
-								onClick={onClose}
-							>
-								Ok
-							</Buttons>
-						</ModalFooter>
-					</ModalContent>
-				</Modal>
-			</Box>
-		</Layout>
-	);
+  const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  return (
+    <Layout>
+      <Box p="8" px={"10%"} w={"100vw"} h={"100%"}>
+        <ButtonBack />
+        <Image
+          src={getDetails.image_event}
+          objectFit={"cover"}
+          h={"700px"}
+          w={"100%"}
+          backgroundRepeat="no-repeat"
+          my={"20px"}
+        />
+        <Text fontSize={"6xl"}>{getDetails.name}</Text>
+        <Flex>
+          <CgProfile size={50} />
+          <Text ml={"30px"} fontSize={"3xl"}>
+            {getDetails.organizer_name}
+          </Text>
+        </Flex>
+        <Text mt={"30px"} fontSize={"xl"} w={"1300px"}>
+          {getDetails.description}
+        </Text>
+        <Flex mt={"30px"}>
+          <SlCalender size={50} />
+          <Text ml={"30px"} fontSize={"3xl"}>
+            {getDetails.start_date} - {getDetails.end_date}
+          </Text>
+        </Flex>
+        <Flex mt={"30px"}>
+          <SiGooglemaps size={50} />
+          <Text ml={"30px"} fontSize={"3xl"}>
+            {getDetails.city}
+          </Text>
+        </Flex>
+        <Flex mt={"30px"}>
+          <CgProfile size={50} />
+          <Text ml={"30px"} fontSize={"3xl"}>
+            {getDetails.total_participant} / {getDetails.maximum_people}
+          </Text>
+        </Flex>
+        <Stack w={"200px"} ml="auto">
+          {getDetails.user_id !== idUser ? (
+            <Buttons
+              openTrigger={onSubmitHandler}
+              changeTrigger={(e) => setEventId(e.target.value)}
+              textContent="Join Event"
+            />
+          ) : (
+            <Buttons
+              openTrigger={onSubmitHandler}
+              changeTrigger={(e) => setEventId(e.target.value)}
+              textContent="Join Event"
+              disabled={"disabled"}
+            />
+          )}
+        </Stack>
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader mx="auto">
+              <FcApproval size={150} />
+            </ModalHeader>
+            <ModalCloseButton />
+            <ModalBody mx="auto">Join Succes</ModalBody>
+
+            <ModalFooter mx="auto">
+              <Buttons
+                bg={"brand.300"}
+                _hover={{ bg: "brand.200" }}
+                color="white"
+                px={10}
+                onClick={onClose}
+              >
+                Ok
+              </Buttons>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </Box>
+    </Layout>
+  );
 };
 
 export default DetailEvent;
