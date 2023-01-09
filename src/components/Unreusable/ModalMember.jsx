@@ -26,12 +26,14 @@ const ModalMember = ({
   acceptMember,
   memberLength,
   requestedLength,
+  status,
 }) => {
-  const { isOpen, onOpen, onClose, status } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const user_id = useSelector((state) => state.users.currentUser.id);
 
   const [condition1, setCondition1] = useState("Member");
   const [condition2, setCondition2] = useState("Owner");
+  console.log(status);
 
   return (
     <>
