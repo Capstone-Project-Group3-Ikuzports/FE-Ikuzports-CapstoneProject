@@ -7,6 +7,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import ModalEditGaleries from "../Unreusable/ModalEditGaleries";
 const CardGallery = ({
@@ -18,14 +19,19 @@ const CardGallery = ({
   status,
 }) => {
   const { isOpen, onToggle } = useDisclosure();
+  const [display, setDisplay] = useState("none");
 
   return (
     <Card
       maxW={"sm"}
       bgColor={"whiteAlpha.800"}
       overflow={"hidden"}
-      onPointerEnter={() => onToggle()}
-      onPointerLeave={() => onToggle()}
+      onPointerEnter={() => {
+        onToggle(), setDisplay("inline-bock");
+      }}
+      onPointerLeave={() => {
+        onToggle(), setDisplay("none");
+      }}
       cursor={"pointer"}
     >
       {status === "Owner" ? (
@@ -61,7 +67,9 @@ const CardGallery = ({
         </Box>
 
         <Text
-          display={"inline-block"}
+          display={display}
+          position={"absolute"}
+          bottom={0}
           transition={"ease-in"}
           fontSize={"lg"}
           bgColor={"ActiveBorder"}
