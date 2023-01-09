@@ -67,7 +67,6 @@ const Myclub = () => {
         <SimpleGrid columns={{ sm: 1, md: 2 }} gap={8}>
           {getMyClub && loading === false ? (
             getMyClub?.map((data) => {
-              console.log(data);
               if (data.member_total === 0) {
                 (" ");
               } else {
@@ -76,13 +75,16 @@ const Myclub = () => {
                     keys={data.id}
                     key={data.id}
                     linkGambar={data.logo}
-                    onClick={() =>
-                      navigate("/clubjoin", {
-                        state: {
-                          id: data.club_id,
-                          status: data.status,
-                        },
-                      })
+                    onClick={
+                      data.status !== "Requested"
+                        ? () =>
+                            navigate("/clubjoin", {
+                              state: {
+                                id: data.club_id,
+                                status: data.status,
+                              },
+                            })
+                        : ""
                     }
                   >
                     <CardBody pb="0" h={200} key={data.id}>
