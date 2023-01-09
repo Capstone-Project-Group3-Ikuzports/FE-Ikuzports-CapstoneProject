@@ -385,6 +385,7 @@ const ClubJoin = () => {
                     fontWeight={"bold"}
                     color={"brand.300"}
                   >{`${data?.name?.toUpperCase()}`}</Text>
+                  {}
                   <ModalMember
                     totalmember={data.member_total}
                     memberRaw={memberRaw}
@@ -392,6 +393,7 @@ const ClubJoin = () => {
                     acceptMember={acceptMember}
                     memberLength={memberLength}
                     requestedLength={requestedLength}
+                    status={status}
                   />
 
                   <Text
