@@ -567,6 +567,7 @@ const ClubJoin = () => {
                       idImage={data.id}
                       deletePhoto={dellPhoto}
                       editPhoto={editPhoto}
+                      status={status}
                     />
                   ))}
                 </SimpleGrid>
