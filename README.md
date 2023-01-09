@@ -1,1 +1,9 @@
-#![image](https://user-images.githubusercontent.com/94609501/211281564-bb646305-032e-44df-a556-d554dc1d3aa3.png) Ikuzports
+# ⚽ Ikuzports
+
+## 📚 About Project
+Ikuzports is a wesbite to help you to find people who have the same hobbies as you, find people in the country with the same hobbies as you and play together with them you can also host an event to gather a lot of people to do the same hobbies as you
+
+## 🌐 Live Demo Of Our Website
+Here's the link to our working demo : [Vercel](https://fe-ikuzports-capstone-project-1.vercel.app/)
+
+## How Our Website Look
