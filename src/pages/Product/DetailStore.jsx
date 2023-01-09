@@ -74,6 +74,7 @@ const DetailStore = () => {
 
   const [detail,setDetail] = useState('')
   const [bank,setBank] = useState('')
+  const [isSubmit, setSubmitted] = useState(false)
 
 
 
@@ -94,36 +95,52 @@ const DetailStore = () => {
     axios
     .get(`https://rubahmerah.site/transactions/`,config)
     .then((res)=>{
+      
 
       if(res.data.data[0].status_payment == 'settlement'){
-        onClose()
+        onClose();
             Swal.fire({
               position: "center",
               icon: "success",
               title: "Your Item has been pay",
               text: "Sit tight its on the way",
               showConfirmButton: true,
-            })}
+            })
+          }
     console.log(res.data.data[0])
     })
 
   }
 
+const OnClickBank = async(e)=>{
+ const bankM =e.target.innerText.toLowerCase()
+  setDisplayMidTrans('block');
+  postDetail(bankM)
+ 
+}
+
+  // useEffect(
+  //   ()=>getTransaction(),[],
+  //   )
+
+  // useEffect(() => {
+  //   if(isSubmit) {
+  //     Swal.fire({
+  //       position: "center",
+  //       icon: "success",
+  //       title: "Your Item has been pay",
+  //       text: "Sit tight its on the way",
+  //       showConfirmButton: true,
+  //     })}
+  // }, [isSubmit])
 
 
-  useEffect(
-    ()=>getTransaction(),[],
-
-    )
-
-
-  const postDetail = () =>{
+  const postDetail = (bankM) =>{
     axios
-    .post('https://rubahmerah.site/transactions/',{total_price:parsingan,product_id:parsinganId,product_quantity:1,transaction_time:`${postWaktu}`,payment_method:`${bank}`},config )
+    .post('https://rubahmerah.site/transactions/',{total_price:parsingan,product_id:parsinganId,product_quantity:1,transaction_time:`${postWaktu}`,payment_method:`${bankM}`},config )
   
     .then((res) => {
       setDetail(res.data.data)
-     
     })
     .catch((err) => {
       Swal.fire({
@@ -189,7 +206,7 @@ useEffect(
                 <ModalBody>
             
                   <Flex alignItems={"center"}>
-                  <Button size={'lg'} variant='link' onClick={()=>{setBank('bca'),setDisplayMidTrans('block'),postDetail(),getTransaction()}}>
+                  <Button size={'lg'} variant='link' onClick={OnClickBank} >
                   <Image src={bca} w={"5vw"} h={"7vh"} mb="10px" mr='25px'/>
                   <Text fontSize={'2xl'} textColor='black' as='b'>BCA</Text>
                   </Button>
@@ -202,6 +219,7 @@ useEffect(
                    <FormLabel fontSize={'xl'} pb={'10px'}>Order id:{detail?.order_id}</FormLabel>
                    <FormLabel fontSize={'xl'} pb={'10px'}>Price :{detail?.gross_amount}</FormLabel>
                    <FormLabel fontSize={'xl'}>Please Transfer to Virtual Account: <Text fontSize={'3xl'} textAlign='center'>{detail?.va_numbers?.va_number}</Text> </FormLabel>
+                    <Button onClick={()=>getTransaction()}>Payment has been made</Button>
                   </FormControl>
                   </Box>
                   </Flex>
